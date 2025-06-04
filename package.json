@@ -1,0 +1,17 @@
+{
+  "name": "patrimonio",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"yarn web:dev\" \"yarn sanity:dev\"",
+    "web:dev": "yarn workspace patrimonio-nuxt dev",
+    "sanity:dev": "yarn workspace studio dev"
+  },
+  "packageManager": "yarn@4.9.1",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
