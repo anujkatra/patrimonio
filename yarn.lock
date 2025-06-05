@@ -2847,7 +2847,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.17.5, @nuxt/kit@npm:^3.15.4, @nuxt/kit@npm:^3.17.4":
+"@nuxt/kit@npm:3.17.5, @nuxt/kit@npm:^3.14.1592, @nuxt/kit@npm:^3.15.4, @nuxt/kit@npm:^3.17.4":
   version: 3.17.5
   resolution: "@nuxt/kit@npm:3.17.5"
   dependencies:
@@ -2952,6 +2952,29 @@ __metadata:
   peerDependencies:
     vue: ^3.3.4
   checksum: 10c0/1d25f39440a89b105b68bafa3c6d373498e55b5f5365df2eb3221734368c2c4dc8517f3fcba64c6c18b8ce8e2d11dd1cac79ba0d649bbe5955b3ed48bc246715
+  languageName: node
+  linkType: hard
+
+"@nuxtjs/sanity@npm:1.13.3":
+  version: 1.13.3
+  resolution: "@nuxtjs/sanity@npm:1.13.3"
+  dependencies:
+    "@nuxt/kit": "npm:^3.14.1592"
+    "@portabletext/types": "npm:^2.0.13"
+    "@sanity/client": "npm:^6.22.5"
+    "@sanity/core-loader": "npm:^1.7.12"
+    "@sanity/preview-url-secret": "npm:^2.0.4"
+    "@sanity/visual-editing": "npm:^2.8.0"
+    consola: "npm:^3.2.3"
+    defu: "npm:^6.1.4"
+    jiti: "npm:^2.4.0"
+    knitwork: "npm:^1.1.0"
+    magic-regexp: "npm:^0.8.0"
+    mlly: "npm:^1.7.3"
+    ofetch: "npm:^1.4.1"
+    ohash: "npm:^1.1.4"
+    pathe: "npm:^1.1.2"
+  checksum: 10c0/c370cc4aa1f2f5d7495fb2d4a91b0a52dcb63a426e86e5380e182cc907b70767fb23df652c1d936d5c41de5b5521ea99b3cf3e91f0bdbae7ecc72b5a8d0584a9
   languageName: node
   linkType: hard
 
@@ -3850,7 +3873,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/client@npm:^6.24.1, @sanity/client@npm:^6.28.3, @sanity/client@npm:^6.28.4":
+"@sanity/client@npm:^6.22.4, @sanity/client@npm:^6.22.5, @sanity/client@npm:^6.24.1, @sanity/client@npm:^6.28.3, @sanity/client@npm:^6.28.4":
   version: 6.29.1
   resolution: "@sanity/client@npm:6.29.1"
   dependencies:
@@ -3861,7 +3884,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/client@npm:^7.4.0":
+"@sanity/client@npm:^7.1.0, @sanity/client@npm:^7.4.0":
   version: 7.4.1
   resolution: "@sanity/client@npm:7.4.1"
   dependencies:
@@ -3911,6 +3934,18 @@ __metadata:
     uuid: "npm:^11.1.0"
     xstate: "npm:^5.19.2"
   checksum: 10c0/f5ec157bde7f85d03ffa1edbee0aa00781c60e92930377c818f0cf89072bb4b7d525df4764cd27f77c5e93576b1f1bc7cbc12a61664a81d8c079849a466129f6
+  languageName: node
+  linkType: hard
+
+"@sanity/core-loader@npm:^1.7.12":
+  version: 1.8.10
+  resolution: "@sanity/core-loader@npm:1.8.10"
+  dependencies:
+    "@sanity/client": "npm:^7.1.0"
+    "@sanity/comlink": "npm:^3.0.5"
+    "@sanity/presentation-comlink": "npm:^1.0.21"
+    "@sanity/visual-editing-csm": "npm:^2.0.18"
+  checksum: 10c0/d3c1c6a49a91ecfe1415e99f66fdc4c55cd29bc77e550fb62d7272d724bdcef72982f980ef70d2c1d29a07ccbae3187c50902e4a8be4a07b4bc92d6a20496427
   languageName: node
   linkType: hard
 
@@ -4104,6 +4139,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sanity/mutate@npm:0.11.0-canary.4":
+  version: 0.11.0-canary.4
+  resolution: "@sanity/mutate@npm:0.11.0-canary.4"
+  dependencies:
+    "@sanity/client": "npm:^6.22.4"
+    "@sanity/diff-match-patch": "npm:^3.1.1"
+    hotscript: "npm:^1.0.13"
+    lodash: "npm:^4.17.21"
+    lodash-es: "npm:^4.17.21"
+    mendoza: "npm:^3.0.7"
+    rxjs: "npm:^7.8.1"
+  peerDependencies:
+    xstate: ^5.19.0
+  peerDependenciesMeta:
+    xstate:
+      optional: true
+  checksum: 10c0/103c26905d5a6dade15a2a3dc693e3143548cb527e9ad0a98b1f8204f39ba7f38893178501c2a99b4d4d65a3a7ce7f5fb99950acbc181942d4de7b440d360bbf
+  languageName: node
+  linkType: hard
+
 "@sanity/mutate@npm:^0.12.4":
   version: 0.12.4
   resolution: "@sanity/mutate@npm:0.12.4"
@@ -4145,7 +4200,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/preview-url-secret@npm:^2.1.11":
+"@sanity/preview-url-secret@npm:^2.0.4, @sanity/preview-url-secret@npm:^2.1.11":
   version: 2.1.11
   resolution: "@sanity/preview-url-secret@npm:2.1.11"
   dependencies:
@@ -4359,6 +4414,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sanity/visual-editing-csm@npm:^2.0.18":
+  version: 2.0.18
+  resolution: "@sanity/visual-editing-csm@npm:2.0.18"
+  dependencies:
+    "@sanity/visual-editing-types": "npm:^1.1.0"
+    valibot: "npm:^1.1.0"
+  peerDependencies:
+    "@sanity/client": ^7.1.0
+  checksum: 10c0/befad03e66689f481d82da8ad45186fd0ee20f38e7a67dc6efd09a68e3012479da83d6f160922bade2ee29077510697543956aabc82a60dfaea95e79833e163e
+  languageName: node
+  linkType: hard
+
 "@sanity/visual-editing-types@npm:^1.1.0":
   version: 1.1.0
   resolution: "@sanity/visual-editing-types@npm:1.1.0"
@@ -4369,6 +4436,53 @@ __metadata:
     "@sanity/types":
       optional: true
   checksum: 10c0/0f60de96ccc83ab25c02ebebb04f80469956a1069882f4cff8fc460974b4bf4fa9fa7b066e29f2102233cb34a435ee1e852b0d1afbbd58fce1119fcbecdabb09
+  languageName: node
+  linkType: hard
+
+"@sanity/visual-editing@npm:^2.8.0":
+  version: 2.15.0
+  resolution: "@sanity/visual-editing@npm:2.15.0"
+  dependencies:
+    "@sanity/comlink": "npm:^3.0.5"
+    "@sanity/icons": "npm:^3.7.0"
+    "@sanity/insert-menu": "npm:^1.1.12"
+    "@sanity/mutate": "npm:0.11.0-canary.4"
+    "@sanity/presentation-comlink": "npm:^1.0.21"
+    "@sanity/preview-url-secret": "npm:^2.1.11"
+    "@sanity/ui": "npm:^2.15.17"
+    "@sanity/visual-editing-csm": "npm:^2.0.18"
+    "@vercel/stega": "npm:0.1.2"
+    get-random-values-esm: "npm:^1.0.2"
+    react-compiler-runtime: "npm:19.1.0-rc.2"
+    rxjs: "npm:^7.8.2"
+    scroll-into-view-if-needed: "npm:^3.1.0"
+    use-effect-event: "npm:^1.0.2"
+    xstate: "npm:^5.19.2"
+  peerDependencies:
+    "@remix-run/react": ">= 2"
+    "@sanity/client": ^7.1.0
+    "@sveltejs/kit": ">= 2"
+    next: ">= 13 || >=14.3.0-canary.0 <14.3.0 || >=15.0.0-rc"
+    react: ^18.3 || >=19.0.0-rc
+    react-dom: ^18.3 || >=19.0.0-rc
+    react-is: ^18.3 || >=19.0.0-rc
+    react-router: ">= 6 || >= 7"
+    styled-components: ^6.1.17
+    svelte: ">= 4"
+  peerDependenciesMeta:
+    "@remix-run/react":
+      optional: true
+    "@sanity/client":
+      optional: true
+    "@sveltejs/kit":
+      optional: true
+    next:
+      optional: true
+    react-router:
+      optional: true
+    svelte:
+      optional: true
+  checksum: 10c0/df950fa56b1e38d18e3d200bae65c3ab2cf8c5dde03e29f4b773e0e9231fd11c6b0952e4dba8fec17e712acffc5ce577fc4847b46d0ccb303496059b9606df60
   languageName: node
   linkType: hard
 
@@ -5008,6 +5122,13 @@ __metadata:
   bin:
     nft: out/cli.js
   checksum: 10c0/84ba32c685f9d7c2c849b1e8c963d3b7eb09d122e666143ed97c3776f5b04a4745605e1d29fd81383f72b1d1c0d7d58e39f06dc92f021b5de079dfa4e8523574
+  languageName: node
+  linkType: hard
+
+"@vercel/stega@npm:0.1.2":
+  version: 0.1.2
+  resolution: "@vercel/stega@npm:0.1.2"
+  checksum: 10c0/66eb80f286d46806004a2eacd215af80ad3cd443e7a96a6070d390dbb3f4d1f6e063013ec0d196c7fe852721d5dbe62e23b44c32975e36b18cda30e5e0728e04
   languageName: node
   linkType: hard
 
@@ -10491,7 +10612,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jiti@npm:^2.1.2, jiti@npm:^2.4.2":
+"jiti@npm:^2.1.2, jiti@npm:^2.4.0, jiti@npm:^2.4.2":
   version: 2.4.2
   resolution: "jiti@npm:2.4.2"
   bin:
@@ -10769,7 +10890,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knitwork@npm:^1.0.0, knitwork@npm:^1.2.0":
+"knitwork@npm:^1.0.0, knitwork@npm:^1.1.0, knitwork@npm:^1.2.0":
   version: 1.2.0
   resolution: "knitwork@npm:1.2.0"
   checksum: 10c0/26113ce2909595054a78b36a79a7cdddf1336438b111688c91a74620148d15182e073c9504d2261ff4cad888d7ef330df91abc0b03d2b52ff3cff7c5b469bfb5
@@ -11107,6 +11228,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"magic-regexp@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "magic-regexp@npm:0.8.0"
+  dependencies:
+    estree-walker: "npm:^3.0.3"
+    magic-string: "npm:^0.30.8"
+    mlly: "npm:^1.6.1"
+    regexp-tree: "npm:^0.1.27"
+    type-level-regexp: "npm:~0.1.17"
+    ufo: "npm:^1.4.0"
+    unplugin: "npm:^1.8.3"
+  checksum: 10c0/785ef825cc754ce6cb4b009b1cc7df7ea014d7a8a829cd6bbbd11618322b914ac1cdbd8fc4f2b269c80d72bbb3ad180682c5e593fb0754dd0e9bd5759cab881e
+  languageName: node
+  linkType: hard
+
 "magic-string-ast@npm:^0.7.0":
   version: 0.7.1
   resolution: "magic-string-ast@npm:0.7.1"
@@ -11225,7 +11361,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mendoza@npm:^3.0.0, mendoza@npm:^3.0.8":
+"mendoza@npm:^3.0.0, mendoza@npm:^3.0.7, mendoza@npm:^3.0.8":
   version: 3.0.8
   resolution: "mendoza@npm:3.0.8"
   checksum: 10c0/8517b504fdf771ac41200ad6292aa8f23c9380f245cc194d6b52659352599724f509894b6656c421a09bc4b09f77acce28c8114991b69faf001a548490f98a1d
@@ -11557,7 +11693,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mlly@npm:^1.3.0, mlly@npm:^1.6.1, mlly@npm:^1.7.1, mlly@npm:^1.7.4":
+"mlly@npm:^1.3.0, mlly@npm:^1.6.1, mlly@npm:^1.7.1, mlly@npm:^1.7.3, mlly@npm:^1.7.4":
   version: 1.7.4
   resolution: "mlly@npm:1.7.4"
   dependencies:
@@ -12218,6 +12354,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ohash@npm:^1.1.4":
+  version: 1.1.6
+  resolution: "ohash@npm:1.1.6"
+  checksum: 10c0/3c25dde77662fffa3fa956b8975d7324311e3df15d9cf8d79b466ac3508f313e02b8ed3041d967810f68e00af344a5a3c4288be0208143c1844ba0f3cc83f777
+  languageName: node
+  linkType: hard
+
 "ohash@npm:^2.0.11":
   version: 2.0.11
   resolution: "ohash@npm:2.0.11"
@@ -12785,6 +12928,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "patrimonio-nuxt@workspace:apps/patrimonio-nuxt"
   dependencies:
+    "@nuxtjs/sanity": "npm:1.13.3"
     nuxt: "npm:^3.17.5"
     vue: "npm:^3.5.16"
     vue-router: "npm:^4.5.1"
@@ -13942,6 +14086,15 @@ __metadata:
   version: 1.4.2
   resolution: "regenerate@npm:1.4.2"
   checksum: 10c0/f73c9eba5d398c818edc71d1c6979eaa05af7a808682749dd079f8df2a6d91a9b913db216c2c9b03e0a8ba2bba8701244a93f45211afbff691c32c7b275db1b8
+  languageName: node
+  linkType: hard
+
+"regexp-tree@npm:^0.1.27":
+  version: 0.1.27
+  resolution: "regexp-tree@npm:0.1.27"
+  bin:
+    regexp-tree: bin/regexp-tree
+  checksum: 10c0/f636f44b4a0d93d7d6926585ecd81f63e4ce2ac895bc417b2ead0874cd36b337dcc3d0fedc63f69bf5aaeaa4340f36ca7e750c9687cceaf8087374e5284e843c
   languageName: node
   linkType: hard
 
@@ -15974,6 +16127,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-level-regexp@npm:~0.1.17":
+  version: 0.1.17
+  resolution: "type-level-regexp@npm:0.1.17"
+  checksum: 10c0/54798f83464cb5ce04246c9c4739ec471c526aaa7690679fddbce05b689b99403de709f3fcb494555d4276b46c606435a95855e52535602f63378ab8b38010d5
+  languageName: node
+  linkType: hard
+
 "typed-array-buffer@npm:^1.0.3":
   version: 1.0.3
   resolution: "typed-array-buffer@npm:1.0.3"
@@ -16086,7 +16246,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ufo@npm:^1.1.2, ufo@npm:^1.5.4, ufo@npm:^1.6.1":
+"ufo@npm:^1.1.2, ufo@npm:^1.4.0, ufo@npm:^1.5.4, ufo@npm:^1.6.1":
   version: 1.6.1
   resolution: "ufo@npm:1.6.1"
   checksum: 10c0/5a9f041e5945fba7c189d5410508cbcbefef80b253ed29aa2e1f8a2b86f4bd51af44ee18d4485e6d3468c92be9bf4a42e3a2b72dcaf27ce39ce947ec994f1e6b
@@ -16360,7 +16520,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unplugin@npm:^1.10.0":
+"unplugin@npm:^1.10.0, unplugin@npm:^1.8.3":
   version: 1.16.1
   resolution: "unplugin@npm:1.16.1"
   dependencies:
@@ -16675,6 +16835,18 @@ __metadata:
   bin:
     uuidv7: cli.js
   checksum: 10c0/c62af06703f4f4d1718279992288cb9a58a087e12e248f59fda433c912bad08c635fcee786da92b6a1a333baef09af4c3c7bddfc649a509303f11e95cb9d8aca
+  languageName: node
+  linkType: hard
+
+"valibot@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "valibot@npm:1.1.0"
+  peerDependencies:
+    typescript: ">=5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/39580b4e4683cc44398fb775e88c03639dbaa7e6f587df416125916cb6307292d45df18f656054e8846093ced13a2d2fdc98659da6dd104d1d20180edcbd99d4
   languageName: node
   linkType: hard
 
