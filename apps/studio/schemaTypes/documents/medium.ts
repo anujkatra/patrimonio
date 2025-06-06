@@ -26,9 +26,4 @@ export const medium: DocumentDefinition = {
       validation: (Rule) => Rule.required(),
     }),
   ],
-  preview: {
-    select: {
-      title: 'name',
-    },
-  },
 }
