@@ -2,6 +2,12 @@ import {defineArrayMember, defineField, DocumentDefinition} from 'sanity'
 import {DocumentIcon} from '@sanity/icons'
 import {withSeo} from '../../helpers/document'
 
+const eventTypes = [
+  {title: 'Art Show', value: 'art-show'},
+  {title: 'Auction', value: 'auction'},
+  {title: 'Solo Show', value: 'solo-show'},
+]
+
 export const event: DocumentDefinition = withSeo({
   name: 'event',
   title: 'Event',
@@ -135,6 +141,18 @@ export const event: DocumentDefinition = withSeo({
   preview: {
     select: {
       title: 'title',
+      type: 'type',
+      pictures: 'pictures',
+    },
+    prepare(selection) {
+      const {type, title, pictures} = selection
+      const typeName =
+        type && eventTypes.flatMap((option) => (option.value === type ? [option.title] : []))
+      return {
+        title: title,
+        subtitle: type ? typeName[0] : '',
+        media: pictures ? pictures[0] : undefined,
+      }
     },
   },
 })
