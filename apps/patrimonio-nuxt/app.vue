@@ -13,6 +13,5 @@ useSiteMetadata({
 
 <template>
  <p>test</p>
- <p>{{ homepageData }}</p>
 </template>
 
