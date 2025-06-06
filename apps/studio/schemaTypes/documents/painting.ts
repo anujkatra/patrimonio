@@ -99,12 +99,6 @@ export const painting: DocumentDefinition = {
       to: [{type: 'medium'}],
     }),
     defineField({
-      title: 'Is the Painting Featured?',
-      name: 'featured',
-      type: 'boolean',
-      initialValue: false,
-    }),
-    defineField({
       title: 'Is the Painting for Sale?',
       name: 'forSale',
       type: 'boolean',
