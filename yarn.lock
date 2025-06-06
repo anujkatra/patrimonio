@@ -3884,7 +3884,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/client@npm:^7.1.0, @sanity/client@npm:^7.4.0":
+"@sanity/client@npm:^7.1.0, @sanity/client@npm:^7.4.0, @sanity/client@npm:^7.4.1":
   version: 7.4.1
   resolution: "@sanity/client@npm:7.4.1"
   dependencies:
@@ -9439,7 +9439,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"groq@npm:3.91.0":
+"groq@npm:3.91.0, groq@npm:^3.91.0":
   version: 3.91.0
   resolution: "groq@npm:3.91.0"
   checksum: 10c0/cc0cf09c5738e5fb143eff39b436f0c7aa2554f73fed8d57f06c1780edb965800b43992cf0df600f3631a5309f5ce4bb28c3bac7f25837a6600132ac8bcc85f2
@@ -12929,7 +12929,10 @@ __metadata:
   resolution: "patrimonio-nuxt@workspace:apps/patrimonio-nuxt"
   dependencies:
     "@nuxtjs/sanity": "npm:1.13.3"
+    "@sanity/client": "npm:^7.4.1"
+    groq: "npm:^3.91.0"
     nuxt: "npm:^3.17.5"
+    sanity: "npm:^3.91.0"
     vue: "npm:^3.5.16"
     vue-router: "npm:^4.5.1"
   languageName: unknown

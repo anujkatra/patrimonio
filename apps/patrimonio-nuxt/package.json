@@ -4,15 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
+    "build": "yarn typegen && nuxt build",
+    "dev": "yarn typegen && nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "typegen": "sanity typegen generate"
   },
   "dependencies": {
     "@nuxtjs/sanity": "1.13.3",
+    "@sanity/client": "^7.4.1",
+    "groq": "^3.91.0",
     "nuxt": "^3.17.5",
+    "sanity": "^3.91.0",
     "vue": "^3.5.16",
     "vue-router": "^4.5.1"
   }
