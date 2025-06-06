@@ -560,8 +560,8 @@ export type AllSanitySchemaTypes = FeaturedSection | Robots | Twitter | Opengrap
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "homepage"] {		...	}
-export type HomepageQueryResult = Array<{
+// Query: *[_type == "homepage"][0] {	...	}
+export type HomepageQueryResult = {
   _id: string;
   _type: "homepage";
   _createdAt: string;
@@ -604,12 +604,12 @@ export type HomepageQueryResult = Array<{
     [internalGroqTypeReferenceTo]?: "event";
   }>;
   seo?: Seo;
-}>;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"homepage\"] {\n\t\t...\n\t}": HomepageQueryResult;
+    "*[_type == \"homepage\"][0] {\n\t...\n\t}": HomepageQueryResult;
   }
 }

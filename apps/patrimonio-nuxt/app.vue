@@ -2,15 +2,17 @@
 import { homepageQuery } from "~/sanity/queries";
 import type { HomepageQueryResult } from "~/sanity/types";
 
-const { data } = await useSanityQuery<HomepageQueryResult>(homepageQuery);
+const {data:homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery);
 
-// useSiteMetadata({
-//   title: post?.seo?.title || post?.value?.title,
-//   description: post?.value?.seoDescription || post?.value?.excerpt,
-// });
+useSiteMetadata({
+  title: homepageData?.value?.seo?.title ?? "title",
+  description:homepageData?.value?.seo?.description ?? "description",
+  ogImage:"",
+});
 </script>
 
 <template>
  <p>test</p>
+ <p>{{ homepageData }}</p>
 </template>
 
