@@ -1,0 +1,6 @@
+{
+  "path": "../patrimonio-nuxt/sanity/queries.{ts,js}",
+  "schema": "schema.json",
+  "generates": "../patrimonio-nuxt/sanity/types.ts",
+  "overloadClientMethods": true
+}
