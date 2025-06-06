@@ -14,9 +14,4 @@ export default defineNuxtConfig({
     //   zIndex: 51,
     // },
   },
-  runtimeConfig: {
-    public: {
-      studioUrl: process.env.NUXT_SANITY_STUDIO_URL,
-    },
-  },
 });
