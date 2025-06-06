@@ -24,7 +24,7 @@ export function useSiteMetadata({ title, description, ogImage }: SiteMetadata) {
       {
         rel: "icon",
         type: "image/png",
-        href: "/favicon.png",
+        href: "/favicon.ico",
       },
     ],
   });
