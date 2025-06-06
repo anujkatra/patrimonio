@@ -92,6 +92,9 @@ export const homepage: DocumentDefinition = withSeo({
         {
           type: 'reference',
           to: [{type: 'painting'}],
+          options: {
+            disableNew: true,
+          },
         },
       ],
     }),
@@ -105,6 +108,9 @@ export const homepage: DocumentDefinition = withSeo({
         {
           type: 'reference',
           to: [{type: 'event'}],
+          options: {
+            disableNew: true,
+          },
         },
       ],
     }),
