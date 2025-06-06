@@ -87,6 +87,7 @@ export const artist: DocumentDefinition = {
   preview: {
     select: {
       title: 'name',
+      subtitle: 'location',
       media: 'picture',
     },
   },
