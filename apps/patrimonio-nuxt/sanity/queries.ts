@@ -1,7 +1,7 @@
 import { defineQuery } from "groq";
 
-export const homepageQuery = defineQuery(`*[_type == "homepage"] {
-		...
+export const homepageQuery = defineQuery(`*[_type == "homepage"][0] {
+	...
 	}`);
 
 // export const pageQuery = defineQuery(/* groq */ `
