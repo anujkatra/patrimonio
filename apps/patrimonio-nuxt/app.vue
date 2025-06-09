@@ -12,6 +12,6 @@ useSiteMetadata({
 </script>
 
 <template>
- <p>test</p>
+ <p class="text-center">test</p>
 </template>
 
