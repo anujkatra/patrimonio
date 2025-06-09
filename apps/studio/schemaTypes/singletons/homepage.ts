@@ -116,8 +116,8 @@ export const homepage: DocumentDefinition = withSeo({
     }),
   ],
   preview: {
-    select: {
-      title: 'Homepage',
-    },
+    prepare: () => ({
+      title: 'Home Page',
+    }),
   },
 })
