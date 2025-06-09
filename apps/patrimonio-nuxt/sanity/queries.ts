@@ -1,7 +1,11 @@
 import { defineQuery } from "groq";
 
 export const homepageQuery = defineQuery(`*[_type == "homepage"][0] {
-	...
+	...,
+	landingImage{
+	...,
+	asset->,
+	}
 	}`);
 
 // export const pageQuery = defineQuery(/* groq */ `

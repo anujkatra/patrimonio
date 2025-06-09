@@ -560,7 +560,7 @@ export type AllSanitySchemaTypes = FeaturedSection | Robots | Twitter | Opengrap
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "homepage"][0] {	...	}
+// Query: *[_type == "homepage"][0] {	...,	landingImage{	...,	asset->,	}	}
 export type HomepageQueryResult = {
   _id: string;
   _type: "homepage";
@@ -574,12 +574,28 @@ export type HomepageQueryResult = {
     ctaLink?: string;
   };
   landingImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -610,6 +626,6 @@ export type HomepageQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"homepage\"][0] {\n\t...\n\t}": HomepageQueryResult;
+    "*[_type == \"homepage\"][0] {\n\t...,\n\tlandingImage{\n\t...,\n\tasset->,\n\t}\n\t}": HomepageQueryResult;
   }
 }
