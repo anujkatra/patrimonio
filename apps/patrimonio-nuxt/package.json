@@ -12,6 +12,7 @@
     "typegen": "sanity typegen generate"
   },
   "dependencies": {
+    "@nuxt/image": "1.10.0",
     "@nuxtjs/sanity": "1.13.3",
     "@sanity/client": "^7.4.1",
     "@tailwindcss/vite": "^4.1.8",
