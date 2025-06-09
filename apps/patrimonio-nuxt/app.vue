@@ -12,6 +12,8 @@ useSiteMetadata({
 </script>
 
 <template>
- <p class="text-center">test</p>
+ <p class="text-center">{{homepageData?.title}}</p>
+ <p class="text-center">{{homepageData?.landingText}}</p>
+ <NuxtImg provider="sanity" :src="`${homepageData?.landingImage.asset?._id}`" :alt="`${homepageData?.landingImage.alt}`" sizes="md:400px" class="mx-auto" />
 </template>
 
