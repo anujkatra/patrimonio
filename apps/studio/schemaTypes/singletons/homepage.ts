@@ -36,9 +36,6 @@ export const homepage: DocumentDefinition = withSeo({
               if (typeof name === 'undefined') {
                 return true // Allow undefined values
               }
-
-              // This would crash if we didn't check
-              // for undefined values first
               return (context.document?.landingCta as any).ctaLink === undefined
                 ? 'Please add CTA Link'
                 : true
