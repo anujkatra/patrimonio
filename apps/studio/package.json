@@ -7,9 +7,10 @@
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
-    "build": "sanity build",
+    "build": "yarn extract-types && sanity build",
     "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "deploy-graphql": "sanity graphql deploy",
+    "extract-types": "sanity schema extract --enforce-required-fields"
   },
   "keywords": [
     "sanity"
