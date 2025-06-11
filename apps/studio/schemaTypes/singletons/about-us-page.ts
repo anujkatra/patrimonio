@@ -7,6 +7,11 @@ export const aboutUs: DocumentDefinition = withSeo({
   title: 'About Us Page',
   type: 'document',
   icon: DocumentIcon,
+  preview: {
+    prepare: () => ({
+      title: 'About Us Page',
+    }),
+  },
   fields: [
     defineField({
       name: 'title',

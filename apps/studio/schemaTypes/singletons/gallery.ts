@@ -7,6 +7,11 @@ export const gallery: DocumentDefinition = withSeo({
   title: 'Gallery Page',
   type: 'document',
   icon: DocumentIcon,
+  preview: {
+    prepare: () => ({
+      title: 'Gallery Page',
+    }),
+  },
   fields: [
     defineField({
       name: 'title',

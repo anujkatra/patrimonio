@@ -7,6 +7,11 @@ export const artists: DocumentDefinition = withSeo({
   title: 'Artists Page',
   type: 'document',
   icon: DocumentIcon,
+  preview: {
+    prepare: () => ({
+      title: 'Artists Page',
+    }),
+  },
   fields: [
     defineField({
       name: 'title',

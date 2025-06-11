@@ -8,6 +8,11 @@ export const homepage: DocumentDefinition = withSeo({
   type: 'document',
   description: 'Content for the Home Page of the Website',
   icon: DocumentIcon,
+  preview: {
+    prepare: () => ({
+      title: 'Home Page',
+    }),
+  },
   fields: [
     defineField({
       name: 'title',
@@ -112,9 +117,4 @@ export const homepage: DocumentDefinition = withSeo({
       ],
     }),
   ],
-  preview: {
-    select: {
-      title: 'Homepage',
-    },
-  },
 })
