@@ -7,6 +7,11 @@ export const auctions: DocumentDefinition = withSeo({
   title: 'Auctions Page',
   type: 'document',
   icon: DocumentIcon,
+  preview: {
+    prepare: () => ({
+      title: 'Auctions Page',
+    }),
+  },
   fields: [
     defineField({
       name: 'title',
