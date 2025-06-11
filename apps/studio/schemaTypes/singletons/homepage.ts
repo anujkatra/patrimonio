@@ -1,4 +1,4 @@
-import {defineArrayMember, defineField, DocumentDefinition} from 'sanity'
+import {defineField, DocumentDefinition} from 'sanity'
 import {DocumentIcon} from '@sanity/icons'
 import {withSeo} from '../../helpers/document'
 
