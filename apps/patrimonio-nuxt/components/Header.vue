@@ -22,6 +22,9 @@
             <li>
               <NuxtLink to="/about-us" class="hover:underline">About Us</NuxtLink>
             </li>
+            <li>
+              <NuxtLink to="/" class="hover:underline">Events</NuxtLink>
+            </li>
           </ul>
         </nav>
      </header>
