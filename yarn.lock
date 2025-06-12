@@ -14269,6 +14269,7 @@ __metadata:
     eslint: "npm:^9.0.0"
     groq: "npm:^3.91.0"
     nuxt: "npm:^3.17.5"
+    prettier: "npm:3.5.3"
     sanity: "npm:^3.91.0"
     tailwindcss: "npm:^4.1.8"
     typescript: "npm:^5.8.3"
@@ -14895,7 +14896,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.0.2, prettier@npm:^3.3.0":
+"prettier@npm:3.5.3, prettier@npm:^3.0.2, prettier@npm:^3.3.0":
   version: 3.5.3
   resolution: "prettier@npm:3.5.3"
   bin:
