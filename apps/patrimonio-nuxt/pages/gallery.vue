@@ -1,3 +1,3 @@
 <template>
- <p class="text-center">Gallery Page</p>
+  <p class="text-center">Gallery Page</p>
 </template>

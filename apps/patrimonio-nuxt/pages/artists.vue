@@ -1,3 +1,3 @@
 <template>
- <p class="text-center">Artists Page</p>
+  <p class="text-center">Artists Page</p>
 </template>
