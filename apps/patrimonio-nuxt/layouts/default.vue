@@ -1,10 +1,9 @@
 <template>
   <div class="bg-white text-black">
     <section class="min-h-screen pt-24">
-      <Header />
+      <GlobalHeader />
       <main class=""><slot /></main>
-      <Footer />
+      <GlobalFooter />
     </section>
   </div>
-  <Toast />
 </template>
