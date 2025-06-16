@@ -1,10 +1,10 @@
 type SiteMetadata = {
-  title?: string;
-  description?: string;
-  ogImage?: string;
-};
+  title?: string
+  description?: string
+  ogImage?: string
+}
 
-export function useSiteMetadata({ title, description, ogImage }: SiteMetadata) {
+export function useSiteMetadata({title, description, ogImage}: SiteMetadata) {
   useSeoMeta({
     title,
     description,
@@ -12,20 +12,20 @@ export function useSiteMetadata({ title, description, ogImage }: SiteMetadata) {
     ogDescription: description,
     twitterTitle: title,
     twitterDescription: description,
-    twitterCard: "summary",
+    twitterCard: 'summary',
     ogImage,
-  });
+  })
 
   useHead({
     htmlAttrs: {
-      lang: "en",
+      lang: 'en',
     },
     link: [
       {
-        rel: "icon",
-        type: "image/png",
-        href: "/favicon.ico",
+        rel: 'icon',
+        type: 'image/png',
+        href: '/favicon.ico',
       },
     ],
-  });
+  })
 }
