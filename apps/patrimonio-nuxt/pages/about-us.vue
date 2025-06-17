@@ -12,7 +12,7 @@ useSiteMetadata({
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 items-start px-6">
+  <div class="flex flex-col gap-2 items-start px-6 py-10">
     <p class="text-center">{{ pageData?.title }}</p>
     <div v-if="pageData?.pictures" class="flex flex-col md:flex-row gap-2">
       <NuxtImg
@@ -25,5 +25,6 @@ useSiteMetadata({
         class="mx-auto aspect-square"
       />
     </div>
+    <SanityContent v-if="pageData?.content" :blocks="pageData.content" />
   </div>
 </template>
