@@ -592,7 +592,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "homepage"][0] {	...,	landingImage{	...,	asset->,	}	}
+// Query: *[_type == "homepage"][0] {	...,	landingImage{  ...,  ...asset-> {    caption,    ...metadata {      lqip, // the lqip can be used for blurHashUrl or other low-quality placeholders      ...dimensions {        width,        height      }    }  }}	}
 export type HomepageQueryResult = {
   _id: string
   _type: 'homepage'
@@ -605,35 +605,66 @@ export type HomepageQueryResult = {
     ctaText?: string
     ctaLink?: string
   }
-  landingImage: {
-    asset: {
-      _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
-    } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt: string
-    _type: 'image'
-  }
+  landingImage:
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt: string
+        _type: 'image'
+        caption: null
+        lqip: string | null
+        width: number | null
+        height: number | null
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt: string
+        _type: 'image'
+        caption: null
+        lqip: string | null
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt: string
+        _type: 'image'
+        caption: null
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt: string
+        _type: 'image'
+      }
   featuredSection?: Array<
     {
       _key: string
@@ -655,11 +686,106 @@ export type HomepageQueryResult = {
   }>
   seo?: Seo
 } | null
+// Variable: aboutUsPageQuery
+// Query: *[_type == "aboutUs"][0] {	...,	pictures[]{  ...,	...asset-> {		caption,		...metadata {			lqip, // the lqip can be used for blurHashUrl or other low-quality placeholders			...dimensions {				width,				height				}				}				},				}	}
+export type AboutUsPageQueryResult = {
+  _id: string
+  _type: 'aboutUs'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  pictures: Array<
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+        caption: null
+        lqip: string | null
+        width: number | null
+        height: number | null
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+        caption: null
+        lqip: string | null
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+        caption: null
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        _key: string
+      }
+  > | null
+  seo?: Seo
+} | null
 
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "homepage"][0] {\n\t...,\n\tlandingImage{\n\t...,\n\tasset->,\n\t}\n\t}': HomepageQueryResult
+    '*[_type == "homepage"][0] {\n\t...,\n\tlandingImage{\n  ...,\n  ...asset-> {\n    caption,\n    ...metadata {\n      lqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n      ...dimensions {\n        width,\n        height\n      }\n    }\n  }\n}\n\t}': HomepageQueryResult
+    '*[_type == "aboutUs"][0] {\n\t...,\n\tpictures[]{\n  ...,\n\t...asset-> {\n\t\tcaption,\n\t\t...metadata {\n\t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n\t\t\t...dimensions {\n\t\t\t\twidth,\n\t\t\t\theight\n\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t}\n\t}\n\t': AboutUsPageQueryResult
   }
 }
