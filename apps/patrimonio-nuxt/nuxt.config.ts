@@ -27,6 +27,6 @@ export default defineNuxtConfig({
     },
   },
   fonts: {
-    provider: 'fontshare',
+    priority: ['fontshare'],
   },
 })
