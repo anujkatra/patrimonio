@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   css: ['~/assets/css/main.css'],
   devtools: {enabled: true},
-  modules: ['@nuxtjs/sanity', '@nuxt/image', '@nuxt/eslint', '@nuxt/fonts', 'nuxt-svgo'],
+  modules: ['@nuxtjs/sanity', '@nuxt/image', '@nuxt/eslint', '@nuxt/fonts'],
   sanity: {
     projectId: process.env.NUXT_SANITY_PROJECT_ID,
     dataset: process.env.NUXT_SANITY_DATASET,
