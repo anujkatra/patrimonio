@@ -1,1 +1,9 @@
 @import 'tailwindcss';
+
+@theme {
+  --font-cabinet: 'Cabinet Grotesk', 'sans';
+  --font-satoshi: 'Satoshi', 'sans';
+
+  --color-patrimonio-blue: #81b2db;
+  --color-patrimonio-red: #d6332e;
+}
