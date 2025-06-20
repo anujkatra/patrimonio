@@ -1,4 +1,5 @@
-export type Robots = {
+export interface Robots {
+  _type?: 'robots'
   noindex?: boolean
   nofollow?: boolean
   noarchive?: boolean

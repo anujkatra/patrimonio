@@ -3,13 +3,16 @@ import {homepageQuery} from '~/sanity/queries'
 import type {HomepageQueryResult} from '~/sanity/types'
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
-// console.log('test', homepageData.value?.seo?.robots)
+const {_type, ...seoRobots} = homepageData.value?.seo?.robots
+  ? homepageData.value.seo.robots
+  : {noindex: false, nofollow: false, _type: 'robots'}
+console.log('seo robots', seoRobots)
 
 useSiteMetadata({
   title: homepageData?.value?.seo?.title ?? 'title',
   description: homepageData?.value?.seo?.description ?? 'description',
   ogImage: '',
-  robots: homepageData.value?.seo?.robots ?? {noindex: false, nofollow: false},
+  robots: seoRobots ?? {noindex: false, nofollow: false},
 })
 </script>
 
