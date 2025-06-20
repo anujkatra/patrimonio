@@ -17,6 +17,7 @@
     "@nuxt/eslint": "1.4.1",
     "@nuxt/image": "1.10.0",
     "@nuxtjs/sanity": "1.13.3",
+    "@nuxtjs/sitemap": "7.4.1",
     "@sanity/client": "^7.4.1",
     "@tailwindcss/vite": "^4.1.8",
     "eslint": "^9.0.0",

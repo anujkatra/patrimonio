@@ -2,10 +2,14 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
+  site: {
+    url: 'https://patrimonio.com',
+    name: 'Patrimonio',
+  },
   compatibilityDate: '2025-05-15',
   css: ['~/assets/css/main.css'],
   devtools: {enabled: true},
-  modules: ['@nuxtjs/sanity', '@nuxt/image', '@nuxt/eslint'],
+  modules: ['@nuxtjs/sanity', '@nuxt/image', '@nuxt/eslint', '@nuxtjs/sitemap'],
   sanity: {
     projectId: process.env.NUXT_SANITY_PROJECT_ID,
     dataset: process.env.NUXT_SANITY_DATASET,
