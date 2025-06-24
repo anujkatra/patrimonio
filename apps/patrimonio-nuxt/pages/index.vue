@@ -6,7 +6,6 @@ const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQ
 const {_type, ...seoRobots} = homepageData.value?.seo?.robots
   ? homepageData.value.seo.robots
   : {noindex: false, nofollow: false, _type: 'robots'}
-console.log('seo robots', seoRobots)
 
 useSiteMetadata({
   title: homepageData?.value?.seo?.title ?? 'title',
