@@ -25,12 +25,13 @@ export function useSiteMetadata({title, description, ogImage, robots}: SiteMetad
   useSeoMeta({
     title,
     description,
+    ogImage,
     ogTitle: title,
     ogDescription: description,
     twitterTitle: title,
     twitterDescription: description,
+    twitterImage: ogImage,
     twitterCard: 'summary',
-    ogImage,
     robots: robots,
   })
 

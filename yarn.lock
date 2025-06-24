@@ -4336,7 +4336,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/image-url@npm:^1.0.2":
+"@sanity/image-url@npm:^1.0.2, @sanity/image-url@npm:^1.1.0":
   version: 1.1.0
   resolution: "@sanity/image-url@npm:1.1.0"
   checksum: 10c0/ae7bf95e79871f1d4673d74eab96e107bb60068878b80f0891b67708bd4683e525b8dfb5c97afdf6f0427529f1001acb2cb22b1d409315cce4a079d49f65e687
@@ -14338,6 +14338,7 @@ __metadata:
     "@nuxtjs/sanity": "npm:1.13.3"
     "@nuxtjs/sitemap": "npm:7.4.1"
     "@sanity/client": "npm:^7.4.1"
+    "@sanity/image-url": "npm:^1.1.0"
     "@tailwindcss/vite": "npm:^4.1.8"
     eslint: "npm:^9.0.0"
     groq: "npm:^3.91.0"

@@ -6,11 +6,11 @@ const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQ
 const {_type, ...seoRobots} = homepageData.value?.seo?.robots
   ? homepageData.value.seo.robots
   : {noindex: false, nofollow: false, _type: 'robots'}
-
+const {$urlFor} = useNuxtApp()
 useSiteMetadata({
   title: homepageData?.value?.seo?.title ?? 'title',
   description: homepageData?.value?.seo?.description ?? 'description',
-  ogImage: '',
+  ogImage: $urlFor(`${homepageData?.value?.seo?.image?.asset?._ref}`).url(),
   robots: seoRobots ?? {noindex: false, nofollow: false},
 })
 </script>
