@@ -2,8 +2,10 @@
 import {homepageQuery} from '~/sanity/queries'
 import type {HomepageQueryResult} from '~/sanity/types'
 import Arrow from '~/assets/svg/arrow.svg'
+import {cn} from '@/utils/cn'
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
+const isActive = true
 
 useSiteMetadata({
   title: homepageData?.value?.seo?.title ?? 'title',
@@ -16,7 +18,10 @@ useSiteMetadata({
   <div>
     <p class="text-center">{{ homepageData?.title }}</p>
     <p class="text-center">{{ homepageData?.landingText }}</p>
-    <Arrow class="mx-auto w-[50px] text-red-500" :font-controlled="false" />
+    <Arrow
+      :class="cn('size-10 text-amber-300', isActive && 'bg-blue-600 mx-auto')"
+      :font-controlled="false"
+    />
     <NuxtImg
       provider="sanity"
       :src="`${homepageData?.landingImage.asset?._id}`"
