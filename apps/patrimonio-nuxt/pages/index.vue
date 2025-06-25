@@ -15,7 +15,7 @@ useSiteMetadata({
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col gap-8 justify-center">
     <p class="text-center">{{ homepageData?.title }}</p>
     <p class="text-center">{{ homepageData?.landingText }}</p>
     <Arrow
@@ -29,5 +29,12 @@ useSiteMetadata({
       sizes="md:400px"
       class="mx-auto"
     />
+    <div class="mx-auto flex gap-4">
+      <BaseButton variant="primary">Primary</BaseButton>
+      <BaseButton type="link" href="/artists"
+        >Internal Link <Arrow class="size-5 ml-1" :font-controlled="false"
+      /></BaseButton>
+      <BaseButton type="link" href="https://nuxt.com">External Link</BaseButton>
+    </div>
   </div>
 </template>
