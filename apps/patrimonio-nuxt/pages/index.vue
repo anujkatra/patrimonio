@@ -13,10 +13,9 @@ useSiteMetadata({
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col gap-8 justify-center">
     <p class="text-center">{{ homepageData?.title }}</p>
     <p class="text-center">{{ homepageData?.landingText }}</p>
-    <Arrow class="mx-auto w-[50px] text-red-500" :font-controlled="false" />
     <NuxtImg
       provider="sanity"
       :src="`${homepageData?.landingImage.asset?._id}`"
@@ -24,5 +23,12 @@ useSiteMetadata({
       sizes="md:400px"
       class="mx-auto"
     />
+    <div class="mx-auto flex gap-4">
+      <BaseLink variant="primary" to="/about-us" />
+      <BaseLink variant="secondary" icon to="/about-us">
+        <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
+        Test
+      </BaseLink>
+    </div>
   </div>
 </template>
