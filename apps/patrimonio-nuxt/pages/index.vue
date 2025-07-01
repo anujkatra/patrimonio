@@ -24,8 +24,7 @@ useSiteMetadata({
       class="mx-auto"
     />
     <div class="mx-auto flex gap-4">
-      <BaseLink variant="primary" to="https://google.com" target="_blank" />
-      <BaseLink variant="noOutline" to="https://google.com" target="_blank" />
+      <BaseLink variant="primary" to="/about-us" />
       <BaseLink variant="secondary" icon to="/about-us">
         <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
         Test
