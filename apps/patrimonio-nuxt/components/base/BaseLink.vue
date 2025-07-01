@@ -6,6 +6,7 @@ import {cva, type VariantProps} from 'class-variance-authority'
 const props = defineProps<{
   variant?: VariantProps<typeof inputVariants>['variant']
   icon?: boolean
+  class?: string
 }>()
 
 const inputVariants = cva(
@@ -37,6 +38,7 @@ const linkClasses = computed(() =>
       variant: props.variant,
       icon: props.icon,
     }),
+    props.class,
   ),
 )
 </script>
