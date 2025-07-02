@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {homepageQuery} from '~/sanity/queries'
 import type {HomepageQueryResult} from '~/sanity/types'
-import Arrow from '~/assets/svg/arrow.svg'
+// import Arrow from '~/assets/svg/arrow.svg'
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
 
@@ -23,12 +23,12 @@ useSiteMetadata({
       sizes="md:400px"
       class="mx-auto"
     />
-    <div class="mx-auto flex flex-col gap-4">
+    <!-- <div class="mx-auto flex flex-col gap-4">
       <BaseLink variant="primary" to="/about-us" />
       <BaseLink variant="secondary" icon to="/about-us">
         <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
         Test
       </BaseLink>
-    </div>
+    </div> -->
   </div>
 </template>
