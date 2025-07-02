@@ -3,7 +3,7 @@
     <section class="min-h-screen pt-24">
       <GlobalHeader />
       <main class=""><slot /></main>
-      <GlobalFooter />
+      <BaseFooter />
     </section>
   </div>
 </template>
