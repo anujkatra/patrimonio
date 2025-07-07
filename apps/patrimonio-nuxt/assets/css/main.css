@@ -2,6 +2,8 @@
 
 @theme {
   --breakpoint-sm: 36rem; /* 576px */
+  --breakpoint-lg: 62rem; /* 992px */
+  --breakpoint-xl: 75rem; /* 1200px */
 
   --font-cabinet: 'Cabinet Grotesk', 'sans';
   --font-satoshi: 'Satoshi', 'sans';
