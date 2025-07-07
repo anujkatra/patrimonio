@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="bg-patrimonio-beige border-[#202020] w-full border-t-[0.5px] flex flex-col gap-[50px] pt-[50px] px-5 pb-[30px]"
+    class="bg-patrimonio-beige border-[#202020] w-full border-t-[0.5px] flex flex-col gap-[50px] pt-[50px] px-5 pb-[30px] sm:pt-[70px] sm:px-10 sm:gap-[65px]"
   >
     <div class="flex flex-col gap-[50px] sm:flex-row sm:justify-between">
       <NuxtLink to="/" class="w-full sm:max-w-[341px]">
