@@ -1,9 +1,15 @@
 @import 'tailwindcss';
 
 @theme {
+  --breakpoint-sm: 36rem; /* 576px */
+  --breakpoint-lg: 62rem; /* 992px */
+  --breakpoint-xl: 75rem; /* 1200px */
+  --breakpoint-2xl: 90rem; /* 1440px */
+
   --font-cabinet: 'Cabinet Grotesk', 'sans';
   --font-satoshi: 'Satoshi', 'sans';
 
   --color-patrimonio-blue: #81b2db;
   --color-patrimonio-red: #d6332e;
+  --color-patrimonio-beige: #fcfbf7;
 }
