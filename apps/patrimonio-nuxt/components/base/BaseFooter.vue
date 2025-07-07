@@ -6,7 +6,7 @@
       <NuxtLink to="/" class="w-full sm:max-w-[341px]">
         <NuxtImg src="/logo.jpg" alt="Website Logo" class="w-full" />
       </NuxtLink>
-      <div class="flex flex-col gap-[30px]">
+      <div class="flex flex-col gap-[30px] lg:flex-row lg:gap-[133px]">
         <div class="flex flex-col gap-[5px]">
           <p class="text-xs leading-none">Phone</p>
           <NuxtLink
