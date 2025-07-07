@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
+  --breakpoint-sm: 36rem; /* 576px */
+
   --font-cabinet: 'Cabinet Grotesk', 'sans';
   --font-satoshi: 'Satoshi', 'sans';
 
