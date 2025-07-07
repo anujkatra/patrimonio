@@ -1,3 +1,13 @@
+<script setup lang="ts">
+const footerContent = {
+  phone: ['+91-98210-17338', '+91-97691-59827'],
+  email: [
+    'sanghvipremal@gmail.com',
+    'premal@patrimoniogallery.com',
+    'distipremalsanghvi@gmail.com',
+  ],
+}
+</script>
 <template>
   <footer
     class="bg-patrimonio-beige border-[#202020] w-full border-t-[0.5px] flex flex-col gap-[50px] pt-[50px] px-5 pb-[30px] sm:pt-[70px] sm:px-10 sm:gap-[65px] 2xl:px-[70px]"
@@ -10,37 +20,23 @@
         <div class="flex flex-col gap-[5px]">
           <p class="text-xs leading-none">Phone</p>
           <NuxtLink
-            to="tel:+91-98210-17338"
+            v-for="(phone, index) in footerContent.phone"
+            :key="index"
+            :to="`tel:${phone}`"
             class="text-base leading-none font-medium hover:underline"
           >
-            +91-98210-17338
-          </NuxtLink>
-          <NuxtLink
-            to="tel:+91-97691-59827"
-            class="text-base leading-none font-medium hover:underline"
-          >
-            +91-97691-59827
+            {{ phone }}
           </NuxtLink>
         </div>
         <div class="flex flex-col gap-[5px]">
           <p class="text-xs leading-none">Email</p>
           <NuxtLink
-            to="mailto:sanghvipremal@gmail.com"
+            v-for="(email, index) in footerContent.email"
+            :key="index"
+            :to="`mailto:${email}`"
             class="text-base leading-none font-medium hover:underline"
           >
-            sanghvipremal@gmail.com
-          </NuxtLink>
-          <NuxtLink
-            to="mailto:premal@patrimoniogallery.com"
-            class="text-base leading-none font-medium hover:underline"
-          >
-            premal@patrimoniogallery.com
-          </NuxtLink>
-          <NuxtLink
-            to="mailto:distipremalsanghvi@gmail.com"
-            class="text-base leading-none font-medium hover:underline"
-          >
-            distipremalsanghvi@gmail.com
+            {{ email }}
           </NuxtLink>
         </div>
       </div>
