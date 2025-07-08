@@ -1,6 +1,26 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 
+type HeaderContentProps = {
+  link: string
+  href: string
+}
+
+const headerContent: HeaderContentProps[] = [
+  {
+    link: 'Artists',
+    href: '/artists',
+  },
+  {
+    link: 'Gallery',
+    href: '/gallery',
+  },
+  {
+    link: 'About Us',
+    href: '/about-us',
+  },
+]
+
 const isMobileMenuOpen = ref(false)
 
 function closeMenu() {
@@ -18,14 +38,8 @@ function closeMenu() {
         role="list"
         class="hidden md:flex items-center gap-8 leading-5 text-base tracking-tight font-normal"
       >
-        <li>
-          <NuxtLink to="/artists" class="hover:underline">Artists</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/gallery" class="hover:underline">Gallery</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/about-us" class="hover:underline">About Us</NuxtLink>
+        <li v-for="(header, index) in headerContent" :key="index">
+          <NuxtLink :to="header.href" class="hover:underline">{{ header.link }}</NuxtLink>
         </li>
       </ul>
       <!-- Mobile Toggle -->
@@ -63,14 +77,8 @@ function closeMenu() {
       leave-active-class="transition duration-300 ease-in-out"
     >
       <ul v-if="isMobileMenuOpen" class="md:hidden bg-white text-center px-4">
-        <li>
-          <NuxtLink to="/artists" @click="closeMenu">Artists</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/gallery" @click="closeMenu">Gallery</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/about-us" @click="closeMenu">About Us</NuxtLink>
+        <li v-for="(header, index) in headerContent" :key="index">
+          <NuxtLink :to="header.href" @click="closeMenu">{{ header.link }}</NuxtLink>
         </li>
       </ul>
     </Transition>
