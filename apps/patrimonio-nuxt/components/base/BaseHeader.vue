@@ -20,19 +20,19 @@ const headerContent: HeaderContentProps[] = [
     href: '/events',
   },
   {
-    link: 'About Us',
+    link: 'Our Story',
     href: '/about-us',
   },
   {
-    link: 'About Us',
+    link: 'Blog',
     href: '/about-us',
   },
   {
-    link: 'About Us',
+    link: 'Press & Media',
     href: '/about-us',
   },
   {
-    link: 'About Us',
+    link: 'Contact Us',
     href: '/about-us',
   },
 ]
@@ -60,14 +60,16 @@ onBeforeUnmount(() => {
 
 <template>
   <header class="sticky z-50 top-0 bg-white/80">
-    <nav class="w-full relative backdrop-blur-lg z-50 bg-white/80">
-      <div class="flex justify-between p-6 h-24 border-[#202020] border-b-[0.5px]">
+    <nav
+      :class="`w-full relative backdrop-blur-lg z-50 bg-white/80 ${isMobileMenuOpen ? `h-screen` : ``}`"
+    >
+      <div class="flex justify-between px-5 pb-5 pt-[50px] border-[#202020] border-b-[0.5px]">
         <NuxtLink class="flex items-center gap-2" to="/">
-          <NuxtImg src="/logo.jpg" />
+          <NuxtImg src="/logo.jpg" class="w-full max-w-[170px] h-8" @click="closeMenu" />
         </NuxtLink>
         <ul
           role="list"
-          class="hidden md:flex items-center gap-8 leading-5 text-base tracking-tight font-normal"
+          class="hidden lg:flex items-center gap-8 leading-5 text-base tracking-tight font-normal"
         >
           <li v-for="(header, index) in headerContent" :key="index">
             <NuxtLink :to="header.href" class="hover:underline">{{ header.link }}</NuxtLink>
@@ -75,7 +77,7 @@ onBeforeUnmount(() => {
         </ul>
         <!-- Mobile Toggle -->
         <button
-          class="md:hidden focus:outline-none"
+          class="lg:hidden focus:outline-none hover:cursor-pointer"
           aria-label="Toggle menu"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
         >
@@ -109,12 +111,12 @@ onBeforeUnmount(() => {
       >
         <ul
           v-if="isMobileMenuOpen"
-          class="md:hidden fixed top-24 z-50 overflow-hidden bg-white h-[calc(100vh-96px)] text-center w-full px-4"
+          class="lg:hidden overflow-y-auto bg-white text-center w-full px-4"
         >
           <li
             v-for="(header, index) in headerContent"
             :key="index"
-            class="border-[#202020] border-b-[0.5px]"
+            class="border-[#202020] border-b-[0.5px] text-xl leading-none"
           >
             <NuxtLink
               :to="header.href"
