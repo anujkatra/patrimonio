@@ -61,8 +61,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="sticky z-50 top-0 bg-white/80">
-    <nav :class="`w-full relative z-50 bg-white/80 ${isMobileMenuOpen ? `h-screen` : ``}`">
+  <header class="sticky z-50 top-0 bg-white">
+    <nav :class="`w-full relative z-50 bg-white ${isMobileMenuOpen ? `h-screen` : ``}`">
       <div
         class="flex justify-between px-5 pb-5 pt-[50px] border-[#202020] border-b-[0.5px] xl:px-[70px] xl:h-[70px] xl:py-5 xl:gap-10"
       >
