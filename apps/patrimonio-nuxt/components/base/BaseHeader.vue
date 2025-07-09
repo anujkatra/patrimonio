@@ -61,7 +61,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="sticky z-50 top-0 bg-white">
+  <header class="sticky z-50 top-0 bg-white font-satoshi text-[#202020]">
     <nav :class="`w-full relative overflow-y-auto ${isMobileMenuOpen ? `min-h-screen` : ``}`">
       <div
         class="flex justify-between px-5 pb-5 pt-[50px] border-[#202020] border-b-[0.5px] xl:px-[70px] xl:h-[70px] xl:py-5 xl:gap-10"
@@ -75,7 +75,7 @@ onBeforeUnmount(() => {
         </NuxtLink>
         <ul
           role="list"
-          class="hidden lg:flex items-center gap-8 leading-5 text-base tracking-tight font-normal"
+          class="hidden lg:flex items-center gap-8 leading-none text-base tracking-tight font-normal"
         >
           <li v-for="(header, index) in headerContent" :key="index">
             <NuxtLink :to="header.href" class="hover:underline">{{ header.link }}</NuxtLink>
