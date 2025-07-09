@@ -19,7 +19,7 @@ const headerContent: HeaderContentProps[] = [
   },
   {
     link: 'Events',
-    href: '/events',
+    href: '/artists',
   },
   {
     link: 'Our Story',
@@ -62,7 +62,7 @@ onBeforeUnmount(() => {
 
 <template>
   <header class="sticky z-50 top-0 bg-white">
-    <nav :class="`w-full relative z-50 bg-white ${isMobileMenuOpen ? `h-screen` : ``}`">
+    <nav :class="`w-full relative overflow-y-auto ${isMobileMenuOpen ? `min-h-screen` : ``}`">
       <div
         class="flex justify-between px-5 pb-5 pt-[50px] border-[#202020] border-b-[0.5px] xl:px-[70px] xl:h-[70px] xl:py-5 xl:gap-10"
       >
@@ -86,7 +86,8 @@ onBeforeUnmount(() => {
         </ul>
         <!-- Mobile Toggle -->
         <div class="lg:hidden flex gap-[15px]">
-          <NuxtImg src="/whatsapp.png" class="w-full h-[35px]" />
+          <NuxtImg src="/whatsapp-mobile.png" class="sm:hidden size-6 self-center" />
+          <NuxtImg src="/whatsapp.png" class="hidden sm:block w-full h-[35px]" />
           <button
             class="focus:outline-none hover:cursor-pointer"
             aria-label="Toggle menu"
@@ -103,10 +104,7 @@ onBeforeUnmount(() => {
         leave-to-class="opacity-0"
         leave-active-class="transition duration-150 ease-in-out"
       >
-        <ul
-          v-if="isMobileMenuOpen"
-          class="lg:hidden absolute overflow-y-auto bg-white text-center w-full px-4"
-        >
+        <ul v-if="isMobileMenuOpen" class="lg:hidden absolute bg-white text-center w-full px-4">
           <li
             v-for="(header, index) in headerContent"
             :key="index"
