@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white text-black font-satoshi">
+  <div>
     <BaseHeader />
-    <main class="py-24"><slot /></main>
+    <main><slot /></main>
     <BaseFooter />
   </div>
 </template>
