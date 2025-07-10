@@ -75,7 +75,7 @@ onBeforeUnmount(() => {
         </NuxtLink>
         <ul
           role="list"
-          class="hidden lg:flex items-center gap-8 leading-none text-base tracking-tight font-normal"
+          class="hidden lg:flex items-center gap-8 leading-none text-base 2xl:gap-10 font-normal"
         >
           <li v-for="(header, index) in headerContent" :key="index">
             <NuxtLink :to="header.href" class="hover:underline">{{ header.link }}</NuxtLink>
