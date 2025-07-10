@@ -1,7 +1,7 @@
 <template>
   <div>
     <BaseHeader />
-    <main class="py-[50px]"><slot /></main>
+    <slot />
     <BaseFooter />
   </div>
 </template>
