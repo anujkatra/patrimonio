@@ -61,35 +61,35 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="sticky z-50 top-0 bg-white font-satoshi text-[#202020]">
-    <nav :class="`w-full relative overflow-y-auto ${isMobileMenuOpen ? `min-h-screen` : ``}`">
+  <header class="font-satoshi sticky top-0 z-50 bg-white text-[#202020]">
+    <nav :class="`relative w-full overflow-y-auto ${isMobileMenuOpen ? `min-h-screen` : ``}`">
       <div
-        class="flex justify-between px-5 pb-5 pt-[50px] border-[#202020] border-b-[0.5px] xl:px-[70px] xl:h-[70px] xl:py-5 xl:gap-10"
+        class="flex justify-between border-b-[0.5px] border-[#202020] px-5 pt-[50px] pb-5 xl:h-[70px] xl:gap-10 xl:px-[70px] xl:py-5"
       >
         <NuxtLink class="flex items-center gap-2" to="/">
           <NuxtImg
             src="/logo.jpg"
-            class="w-full max-w-[170px] md:max-w-[191px] md:h-[35px] h-8"
+            class="h-8 w-full max-w-[170px] md:h-[35px] md:max-w-[191px]"
             @click="closeMenu"
           />
         </NuxtLink>
         <ul
           role="list"
-          class="hidden lg:flex items-center gap-8 leading-none text-base 2xl:gap-10 font-normal"
+          class="hidden items-center gap-8 text-base leading-none font-normal lg:flex 2xl:gap-10"
         >
           <li v-for="(header, index) in headerContent" :key="index">
             <NuxtLink :to="header.href" class="hover:underline">{{ header.link }}</NuxtLink>
           </li>
           <li>
-            <NuxtImg src="/whatsapp.png" class="w-full h-[35px]" />
+            <NuxtImg src="/whatsapp.png" class="h-[35px] w-full" />
           </li>
         </ul>
         <!-- Mobile Toggle -->
-        <div class="lg:hidden flex gap-[15px]">
-          <NuxtImg src="/whatsapp-mobile.png" class="sm:hidden size-6 self-center" />
-          <NuxtImg src="/whatsapp.png" class="hidden sm:block w-full h-[35px]" />
+        <div class="flex gap-[15px] lg:hidden">
+          <NuxtImg src="/whatsapp-mobile.png" class="size-6 self-center sm:hidden" />
+          <NuxtImg src="/whatsapp.png" class="hidden h-[35px] w-full sm:block" />
           <button
-            class="focus:outline-none hover:cursor-pointer"
+            class="hover:cursor-pointer focus:outline-none"
             aria-label="Toggle menu"
             @click="isMobileMenuOpen = !isMobileMenuOpen"
           >
@@ -104,15 +104,15 @@ onBeforeUnmount(() => {
         leave-to-class="opacity-0"
         leave-active-class="transition duration-150 ease-in-out"
       >
-        <ul v-if="isMobileMenuOpen" class="lg:hidden absolute bg-white text-center w-full px-4">
+        <ul v-if="isMobileMenuOpen" class="absolute w-full bg-white px-4 text-center lg:hidden">
           <li
             v-for="(header, index) in headerContent"
             :key="index"
-            class="border-[#202020] border-b-[0.5px] text-xl leading-none"
+            class="border-b-[0.5px] border-[#202020] text-xl leading-none"
           >
             <NuxtLink
               :to="header.href"
-              class="py-[30px] w-full h-full inline-block"
+              class="inline-block h-full w-full py-[30px]"
               @click="closeMenu"
               >{{ header.link }}</NuxtLink
             >
