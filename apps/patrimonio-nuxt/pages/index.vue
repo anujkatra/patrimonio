@@ -13,7 +13,7 @@ useSiteMetadata({
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 justify-center">
+  <div class="flex flex-col justify-center gap-8">
     <p class="text-center">{{ homepageData?.title }}</p>
     <p class="text-center">{{ homepageData?.landingText }}</p>
     <NuxtImg
