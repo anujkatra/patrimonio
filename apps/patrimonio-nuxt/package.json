@@ -12,8 +12,8 @@
     "typegen": "sanity typegen generate",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prettier":"prettier . --check",
-    "prettier:fix":"prettier . --write"
+    "prettier": "prettier . --check",
+    "prettier:fix": "prettier . --write"
   },
   "dependencies": {
     "@nuxt/eslint": "1.4.1",
@@ -28,7 +28,6 @@
     "groq": "^3.91.0",
     "nuxt": "^3.17.5",
     "nuxt-svgo": "4.2.2",
-    "prettier-plugin-tailwindcss": "^0.6.14",
     "sanity": "^3.91.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.8",
@@ -37,6 +36,7 @@
   },
   "devDependencies": {
     "prettier": "3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "^5.8.3"
   }
 }
