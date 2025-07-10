@@ -10,7 +10,7 @@ const footerContent = {
 </script>
 <template>
   <footer
-    class="bg-patrimonio-beige border-[#202020] font-satoshi text-[#202020] w-full border-t-[0.5px] flex flex-col gap-[50px] pt-[50px] px-5 pb-[30px] sm:pt-[70px] sm:px-10 sm:gap-[65px] 2xl:px-[70px]"
+    class="bg-patrimonio-beige font-satoshi flex w-full flex-col gap-[50px] border-t-[0.5px] border-[#202020] px-5 pt-[50px] pb-[30px] text-[#202020] sm:gap-[65px] sm:px-10 sm:pt-[70px] 2xl:px-[70px]"
   >
     <div class="flex flex-col gap-[50px] sm:flex-row sm:justify-between">
       <NuxtLink to="/" class="w-full sm:max-w-[341px] 2xl:max-w-[523px]">
@@ -23,7 +23,7 @@ const footerContent = {
             v-for="(phone, index) in footerContent.phone"
             :key="index"
             :to="`tel:${phone}`"
-            class="text-base leading-none font-semibold hover:underline"
+            class="text-base leading-none font-medium hover:underline"
           >
             {{ phone }}
           </NuxtLink>
@@ -34,14 +34,14 @@ const footerContent = {
             v-for="(email, index) in footerContent.email"
             :key="index"
             :to="`mailto:${email}`"
-            class="text-base leading-none font-semibold hover:underline"
+            class="text-base leading-none font-medium hover:underline"
           >
             {{ email }}
           </NuxtLink>
         </div>
       </div>
     </div>
-    <p class="text-xs text-center leading-none">
+    <p class="text-center text-xs leading-none">
       Copyright © {{ new Date().getFullYear() }} Patrimonio Gallery. All Rights Reserved.
     </p>
   </footer>
