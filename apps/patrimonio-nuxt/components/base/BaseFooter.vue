@@ -23,7 +23,7 @@ const footerContent = {
             v-for="(phone, index) in footerContent.phone"
             :key="index"
             :to="`tel:${phone}`"
-            class="text-base leading-none font-semibold hover:underline"
+            class="text-base leading-none font-medium hover:underline"
           >
             {{ phone }}
           </NuxtLink>
@@ -34,7 +34,7 @@ const footerContent = {
             v-for="(email, index) in footerContent.email"
             :key="index"
             :to="`mailto:${email}`"
-            class="text-base leading-none font-semibold hover:underline"
+            class="text-base leading-none font-medium hover:underline"
           >
             {{ email }}
           </NuxtLink>
