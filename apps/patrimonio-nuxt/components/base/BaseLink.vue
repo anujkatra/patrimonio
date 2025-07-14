@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const inputVariants = cva(
-  'inline-flex transition-all items-center duration-300 ease-out font-cabinet text-[20px] w-[420px] h-[60px] px-2.5 px-[30px]',
+  'inline-flex transition-all items-center duration-300 ease-out font-cabinet text-[20px] max-w-[420px] h-[60px] px-2.5 px-[30px]',
   {
     variants: {
       variant: {
