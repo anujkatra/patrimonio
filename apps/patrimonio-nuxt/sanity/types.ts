@@ -89,6 +89,57 @@ export type Opengraph = {
   title?: string
 }
 
+export type Painting = {
+  _id: string
+  _type: 'painting'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  artist: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'artist'
+  }
+  year: number
+  dimensions: {
+    height: number
+    width: number
+    unit: 'in' | 'ft' | 'cm' | 'm'
+  }
+  medium?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'medium'
+  }
+  forSale?: boolean
+}
+
+export type Medium = {
+  _id: string
+  _type: 'medium'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+}
+
 export type Event = {
   _id: string
   _type: 'event'
@@ -158,55 +209,22 @@ export type DateRange = {
   endDate?: string
 }
 
-export type Painting = {
+export type Collection = {
   _id: string
-  _type: 'painting'
+  _type: 'collection'
   _createdAt: string
   _updatedAt: string
   _rev: string
-  name: string
-  picture: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-  }
-  artist: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'artist'
-  }
-  year: number
-  dimensions: {
-    height: number
-    width: number
-    unit: 'in' | 'ft' | 'cm' | 'm'
-  }
-  medium?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'medium'
-  }
-  forSale?: boolean
-}
-
-export type Medium = {
-  _id: string
-  _type: 'medium'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name: string
+  title: string
   slug: Slug
+  paintings?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'painting'
+  }>
+  seo?: Seo
 }
 
 export type Artist = {
@@ -397,6 +415,13 @@ export type Homepage = {
     alt: string
     _type: 'image'
   }
+  featuredCollections?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'collection'
+  }>
   featuredSection?: Array<
     {
       _key: string
@@ -566,10 +591,11 @@ export type AllSanitySchemaTypes =
   | Robots
   | Twitter
   | Opengraph
-  | Event
-  | DateRange
   | Painting
   | Medium
+  | Event
+  | DateRange
+  | Collection
   | Artist
   | Auctions
   | Shows
@@ -634,6 +660,41 @@ export type HomepageQueryResult = {
     alt: string
     _type: 'image'
   }
+  featuredCollections: Array<{
+    title: string
+    slug: Slug
+    paintings: {
+      picture: {
+        asset: {
+          _id: string
+          _type: 'sanity.imageAsset'
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash?: string
+          extension?: string
+          mimeType?: string
+          size?: number
+          assetId?: string
+          uploadId?: string
+          path?: string
+          url?: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+      }
+    } | null
+  }> | null
   featuredSection?: Array<
     {
       _key: string
@@ -654,7 +715,6 @@ export type HomepageQueryResult = {
     [internalGroqTypeReferenceTo]?: 'event'
   }>
   seo?: Seo
-  featuredCollections: null
 } | null
 
 // Query TypeMap
