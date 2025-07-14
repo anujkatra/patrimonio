@@ -78,7 +78,11 @@ onBeforeUnmount(() => {
           class="hidden items-center gap-8 text-base leading-none font-normal lg:flex 2xl:gap-10"
         >
           <li v-for="(header, index) in headerContent" :key="index">
-            <NuxtLink :to="header.href" class="hover:underline">{{ header.link }}</NuxtLink>
+            <NuxtLink
+              :to="header.href"
+              class="underline-offset-[9px] hover:underline lg:hover:font-semibold"
+              >{{ header.link }}</NuxtLink
+            >
           </li>
           <li>
             <NuxtImg src="/whatsapp.png" class="h-[35px] w-full" />
