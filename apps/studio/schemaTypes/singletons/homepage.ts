@@ -78,6 +78,22 @@ export const homepage: DocumentDefinition = withSeo({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      title: 'Featured Collections',
+      name: 'featuredCollections',
+      type: 'array',
+      description: 'Featured Collections (max 6)',
+      validation: (Rule) => Rule.unique().max(6),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'collection'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'featuredSection',
       title: 'Featured Section',
       description: 'Landing Page Featured Sections',
