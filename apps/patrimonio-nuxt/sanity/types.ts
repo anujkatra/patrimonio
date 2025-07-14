@@ -592,7 +592,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "homepage"][0] {	...,	landingImage{	...,	asset->,	}	}
+// Query: *[_type == "homepage"][0] {	...,	landingImage{	...,	asset->,	},	featuredCollections[]->{	title,	slug,	paintings[0]->{	picture{	...,	asset->,	}	}	}}
 export type HomepageQueryResult = {
   _id: string
   _type: 'homepage'
@@ -654,12 +654,13 @@ export type HomepageQueryResult = {
     [internalGroqTypeReferenceTo]?: 'event'
   }>
   seo?: Seo
+  featuredCollections: null
 } | null
 
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "homepage"][0] {\n\t...,\n\tlandingImage{\n\t...,\n\tasset->,\n\t}\n\t}': HomepageQueryResult
+    '*[_type == "homepage"][0] {\n\t...,\n\tlandingImage{\n\t...,\n\tasset->,\n\t},\n\tfeaturedCollections[]->{\n\ttitle,\n\tslug,\n\tpaintings[0]->{\n\tpicture{\n\t...,\n\tasset->,\n\t}\n\t}\n\t}\n}': HomepageQueryResult
   }
 }

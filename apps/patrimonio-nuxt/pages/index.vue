@@ -42,5 +42,38 @@ useSiteMetadata({
         </div>
       </div>
     </section>
+    <section class="border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10">
+      <div class="flex flex-col gap-5">
+        <div class="flex flex-col gap-2.5">
+          <h2
+            class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
+          >
+            Collections
+          </h2>
+          <p class="font-satoshi text-lg leading-none font-light tracking-normal">
+            Discover an exquisite global collection, thoughtfully presented through curated events,
+            exhibitions, and exclusive showcases.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div
+            v-for="(collection, index) in homepageData?.featuredCollections"
+            :key="index"
+            class="col-span-1"
+          >
+            <NuxtImg
+              provider="sanity"
+              :src="`${collection?.paintings?.picture?.asset?._id}`"
+              :alt="`${collection?.paintings?.picture?.alt}`"
+              class="w-full"
+            />
+          </div>
+          <BaseLink variant="secondary" class="col-span-2 w-full" icon to="/gallery">
+            View All
+            <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
+          </BaseLink>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
