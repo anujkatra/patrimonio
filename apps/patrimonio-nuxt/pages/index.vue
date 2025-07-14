@@ -14,24 +14,25 @@ useSiteMetadata({
 
 <template>
   <main>
-    <section class="px-5 py-[50px] md:px-10">
-      <div class="flex flex-col gap-5">
+    <section class="flex justify-center px-5 py-[50px] md:px-10">
+      <div class="flex max-w-[1352px] flex-col gap-5 lg:flex-row">
         <NuxtImg
           provider="sanity"
           :src="`${homepageData?.landingImage.asset?._id}`"
           :alt="`${homepageData?.landingImage.alt}`"
           sizes="100vw sm:400px"
-          class="mx-auto"
+          class="mx-auto lg:order-2 lg:w-full lg:flex-1"
         />
         <div
-          class="flex flex-col gap-2.5 self-center md:items-center md:max-lg:max-w-lg lg:flex-row lg:gap-0"
+          class="flex flex-col gap-2.5 self-center md:flex-row md:items-center md:gap-0 lg:order-1 lg:w-full lg:max-w-[542px] lg:flex-1 lg:flex-col lg:items-start lg:gap-5"
         >
           <p
-            class="font-cabinet text-[35px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
+            class="font-cabinet text-[35px] leading-none font-normal tracking-normal md:flex-1 lg:text-[50px]"
           >
-            {{ homepageData?.title }}
+            Curating <br class="hidden md:block" />
+            Masterpieces,<br class="hidden md:block" />Celebrating Artists
           </p>
-          <div class="flex flex-col gap-5 lg:flex-1">
+          <div class="flex flex-col gap-5 md:flex-1">
             <p class="font-satoshi text-lg leading-none font-light tracking-normal">
               {{ homepageData?.landingText }}
             </p>
@@ -42,8 +43,8 @@ useSiteMetadata({
         </div>
       </div>
     </section>
-    <section class="border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10">
-      <div class="flex flex-col gap-5">
+    <section class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10">
+      <div class="flex max-w-[1352px] flex-col gap-5">
         <div class="flex flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
