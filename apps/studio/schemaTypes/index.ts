@@ -14,6 +14,7 @@ import {seo} from './objects/seo'
 import {opengraph} from './objects/seo/opengraph'
 import {robots} from './objects/seo/robots'
 import {twitter} from './objects/seo/twitter'
+import {collection} from './documents/collection'
 
 export const schemaTypes = [
   // Singletons
@@ -25,9 +26,10 @@ export const schemaTypes = [
   auctions,
   // Documents
   artist,
-  painting,
-  medium,
+  collection,
   event,
+  medium,
+  painting,
   // Objects
   dateRange,
   seo,
