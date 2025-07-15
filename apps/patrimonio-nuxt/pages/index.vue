@@ -66,10 +66,10 @@ useSiteMetadata({
               provider="sanity"
               :src="`${collection?.paintings?.picture?.asset?._id}`"
               :alt="`${collection?.paintings?.picture?.alt}`"
-              class="w-full"
+              class="w-full lg:max-w-lg"
             />
           </div>
-          <BaseLink variant="secondary" class="col-span-2 w-full" icon to="/gallery">
+          <BaseLink variant="secondary" class="col-span-2 w-full lg:mx-auto" icon to="/gallery">
             View All
             <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
           </BaseLink>
