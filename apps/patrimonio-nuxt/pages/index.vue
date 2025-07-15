@@ -15,22 +15,22 @@ useSiteMetadata({
 <template>
   <main>
     <section class="flex justify-center px-5 py-[50px] md:px-10">
-      <div class="flex max-w-6xl flex-col gap-5 lg:flex-row">
+      <div class="flex w-full max-w-6xl flex-col gap-5 lg:flex-row">
         <NuxtImg
           provider="sanity"
           :src="`${homepageData?.landingImage.asset?._id}`"
           :alt="`${homepageData?.landingImage.alt}`"
-          sizes="100vw sm:400px"
-          class="mx-auto lg:order-2 lg:w-full lg:flex-1"
+          class="mx-auto w-full max-w-[400px] lg:order-2 lg:flex-1"
         />
         <div
-          class="flex flex-col gap-2.5 self-center md:flex-row md:items-center md:gap-0 lg:order-1 lg:w-full lg:max-w-[542px] lg:flex-1 lg:flex-col lg:items-start lg:gap-5"
+          class="flex w-full flex-col gap-2.5 self-center md:flex-row md:items-center md:gap-0 lg:order-1 lg:max-w-[542px] lg:flex-1 lg:flex-col lg:items-start lg:gap-5"
         >
           <p
             class="font-cabinet text-[35px] leading-none font-normal tracking-normal md:flex-1 lg:text-[50px]"
           >
             Curating <br class="hidden md:block" />
-            Masterpieces,<br class="hidden md:block" />Celebrating Artists
+            Masterpieces,<br class="hidden md:block" />
+            Celebrating Artists
           </p>
           <div class="flex flex-col gap-5 md:flex-1">
             <p class="font-satoshi text-lg leading-none font-light tracking-normal">
