@@ -15,7 +15,7 @@ useSiteMetadata({
 <template>
   <main>
     <section class="flex justify-center px-5 py-[50px] md:px-10">
-      <div class="flex max-w-[1352px] flex-col gap-5 lg:flex-row">
+      <div class="flex max-w-6xl flex-col gap-5 lg:flex-row">
         <NuxtImg
           provider="sanity"
           :src="`${homepageData?.landingImage.asset?._id}`"
@@ -44,7 +44,7 @@ useSiteMetadata({
       </div>
     </section>
     <section class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10">
-      <div class="flex max-w-[1352px] flex-col gap-5">
+      <div class="flex max-w-6xl flex-col gap-5">
         <div class="flex flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
