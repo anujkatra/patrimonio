@@ -60,13 +60,13 @@ useSiteMetadata({
           <div
             v-for="(collection, index) in homepageData?.featuredCollections"
             :key="index"
-            class="col-span-1"
+            class="col-span-1 mx-auto flex size-full"
           >
-            <NuxtImg
-              provider="sanity"
-              :src="`${collection?.paintings?.picture?.asset?._id}`"
-              :alt="`${collection?.paintings?.picture?.alt}`"
-              class="w-full lg:max-w-lg"
+            <CollectionTile
+              v-if="collection?.paintings?.picture?.asset != null"
+              :title="collection.title"
+              :slug="collection.slug.current"
+              :image-src="collection?.paintings?.picture?.asset"
             />
           </div>
           <BaseLink variant="secondary" class="col-span-2 w-full lg:mx-auto" icon to="/gallery">

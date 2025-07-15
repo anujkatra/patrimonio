@@ -17,7 +17,7 @@ const inputVariants = cva(
         primary:
           'bg-white hover:bg-black text-black hover:text-white border-[1.5px] border-[0.5px] border-[#202020]',
         secondary:
-          'bg-[linear-gradient(264.83deg,rgba(252,251,247,0.5)_-4.61%,rgba(129,178,219,0.5)_44.28%,rgba(214,51,46,0.5)_112.37%)] hover:bg-black hover:bg-none hover:text-white border-[0.5px] border-[#202020]',
+          'bg-[linear-gradient(264.83deg,rgba(252,251,247,0.5)_-4.61%,rgba(129,178,219,0.5)_44.28%,rgba(214,51,46,0.5)_112.37%)] bg-white hover:bg-black hover:bg-none hover:text-white border-[0.5px] border-[#202020]',
         noOutline: 'bg-white hover:bg-black text-black hover:text-white',
       },
       icon: {
