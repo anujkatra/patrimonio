@@ -65,9 +65,10 @@ useSiteMetadata({
             <CollectionTile
               v-if="collection?.paintings?.picture?.asset != null"
               :title="collection.title"
-              :slug="collection.slug.current"
+              slug="/gallery"
               :image-src="collection?.paintings?.picture?.asset"
             />
+            <!-- :slug="collection.slug.current" -->
           </div>
           <BaseLink variant="secondary" class="col-span-2 w-full lg:mx-auto" icon to="/gallery">
             View All

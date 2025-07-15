@@ -37,7 +37,7 @@ const props = defineProps<{
       <BaseLink
         variant="secondary"
         class="absolute bottom-10 z-[1] mx-5 hidden w-full max-w-[380px] transition-all duration-300 ease-in group-hover:inline-flex"
-        :to="`/gallery/colleciton/${props.slug}`"
+        :to="props.slug"
         icon
       >
         {{ props.title }}
