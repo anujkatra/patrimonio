@@ -618,7 +618,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "homepage"][0] {	...,	landingImage{	...,	asset->,	},	featuredCollections[]->{	title,	slug,	paintings[0]->{	picture{	...,	asset->,	}	}	}}
+// Query: *[_type == "homepage"][0] {	...,	landingImage{		...,		asset->,	},	featuredCollections[]->{		title,		slug,		paintings[0]->{			picture{				...,				asset->,			}		}	},	featuredPaintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	}}
 export type HomepageQueryResult = {
   _id: string
   _type: 'homepage'
@@ -700,13 +700,41 @@ export type HomepageQueryResult = {
       _key: string
     } & FeaturedSection
   >
-  featuredPaintings?: Array<{
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    _key: string
-    [internalGroqTypeReferenceTo]?: 'painting'
-  }>
+  featuredPaintings: Array<{
+    name: string
+    artist: string
+    year: number
+    medium: string | null
+    picture: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
   featuredEvents?: Array<{
     _ref: string
     _type: 'reference'
@@ -721,6 +749,6 @@ export type HomepageQueryResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "homepage"][0] {\n\t...,\n\tlandingImage{\n\t...,\n\tasset->,\n\t},\n\tfeaturedCollections[]->{\n\ttitle,\n\tslug,\n\tpaintings[0]->{\n\tpicture{\n\t...,\n\tasset->,\n\t}\n\t}\n\t}\n}': HomepageQueryResult
+    '*[_type == "homepage"][0] {\n\t...,\n\tlandingImage{\n\t\t...,\n\t\tasset->,\n\t},\n\tfeaturedCollections[]->{\n\t\ttitle,\n\t\tslug,\n\t\tpaintings[0]->{\n\t\t\tpicture{\n\t\t\t\t...,\n\t\t\t\tasset->,\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t}\n}': HomepageQueryResult
   }
 }

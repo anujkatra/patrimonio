@@ -18,7 +18,7 @@ const props = defineProps<{
     "
   >
     <div class="size-full lg:hidden">
-      <NuxtLink :to="`/gallery/colleciton/${props.slug}`" class="w-full">
+      <NuxtLink :to="props.slug" class="w-full">
         <NuxtImg
           provider="sanity"
           :src="`${props.imageSrc._id}`"

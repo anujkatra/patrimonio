@@ -3,18 +3,28 @@ import {defineQuery} from 'groq'
 export const homepageQuery = defineQuery(`*[_type == "homepage"][0] {
 	...,
 	landingImage{
-	...,
-	asset->,
+		...,
+		asset->,
 	},
 	featuredCollections[]->{
-	title,
-	slug,
-	paintings[0]->{
-	picture{
-	...,
-	asset->,
-	}
-	}
+		title,
+		slug,
+		paintings[0]->{
+			picture{
+				...,
+				asset->,
+			}
+		}
+	},
+	featuredPaintings[]->{
+		name,
+		"artist":artist->.name,
+		year,
+		"medium":medium->.name,
+		picture{
+			...,
+			asset->,
+		}
 	}
 }`)
 
