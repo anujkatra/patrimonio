@@ -12,11 +12,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div
-    :class="
-      twMerge(`group relative mx-auto h-full max-h-[420px] w-full max-w-[420px]`, props.class)
-    "
-  >
+  <div :class="twMerge(`group relative h-full max-h-[420px] w-full max-w-[420px]`, props.class)">
     <div class="size-full lg:hidden">
       <NuxtLink :to="props.slug" class="w-full">
         <NuxtImg
