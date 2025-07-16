@@ -43,6 +43,7 @@ useSiteMetadata({
         </div>
       </div>
     </section>
+
     <section class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10">
       <div class="flex max-w-6xl flex-col gap-5">
         <div class="flex flex-col gap-2.5">
@@ -75,6 +76,34 @@ useSiteMetadata({
             <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
           </BaseLink>
         </div>
+      </div>
+    </section>
+
+    <section
+      class="flex w-full flex-col gap-5 overflow-hidden border-t-[0.5px] border-[#202020] py-[50px] pl-5 md:pl-10"
+    >
+      <div class="flex max-w-[1440px] flex-col gap-2.5 pr-5 md:pr-10">
+        <h2
+          class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
+        >
+          Featured
+        </h2>
+        <p class="font-satoshi text-lg leading-none font-light tracking-normal">
+          Discover an exquisite global collection, thoughtfully presented through curated events,
+          exhibitions, and exclusive showcases.
+        </p>
+      </div>
+      <div class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 md:pr-10">
+        <template v-for="(painting, index) in homepageData?.featuredPaintings" :key="index">
+          <PaintingTile
+            v-if="painting?.picture?.asset != null"
+            :name="painting.name"
+            :artist="painting.artist"
+            :year="painting.year"
+            :medium="painting.medium ?? ``"
+            :image-src="painting.picture.asset"
+          />
+        </template>
       </div>
     </section>
   </main>
