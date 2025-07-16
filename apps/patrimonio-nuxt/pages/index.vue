@@ -120,5 +120,22 @@ useSiteMetadata({
         </div>
       </div>
     </section>
+
+    <section class="relative w-full border-t-[0.5px] border-[#202020]">
+      <NuxtImg src="/hp-artist-bg-mobile.png" class="absolute size-full opacity-50" />
+      <div class="flex flex-col gap-5 px-5 py-[50px] md:px-10">
+        <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5">
+          <h2
+            class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
+          >
+            Artists’ Overview
+          </h2>
+          <p class="font-satoshi text-lg leading-none font-light tracking-normal">
+            Discover an exquisite global collection, thoughtfully presented through curated events,
+            exhibitions, and exclusive showcases.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
