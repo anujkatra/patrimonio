@@ -13,19 +13,12 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div
-    :class="
-      twMerge(
-        `group flex w-[300px] flex-col gap-5 transition-all duration-300 md:w-[350px]`,
-        props.class,
-      )
-    "
-  >
+  <div :class="twMerge(`group flex w-[300px] flex-col gap-5 pb-5 md:w-[350px]`, props.class)">
     <NuxtImg
       provider="sanity"
       :src="`${props.imageSrc._id}`"
       :alt="`${props.name}`"
-      class="aspect-square min-w-[300px] group-hover:aspect-auto md:min-w-[350px]"
+      class="aspect-square min-w-[300px] md:min-w-[350px]"
     />
     <div class="flex w-full flex-col gap-[5px]">
       <h3 class="font-cabinet text-2xl/none font-medium tracking-normal">{{ name }}</h3>

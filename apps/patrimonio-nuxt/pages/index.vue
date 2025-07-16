@@ -93,7 +93,19 @@ useSiteMetadata({
           exhibitions, and exclusive showcases.
         </p>
       </div>
-      <div class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 md:pr-10">
+      <div
+        class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 [scrollbar-width:thin] md:pr-10"
+      >
+        <template v-for="(painting, index) in homepageData?.featuredPaintings" :key="index">
+          <PaintingTile
+            v-if="painting?.picture?.asset != null"
+            :name="painting.name"
+            :artist="painting.artist"
+            :year="painting.year"
+            :medium="painting.medium ?? ``"
+            :image-src="painting.picture.asset"
+          />
+        </template>
         <template v-for="(painting, index) in homepageData?.featuredPaintings" :key="index">
           <PaintingTile
             v-if="painting?.picture?.asset != null"
