@@ -16,8 +16,6 @@ const active =
   homepageData?.value?.featuredArtists != null
     ? ref(homepageData?.value?.featuredArtists[0].slug.current)
     : ''
-
-console.log('test', homepageData?.value?.featuredArtists)
 </script>
 
 <template>
