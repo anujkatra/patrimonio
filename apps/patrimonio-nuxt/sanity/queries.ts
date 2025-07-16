@@ -25,6 +25,14 @@ export const homepageQuery = defineQuery(`*[_type == "homepage"][0] {
 			...,
 			asset->,
 		}
+	},
+	featuredArtists[]->{
+		name,
+		slug,
+		picture{
+			...,
+			asset->,
+		}
 	}
 }`)
 

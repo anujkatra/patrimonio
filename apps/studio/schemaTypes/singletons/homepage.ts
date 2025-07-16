@@ -117,6 +117,22 @@ export const homepage: DocumentDefinition = withSeo({
       ],
     }),
     defineField({
+      title: 'Featured Artists',
+      name: 'featuredArtists',
+      type: 'array',
+      description: 'Featured Artists (max 5)',
+      validation: (Rule) => Rule.unique().max(5),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'artist'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
+    defineField({
       title: 'Featured Events',
       name: 'featuredEvents',
       type: 'array',

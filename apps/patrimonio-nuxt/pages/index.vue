@@ -2,6 +2,7 @@
 import {homepageQuery} from '~/sanity/queries'
 import type {HomepageQueryResult} from '~/sanity/types'
 import Arrow from '~/assets/svg/arrow.svg'
+import {ref} from 'vue'
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
 
@@ -10,6 +11,13 @@ useSiteMetadata({
   description: homepageData?.value?.seo?.description ?? 'description',
   ogImage: '',
 })
+
+const active =
+  homepageData?.value?.featuredArtists != null
+    ? ref(homepageData?.value?.featuredArtists[0].slug.current)
+    : ''
+
+console.log('test', homepageData?.value?.featuredArtists)
 </script>
 
 <template>
@@ -122,7 +130,10 @@ useSiteMetadata({
     </section>
 
     <section class="relative w-full border-t-[0.5px] border-[#202020]">
-      <NuxtImg src="/hp-artist-bg-mobile.png" class="absolute size-full opacity-50" />
+      <NuxtImg
+        src="/hp-artist-bg-mobile.png"
+        class="pointer-events-none absolute size-full opacity-50"
+      />
       <div class="flex flex-col gap-5 px-5 py-[50px] md:px-10">
         <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5">
           <h2
@@ -134,6 +145,37 @@ useSiteMetadata({
             Discover an exquisite global collection, thoughtfully presented through curated events,
             exhibitions, and exclusive showcases.
           </p>
+        </div>
+        <div class="relative flex flex-col gap-2.5 lg:flex-row">
+          <div class="relative inline-flex h-full min-h-[400px] lg:order-2 lg:flex-1">
+            <template v-for="artist in homepageData?.featuredArtists" :key="artist.slug.current">
+              <Transition
+                enter-from-class="opacity-0"
+                enter-active-class="transition duration-300 ease-in-out"
+                leave-to-class="opacity-0"
+                leave-active-class="transition duration-300 ease-in-out"
+              >
+                <div v-if="active === artist.slug.current" class="absolute h-full w-full">
+                  <NuxtImg
+                    provider="sanity"
+                    :src="`${artist.picture.asset?._id}`"
+                    :alt="`${artist.name}`"
+                    class="h-auto w-full max-w-[500px] object-cover"
+                  />
+                </div>
+              </Transition>
+            </template>
+          </div>
+          <div class="flex w-full gap-2.5 overflow-x-auto lg:order-1 lg:flex-1">
+            <button
+              v-for="artist in homepageData?.featuredArtists"
+              :key="artist.slug.current"
+              class="h-fit w-fit cursor-pointer"
+              @click="active = artist.slug.current"
+            >
+              {{ artist.name }}
+            </button>
+          </div>
         </div>
       </div>
     </section>
