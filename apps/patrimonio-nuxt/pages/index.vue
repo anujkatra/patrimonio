@@ -12,10 +12,12 @@ useSiteMetadata({
   ogImage: '',
 })
 
-const active =
-  homepageData?.value?.featuredArtists != null
-    ? ref(homepageData?.value?.featuredArtists[0].slug.current)
-    : ''
+const featuredArtistData =
+  homepageData.value?.featuredArtists?.map((artist) => {
+    return {name: artist.name, imgSrc: artist.picture.asset?._id ?? '', slug: artist.slug.current}
+  }) ?? []
+const currentActiveFeaturedArtist = ref(featuredArtistData[0])
+console.log('test', featuredArtistData)
 </script>
 
 <template>
@@ -127,12 +129,12 @@ const active =
       </div>
     </section>
 
-    <section class="relative w-full border-t-[0.5px] border-[#202020]">
+    <section class="relative flex w-full justify-center border-t-[0.5px] border-[#202020]">
       <NuxtImg
         src="/hp-artist-bg-mobile.png"
         class="pointer-events-none absolute size-full opacity-50"
       />
-      <div class="flex flex-col gap-5 px-5 py-[50px] md:px-10">
+      <div class="flex w-full max-w-[1440px] flex-col gap-5 px-5 py-[50px] md:px-10">
         <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
@@ -145,31 +147,40 @@ const active =
           </p>
         </div>
         <div class="relative flex flex-col gap-2.5 lg:flex-row">
-          <div class="relative inline-flex h-full min-h-[400px] lg:order-2 lg:flex-1">
-            <template v-for="artist in homepageData?.featuredArtists" :key="artist.slug.current">
+          <div
+            class="relative flex min-h-[400px] w-full max-w-[650px] self-center transition-all duration-300 ease-in-out sm:min-h-[500px] lg:order-2 lg:max-h-[510px] lg:max-w-full lg:flex-1"
+          >
+            <template v-for="artist in featuredArtistData" :key="artist.slug">
               <Transition
                 enter-from-class="opacity-0"
                 enter-active-class="transition duration-300 ease-in-out"
                 leave-to-class="opacity-0"
                 leave-active-class="transition duration-300 ease-in-out"
               >
-                <div v-if="active === artist.slug.current" class="absolute h-full w-full">
-                  <NuxtImg
-                    provider="sanity"
-                    :src="`${artist.picture.asset?._id}`"
-                    :alt="`${artist.name}`"
-                    class="h-auto w-full max-w-[500px] object-cover"
-                  />
-                </div>
+                <NuxtImg
+                  v-if="artist.slug === currentActiveFeaturedArtist.slug"
+                  provider="sanity"
+                  :src="`${artist.imgSrc}`"
+                  :alt="`${artist.name}`"
+                  :class="`pointer-events-none absolute inset-0 m-auto max-h-[400px] w-full object-cover sm:max-h-[500px] lg:max-h-full`"
+                />
               </Transition>
             </template>
           </div>
-          <div class="flex w-full gap-2.5 overflow-x-auto lg:order-1 lg:flex-1">
+          <div
+            class="flex w-full gap-2.5 pb-4 text-nowrap max-lg:overflow-x-auto max-lg:[scrollbar-width:none] lg:order-1 lg:flex-1 lg:flex-col lg:justify-center lg:gap-4"
+          >
             <button
               v-for="artist in homepageData?.featuredArtists"
               :key="artist.slug.current"
-              class="h-fit w-fit cursor-pointer"
-              @click="active = artist.slug.current"
+              :class="`h-fit w-full cursor-pointer ${artist.slug.current === currentActiveFeaturedArtist.slug ? `font-medium underline underline-offset-12` : ``}`"
+              @click="
+                currentActiveFeaturedArtist = {
+                  name: artist.name,
+                  imgSrc: artist.picture.asset?._id ?? ``,
+                  slug: artist.slug.current,
+                }
+              "
             >
               {{ artist.name }}
             </button>
