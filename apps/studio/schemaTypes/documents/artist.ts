@@ -22,7 +22,7 @@ export const artist: DocumentDefinition = {
       //   return !currentUser?.roles.find(({name}) => name === 'administrator')
       // },
       options: {
-        source: 'title',
+        source: 'name',
         slugify: (input) => input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
       validation: (Rule) => Rule.required(),
