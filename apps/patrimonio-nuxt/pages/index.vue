@@ -132,7 +132,15 @@ console.log('test', featuredArtistData)
     <section class="relative flex w-full justify-center border-t-[0.5px] border-[#202020]">
       <NuxtImg
         src="/hp-artist-bg-mobile.png"
-        class="pointer-events-none absolute size-full opacity-50"
+        class="pointer-events-none absolute size-full opacity-50 md:hidden"
+      />
+      <NuxtImg
+        src="/hp-artist-bg-tablet.png"
+        class="pointer-events-none absolute hidden size-full opacity-50 md:block xl:hidden"
+      />
+      <NuxtImg
+        src="/hp-artist-bg-desktop.png"
+        class="pointer-events-none absolute hidden size-full opacity-50 xl:block"
       />
       <div class="flex w-full max-w-[1440px] flex-col gap-5 px-5 py-[50px] md:px-10">
         <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5">
