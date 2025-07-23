@@ -17,7 +17,6 @@ const featuredArtistData =
     return {name: artist.name, imgSrc: artist.picture.asset?._id ?? '', slug: artist.slug.current}
   }) ?? []
 const currentActiveFeaturedArtist = ref(0)
-console.log('test', featuredArtistData)
 
 function change(index: number) {
   currentActiveFeaturedArtist.value = index
