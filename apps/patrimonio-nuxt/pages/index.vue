@@ -16,8 +16,12 @@ const featuredArtistData =
   homepageData.value?.featuredArtists?.map((artist) => {
     return {name: artist.name, imgSrc: artist.picture.asset?._id ?? '', slug: artist.slug.current}
   }) ?? []
-const currentActiveFeaturedArtist = ref(featuredArtistData[0])
+const currentActiveFeaturedArtist = ref(0)
 console.log('test', featuredArtistData)
+
+function change(index: number) {
+  currentActiveFeaturedArtist.value = index
+}
 </script>
 
 <template>
@@ -154,11 +158,14 @@ console.log('test', featuredArtistData)
             exhibitions, and exclusive showcases.
           </p>
         </div>
-        <div class="relative flex flex-col gap-2.5 lg:flex-row">
+        <div
+          v-if="featuredArtistData.length !== 0"
+          class="relative flex flex-col gap-2.5 lg:flex-row"
+        >
           <div
             class="relative flex min-h-[400px] w-full max-w-[650px] self-center transition-all duration-300 ease-in-out sm:min-h-[500px] lg:order-2 lg:max-h-[510px] lg:max-w-full lg:flex-1"
           >
-            <template v-for="artist in featuredArtistData" :key="artist.slug">
+            <template v-for="(artist, index) in featuredArtistData" :key="artist.slug">
               <Transition
                 enter-from-class="opacity-0"
                 enter-active-class="transition duration-300 ease-in-out"
@@ -166,7 +173,10 @@ console.log('test', featuredArtistData)
                 leave-active-class="transition duration-300 ease-in-out"
               >
                 <NuxtImg
-                  v-if="artist.slug === currentActiveFeaturedArtist.slug"
+                  v-if="
+                    featuredArtistData[index].slug ===
+                    featuredArtistData[currentActiveFeaturedArtist].slug
+                  "
                   provider="sanity"
                   :src="`${artist.imgSrc}`"
                   :alt="`${artist.name}`"
@@ -179,16 +189,15 @@ console.log('test', featuredArtistData)
             class="flex w-full gap-2.5 pb-4 text-nowrap max-lg:overflow-x-auto max-lg:[scrollbar-width:none] lg:order-1 lg:flex-1 lg:flex-col lg:justify-center lg:gap-4"
           >
             <button
-              v-for="artist in homepageData?.featuredArtists"
-              :key="artist.slug.current"
-              :class="`h-fit w-full cursor-pointer ${artist.slug.current === currentActiveFeaturedArtist.slug ? `font-medium underline underline-offset-12` : ``}`"
-              @click="
-                currentActiveFeaturedArtist = {
-                  name: artist.name,
-                  imgSrc: artist.picture.asset?._id ?? ``,
-                  slug: artist.slug.current,
-                }
-              "
+              v-for="(artist, index) in featuredArtistData"
+              :key="featuredArtistData[index].slug"
+              :class="`h-fit w-full cursor-pointer ${
+                featuredArtistData[index].slug ===
+                featuredArtistData[currentActiveFeaturedArtist].slug
+                  ? `font-medium underline underline-offset-12`
+                  : ``
+              }`"
+              @click="change(index)"
             >
               {{ artist.name }}
             </button>
