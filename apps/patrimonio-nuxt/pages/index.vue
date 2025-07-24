@@ -6,6 +6,8 @@ import {ref} from 'vue'
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
 
+console.log('test', homepageData.value?.featuredEvents)
+
 useSiteMetadata({
   title: homepageData?.value?.seo?.title ?? 'title',
   description: homepageData?.value?.seo?.description ?? 'description',

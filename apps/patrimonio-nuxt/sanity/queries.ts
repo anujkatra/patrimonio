@@ -33,7 +33,17 @@ export const homepageQuery = defineQuery(`*[_type == "homepage"][0] {
 			...,
 			asset->,
 		}
-	}
+	},
+	featuredEvents[]->{
+		title,
+		slug,
+		venue,
+		dateRange,
+		pictures[0]{
+			...,
+			asset->,
+		},
+	},
 }`)
 
 // export const pageQuery = defineQuery(/* groq */ `
