@@ -6,8 +6,6 @@ import {ref} from 'vue'
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
 
-console.log('test', homepageData.value?.featuredEvents)
-
 useSiteMetadata({
   title: homepageData?.value?.seo?.title ?? 'title',
   description: homepageData?.value?.seo?.description ?? 'description',
@@ -20,8 +18,35 @@ const featuredArtistData =
   }) ?? []
 const currentActiveFeaturedArtist = ref(0)
 
+const formatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: '2-digit',
+})
+
+const featuredEventsData =
+  homepageData.value?.featuredEvents?.map((event) => {
+    const startDate = new Date(event.dateRange?.startDate ?? '')
+    const endDate = new Date(event.dateRange?.endDate ?? '')
+    return {
+      title: event.title,
+      imgSrc: event.pictures?.asset?._id ?? '',
+      slug: event.slug.current,
+      venue: event.venue,
+      startDate: formatter.format(startDate),
+      endDate: formatter.format(endDate),
+    }
+  }) ?? []
+const currentActiveEvent = ref(0)
+
 function change(index: number) {
   currentActiveFeaturedArtist.value = index
+}
+function previous(index: number) {
+  currentActiveEvent.value = index !== 0 ? index - 1 : featuredEventsData.length - 1
+}
+function next(index: number) {
+  currentActiveEvent.value = index !== featuredEventsData.length - 1 ? index + 1 : 0
 }
 </script>
 
@@ -220,7 +245,56 @@ function change(index: number) {
             exhibitions, and exclusive showcases.
           </p>
         </div>
-        <div class="grid grid-cols-2 gap-2.5"></div>
+        <TransitionGroup name="fade" tag="div">
+          <div
+            v-for="(event, index) in featuredEventsData"
+            :key="event.slug"
+            class="flex w-full flex-col items-center justify-center lg:grid lg:grid-cols-2"
+          >
+            <template
+              v-if="featuredEventsData[index].slug === featuredEventsData[currentActiveEvent].slug"
+            >
+              <div class="mx-auto w-full flex-1 max-lg:max-w-xl lg:col-span-1">
+                <NuxtImg
+                  provider="sanity"
+                  :src="`${event.imgSrc}`"
+                  :alt="`${event.title}`"
+                  class="w-full object-cover"
+                />
+              </div>
+              <div
+                class="flex size-full min-h-[260px] flex-1 flex-col gap-5 bg-[linear-gradient(264.83deg,rgba(252,251,247,0.25)_-4.61%,rgba(129,178,219,0.25)_44.28%,rgba(214,51,46,0.25)_112.37%)] px-5 pt-10 max-lg:max-w-xl lg:col-span-1"
+              >
+                <div class="flex flex-col gap-[5px]">
+                  <p class="font-cabinet text-2xl/none font-bold tracking-normal">
+                    {{ event.title }}
+                  </p>
+                  <div class="flex flex-col gap-2.5">
+                    <p class="font-satoshi text-base/none font-light tracking-normal">by Artist</p>
+                    <p class="font-satoshi text-sm/none font-light tracking-normal">
+                      {{ event.startDate }} | {{ event.venue }}
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-2.5">
+                  <button
+                    :class="`flex h-[30px] w-[45px] cursor-pointer justify-center rounded-[86px] border-[0.5px] border-[#202020] hover:bg-black hover:text-white`"
+                    @click="previous(index)"
+                  >
+                    <Arrow class="w-[20px] rotate-180" :font-controlled="false" />
+                  </button>
+                  {{ index + 1 }} / {{ featuredEventsData.length }}
+                  <button
+                    :class="`flex h-[30px] w-[45px] cursor-pointer justify-center rounded-[86px] border-[0.5px] border-[#202020] hover:bg-black hover:text-white`"
+                    @click="next(index)"
+                  >
+                    <Arrow class="w-[20px]" :font-controlled="false" />
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
+        </TransitionGroup>
       </div>
     </section>
   </main>
