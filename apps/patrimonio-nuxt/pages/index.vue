@@ -30,6 +30,7 @@ const featuredEventsData =
     const endDate = new Date(event.dateRange?.endDate ?? '')
     return {
       title: event.title,
+      artist: event.artist ?? '',
       imgSrc: event.pictures?.asset?._id ?? '',
       slug: event.slug.current,
       venue: event.venue,
@@ -245,57 +246,73 @@ function next(index: number) {
             exhibitions, and exclusive showcases.
           </p>
         </div>
-        <TransitionGroup name="fade" tag="div">
+        <div class="flex h-full">
           <div
-            v-for="(event, index) in featuredEventsData"
-            :key="event.slug"
-            class="flex w-full flex-col items-center justify-center lg:grid lg:grid-cols-2"
+            class="relative inset-0 flex w-full flex-col items-center justify-center lg:grid lg:grid-cols-2"
           >
-            <template
-              v-if="featuredEventsData[index].slug === featuredEventsData[currentActiveEvent].slug"
-            >
-              <div class="mx-auto w-full flex-1 max-lg:max-w-xl lg:col-span-1">
+            <Transition mode="out-in" name="fade">
+              <div
+                :key="currentActiveEvent"
+                class="mx-auto w-full flex-1 max-lg:max-w-xl lg:col-span-1"
+              >
                 <NuxtImg
                   provider="sanity"
-                  :src="`${event.imgSrc}`"
-                  :alt="`${event.title}`"
+                  :src="`${featuredEventsData[currentActiveEvent].imgSrc}`"
+                  :alt="`${featuredEventsData[currentActiveEvent].title}`"
                   class="w-full object-cover"
                 />
               </div>
-              <div
-                class="flex size-full min-h-[260px] flex-1 flex-col gap-5 bg-[linear-gradient(264.83deg,rgba(252,251,247,0.25)_-4.61%,rgba(129,178,219,0.25)_44.28%,rgba(214,51,46,0.25)_112.37%)] px-5 pt-10 max-lg:max-w-xl lg:col-span-1"
-              >
-                <div class="flex flex-col gap-[5px]">
+            </Transition>
+            <div
+              class="flex size-full min-h-[260px] flex-1 flex-col gap-5 bg-[linear-gradient(264.83deg,rgba(252,251,247,0.25)_-4.61%,rgba(129,178,219,0.25)_44.28%,rgba(214,51,46,0.25)_112.37%)] px-5 pt-10 max-lg:max-w-xl lg:col-span-1"
+            >
+              <Transition mode="out-in" name="fade">
+                <div :key="currentActiveEvent" class="flex flex-col gap-[5px]">
                   <p class="font-cabinet text-2xl/none font-bold tracking-normal">
-                    {{ event.title }}
+                    {{ featuredEventsData[currentActiveEvent].title }}
                   </p>
                   <div class="flex flex-col gap-2.5">
-                    <p class="font-satoshi text-base/none font-light tracking-normal">by Artist</p>
+                    <p class="font-satoshi text-base/none font-light tracking-normal">
+                      by {{ featuredEventsData[currentActiveEvent].artist }}
+                    </p>
                     <p class="font-satoshi text-sm/none font-light tracking-normal">
-                      {{ event.startDate }} | {{ event.venue }}
+                      {{ featuredEventsData[currentActiveEvent].startDate }} |
+                      {{ featuredEventsData[currentActiveEvent].venue }}
                     </p>
                   </div>
                 </div>
-                <div class="flex gap-2.5">
-                  <button
-                    :class="`flex h-[30px] w-[45px] cursor-pointer justify-center rounded-[86px] border-[0.5px] border-[#202020] hover:bg-black hover:text-white`"
-                    @click="previous(index)"
-                  >
-                    <Arrow class="w-[20px] rotate-180" :font-controlled="false" />
-                  </button>
-                  {{ index + 1 }} / {{ featuredEventsData.length }}
-                  <button
-                    :class="`flex h-[30px] w-[45px] cursor-pointer justify-center rounded-[86px] border-[0.5px] border-[#202020] hover:bg-black hover:text-white`"
-                    @click="next(index)"
-                  >
-                    <Arrow class="w-[20px]" :font-controlled="false" />
-                  </button>
-                </div>
+              </Transition>
+              <div class="flex gap-2.5">
+                <button
+                  :class="`flex h-[30px] w-[45px] cursor-pointer justify-center rounded-[86px] border-[0.5px] border-[#202020] hover:bg-black hover:text-white`"
+                  @click="previous(currentActiveEvent)"
+                >
+                  <Arrow class="w-[20px] rotate-180" :font-controlled="false" />
+                </button>
+                {{ currentActiveEvent + 1 }} / {{ featuredEventsData.length }}
+                <button
+                  :class="`flex h-[30px] w-[45px] cursor-pointer justify-center rounded-[86px] border-[0.5px] border-[#202020] hover:bg-black hover:text-white`"
+                  @click="next(currentActiveEvent)"
+                >
+                  <Arrow class="w-[20px]" :font-controlled="false" />
+                </button>
               </div>
-            </template>
+            </div>
           </div>
-        </TransitionGroup>
+        </div>
       </div>
     </section>
   </main>
 </template>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
