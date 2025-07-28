@@ -148,5 +148,21 @@ export const homepage: DocumentDefinition = withSeo({
         },
       ],
     }),
+    defineField({
+      title: 'Featured Press and Media',
+      name: 'featuredPress',
+      type: 'array',
+      description: 'Featured Press and Media (max 6)',
+      validation: (Rule) => Rule.unique().max(6),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'press'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
   ],
 })
