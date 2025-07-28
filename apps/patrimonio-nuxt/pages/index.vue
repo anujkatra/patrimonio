@@ -248,7 +248,7 @@ function next(index: number) {
         </div>
         <div class="flex h-full">
           <div
-            class="relative inset-0 flex w-full flex-col items-center justify-center lg:grid lg:grid-cols-2"
+            class="relative inset-0 flex w-full flex-col items-center justify-center md:grid md:grid-cols-2"
           >
             <Transition mode="out-in" name="fade">
               <div
@@ -259,15 +259,15 @@ function next(index: number) {
                   provider="sanity"
                   :src="`${featuredEventsData[currentActiveEvent].imgSrc}`"
                   :alt="`${featuredEventsData[currentActiveEvent].title}`"
-                  class="w-full object-cover"
+                  class="w-full md:aspect-square"
                 />
               </div>
             </Transition>
             <div
-              class="flex size-full min-h-[260px] flex-1 flex-col gap-5 bg-[linear-gradient(264.83deg,rgba(252,251,247,0.25)_-4.61%,rgba(129,178,219,0.25)_44.28%,rgba(214,51,46,0.25)_112.37%)] px-5 pt-10 max-lg:max-w-xl lg:col-span-1"
+              class="flex size-full min-h-[260px] flex-1 flex-col gap-10 bg-[linear-gradient(264.83deg,rgba(252,251,247,0.25)_-4.61%,rgba(129,178,219,0.25)_44.28%,rgba(214,51,46,0.25)_112.37%)] px-5 pt-10 max-lg:max-w-xl lg:col-span-1 lg:gap-[60px]"
             >
               <Transition mode="out-in" name="fade">
-                <div :key="currentActiveEvent" class="flex flex-col gap-[5px]">
+                <div :key="currentActiveEvent" class="flex flex-col gap-2.5">
                   <p class="font-cabinet text-2xl/none font-bold tracking-normal">
                     {{ featuredEventsData[currentActiveEvent].title }}
                   </p>
@@ -297,8 +297,20 @@ function next(index: number) {
                   <Arrow class="w-[20px]" :font-controlled="false" />
                 </button>
               </div>
+              <div class="hidden lg:block">
+                <BaseLink variant="primary" class="bg-patrimonio-beige w-full" icon to="/gallery">
+                  View all upcoming events | {{ featuredEventsData.length }} |
+                  <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
+                </BaseLink>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="lg:hidden">
+          <BaseLink variant="secondary" class="w-full" icon to="/gallery">
+            View all upcoming events | {{ featuredEventsData.length }} |
+            <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
+          </BaseLink>
         </div>
       </div>
     </section>
