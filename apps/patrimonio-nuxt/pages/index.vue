@@ -16,7 +16,7 @@ const featuredArtistData =
   homepageData.value?.featuredArtists?.map((artist) => {
     return {name: artist.name, imgSrc: artist.picture.asset?._id ?? '', slug: artist.slug.current}
   }) ?? []
-const currentActiveFeaturedArtist = ref(0)
+const currentActiveArtist = ref(0)
 
 const formatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
@@ -41,7 +41,7 @@ const featuredEventsData =
 const currentActiveEvent = ref(0)
 
 function change(index: number) {
-  currentActiveFeaturedArtist.value = index
+  currentActiveArtist.value = index
 }
 function previous(index: number) {
   currentActiveEvent.value = index !== 0 ? index - 1 : featuredEventsData.length - 1
@@ -190,27 +190,17 @@ function next(index: number) {
           class="relative flex flex-col gap-2.5 lg:flex-row"
         >
           <div
-            class="relative flex min-h-[400px] w-full max-w-[650px] self-center transition-all duration-300 ease-in-out sm:min-h-[500px] lg:order-2 lg:max-h-[510px] lg:max-w-full lg:flex-1"
+            class="relative flex min-h-[400px] w-full max-w-[650px] self-center sm:min-h-[500px] lg:order-2 lg:max-h-[510px] lg:max-w-full lg:flex-1"
           >
-            <template v-for="(artist, index) in featuredArtistData" :key="artist.slug">
-              <Transition
-                enter-from-class="opacity-0"
-                enter-active-class="transition duration-300 ease-in-out"
-                leave-to-class="opacity-0"
-                leave-active-class="transition duration-300 ease-in-out"
-              >
-                <NuxtImg
-                  v-if="
-                    featuredArtistData[index].slug ===
-                    featuredArtistData[currentActiveFeaturedArtist].slug
-                  "
-                  provider="sanity"
-                  :src="`${artist.imgSrc}`"
-                  :alt="`${artist.name}`"
-                  :class="`pointer-events-none absolute inset-0 m-auto max-h-[400px] w-full object-cover sm:max-h-[500px] lg:max-h-full`"
-                />
-              </Transition>
-            </template>
+            <Transition mode="out-in" name="fade">
+              <NuxtImg
+                :key="currentActiveArtist"
+                provider="sanity"
+                :src="`${featuredArtistData[currentActiveArtist].imgSrc}`"
+                :alt="`${featuredArtistData[currentActiveArtist].name}`"
+                :class="`pointer-events-none absolute inset-0 m-auto max-h-[400px] w-full object-cover sm:max-h-[500px] lg:max-h-full`"
+              />
+            </Transition>
           </div>
           <div
             class="flex w-full gap-2.5 pb-4 text-nowrap max-lg:overflow-x-auto max-lg:[scrollbar-width:none] lg:order-1 lg:flex-1 lg:flex-col lg:justify-center lg:gap-4"
@@ -219,8 +209,7 @@ function next(index: number) {
               v-for="(artist, index) in featuredArtistData"
               :key="featuredArtistData[index].slug"
               :class="`h-fit w-full cursor-pointer ${
-                featuredArtistData[index].slug ===
-                featuredArtistData[currentActiveFeaturedArtist].slug
+                featuredArtistData[index].slug === featuredArtistData[currentActiveArtist].slug
                   ? `font-medium underline underline-offset-12`
                   : ``
               }`"
