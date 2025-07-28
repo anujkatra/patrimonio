@@ -5,6 +5,7 @@ import Arrow from '~/assets/svg/arrow.svg'
 import {ref} from 'vue'
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
+console.log('test', homepageData?.value?.featuredPress)
 
 useSiteMetadata({
   title: homepageData?.value?.seo?.title ?? 'title',
@@ -327,6 +328,40 @@ function next(index: number) {
             Discover an exquisite global collection, thoughtfully presented through curated events,
             exhibitions, and exclusive showcases.
           </p>
+        </div>
+        <div
+          class="grid auto-rows-fr grid-cols-1 gap-x-5 gap-y-[50px] md:grid-cols-2 lg:grid-cols-3"
+        >
+          <NuxtLink
+            v-for="press in homepageData?.featuredPress"
+            :key="press.slug.current"
+            :to="press.slug.current"
+            class="h-full w-full"
+          >
+            <div
+              class="bg-patrimonio-beige col-span-1 flex h-full w-full flex-col justify-between gap-5 border border-black p-5"
+            >
+              <div class="flex">
+                <div class="flex flex-col gap-2.5">
+                  <p class="font-cabinet text-lg/none font-medium tracking-normal">
+                    {{ press.title }}
+                  </p>
+                  <p
+                    class="font-satoshi text-xl/none font-light tracking-normal hover:line-clamp-none"
+                  >
+                    {{ press.excerpt }}
+                  </p>
+                </div>
+                <Arrow class="w-[50px] self-end" :font-controlled="false" />
+              </div>
+              <NuxtImg
+                provider="sanity"
+                :src="`${press.featuredImage.asset?._id}`"
+                :alt="`${press.featuredImage.alt}`"
+                class="h-40 w-full object-cover"
+              />
+            </div>
+          </NuxtLink>
         </div>
       </div>
     </section>

@@ -45,6 +45,15 @@ export const homepageQuery = defineQuery(`*[_type == "homepage"][0] {
 		},
 		"artist":artists[0]->.name,
 	},
+	featuredPress[]->{
+		title,
+		slug,
+		excerpt,
+		featuredImage{
+			...,
+			asset->,
+		},
+	},
 }`)
 
 // export const pageQuery = defineQuery(/* groq */ `

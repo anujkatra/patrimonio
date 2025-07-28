@@ -89,6 +89,48 @@ export type Opengraph = {
   title?: string
 }
 
+export type Press = {
+  _id: string
+  _type: 'press'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  excerpt: string
+}
+
 export type Painting = {
   _id: string
   _type: 'painting'
@@ -448,6 +490,13 @@ export type Homepage = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'event'
   }>
+  featuredPress?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'press'
+  }>
   seo?: Seo
 }
 
@@ -598,6 +647,7 @@ export type AllSanitySchemaTypes =
   | Robots
   | Twitter
   | Opengraph
+  | Press
   | Painting
   | Medium
   | Event
@@ -625,7 +675,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "homepage"][0] {	...,	landingImage{		...,		asset->,	},	featuredCollections[]->{		title,		slug,		paintings[0]->{			picture{				...,				asset->,			}		}	},	featuredPaintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	},	featuredArtists[]->{		name,		slug,		picture{			...,			asset->,		}	},	featuredEvents[]->{		title,		slug,		venue,		dateRange,		pictures[0]{			...,			asset->,		},		"artist":artists[0]->.name,	},}
+// Query: *[_type == "homepage"][0] {	...,	landingImage{		...,		asset->,	},	featuredCollections[]->{		title,		slug,		paintings[0]->{			picture{				...,				asset->,			}		}	},	featuredPaintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	},	featuredArtists[]->{		name,		slug,		picture{			...,			asset->,		}	},	featuredEvents[]->{		title,		slug,		venue,		dateRange,		pictures[0]{			...,			asset->,		},		"artist":artists[0]->.name,	},	featuredPress[]->{		title,		slug,		excerpt,		featuredImage{			...,			asset->,		},	},}
 export type HomepageQueryResult = {
   _id: string
   _type: 'homepage'
@@ -812,6 +862,40 @@ export type HomepageQueryResult = {
     } | null
     artist: string | null
   }> | null
+  featuredPress: Array<{
+    title: string
+    slug: Slug
+    excerpt: string
+    featuredImage: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
   seo?: Seo
 } | null
 
@@ -819,6 +903,6 @@ export type HomepageQueryResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "homepage"][0] {\n\t...,\n\tlandingImage{\n\t\t...,\n\t\tasset->,\n\t},\n\tfeaturedCollections[]->{\n\t\ttitle,\n\t\tslug,\n\t\tpaintings[0]->{\n\t\t\tpicture{\n\t\t\t\t...,\n\t\t\t\tasset->,\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedEvents[]->{\n\t\ttitle,\n\t\tslug,\n\t\tvenue,\n\t\tdateRange,\n\t\tpictures[0]{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t\t"artist":artists[0]->.name,\n\t},\n}': HomepageQueryResult
+    '*[_type == "homepage"][0] {\n\t...,\n\tlandingImage{\n\t\t...,\n\t\tasset->,\n\t},\n\tfeaturedCollections[]->{\n\t\ttitle,\n\t\tslug,\n\t\tpaintings[0]->{\n\t\t\tpicture{\n\t\t\t\t...,\n\t\t\t\tasset->,\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedEvents[]->{\n\t\ttitle,\n\t\tslug,\n\t\tvenue,\n\t\tdateRange,\n\t\tpictures[0]{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t\t"artist":artists[0]->.name,\n\t},\n\tfeaturedPress[]->{\n\t\ttitle,\n\t\tslug,\n\t\texcerpt,\n\t\tfeaturedImage{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t},\n}': HomepageQueryResult
   }
 }
