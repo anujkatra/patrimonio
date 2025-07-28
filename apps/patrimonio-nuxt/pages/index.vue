@@ -5,7 +5,6 @@ import Arrow from '~/assets/svg/arrow.svg'
 import {ref} from 'vue'
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
-console.log('test', homepageData?.value?.featuredPress)
 
 useSiteMetadata({
   title: homepageData?.value?.seo?.title ?? 'title',
@@ -335,9 +334,10 @@ function next(index: number) {
           <NuxtLink
             v-for="press in homepageData?.featuredPress"
             :key="press.slug.current"
-            :to="press.slug.current"
+            :to="`/gallery`"
             class="h-full w-full"
           >
+            <!-- :to="`/press/${press.slug.current}`" -->
             <div
               class="bg-patrimonio-beige col-span-1 flex h-full w-full flex-col justify-between gap-5 border border-black p-5"
             >
