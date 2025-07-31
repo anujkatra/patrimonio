@@ -27,6 +27,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-vue": "^8.6.0",
     "eslint": "^9.0.0",
+    "grid-layout-plus": "^1.1.0",
     "groq": "^3.91.0",
     "nuxt": "^3.17.5",
     "nuxt-svgo": "4.2.2",

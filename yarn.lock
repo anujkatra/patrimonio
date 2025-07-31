@@ -2229,6 +2229,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@floating-ui/core@npm:^1.7.3":
+  version: 1.7.3
+  resolution: "@floating-ui/core@npm:1.7.3"
+  dependencies:
+    "@floating-ui/utils": "npm:^0.2.10"
+  checksum: 10c0/edfc23800122d81df0df0fb780b7328ae6c5f00efbb55bd48ea340f4af8c5b3b121ceb4bb81220966ab0f87b443204d37105abdd93d94846468be3243984144c
+  languageName: node
+  linkType: hard
+
 "@floating-ui/dom@npm:^1.0.0":
   version: 1.7.1
   resolution: "@floating-ui/dom@npm:1.7.1"
@@ -2236,6 +2245,16 @@ __metadata:
     "@floating-ui/core": "npm:^1.7.1"
     "@floating-ui/utils": "npm:^0.2.9"
   checksum: 10c0/33b0e892f4c50ce568169cd58793ff5e3bc1e72ee007237d73b9458d4475e1e5f5a4b3f9e6752422d5f5ac902bc0c135ca7dc0a23c6df187fd9d28dc34cdceed
+  languageName: node
+  linkType: hard
+
+"@floating-ui/dom@npm:^1.7.0":
+  version: 1.7.3
+  resolution: "@floating-ui/dom@npm:1.7.3"
+  dependencies:
+    "@floating-ui/core": "npm:^1.7.3"
+    "@floating-ui/utils": "npm:^0.2.10"
+  checksum: 10c0/cba30e9af1a52fb7cb443ae516d7aec032b33da2fa50914dcb18fc834dc31c71922f5c7653431e70d493f347018b2ce6435c98b3f154d92082345689b4458e59
   languageName: node
   linkType: hard
 
@@ -2248,6 +2267,13 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   checksum: 10c0/e88750ea2fb352264d52d502d3979f94155ce2c8ab9a50862810d0cfc8c8e49cb6bbde466d668736cb38624d089360ef97451397b647408a0eb2c1870234c19a
+  languageName: node
+  linkType: hard
+
+"@floating-ui/utils@npm:^0.2.10":
+  version: 0.2.10
+  resolution: "@floating-ui/utils@npm:0.2.10"
+  checksum: 10c0/e9bc2a1730ede1ee25843937e911ab6e846a733a4488623cd353f94721b05ec2c9ec6437613a2ac9379a94c2fd40c797a2ba6fa1df2716f5ce4aa6ddb1cf9ea4
   languageName: node
   linkType: hard
 
@@ -2518,6 +2544,13 @@ __metadata:
     "@types/node":
       optional: true
   checksum: 10c0/bbaa33c274a10f70d3a587264e1db6dbfcd8c1458d595c54870d1d5b3fc113ab5063203ec12a098485bb9e2fcef1a87d8c6ecd2a6d44ddc575f5c4715379be5e
+  languageName: node
+  linkType: hard
+
+"@interactjs/types@npm:1.10.27":
+  version: 1.10.27
+  resolution: "@interactjs/types@npm:1.10.27"
+  checksum: 10c0/767afe37cd932ed248712dc0aa9c912b18af1104ec26829d655daaeef57d13c8e9e973c9f59e4be978d66fe7e86b77f58dec4688bb2e5d38b838d5a38cb27cf4
   languageName: node
   linkType: hard
 
@@ -5900,6 +5933,26 @@ __metadata:
   version: 0.1.2
   resolution: "@vercel/stega@npm:0.1.2"
   checksum: 10c0/66eb80f286d46806004a2eacd215af80ad3cd443e7a96a6070d390dbb3f4d1f6e063013ec0d196c7fe852721d5dbe62e23b44c32975e36b18cda30e5e0728e04
+  languageName: node
+  linkType: hard
+
+"@vexip-ui/hooks@npm:^2.8.0":
+  version: 2.9.3
+  resolution: "@vexip-ui/hooks@npm:2.9.3"
+  dependencies:
+    "@floating-ui/dom": "npm:^1.7.0"
+    "@juggle/resize-observer": "npm:^3.4.0"
+    "@vexip-ui/utils": "npm:2.16.4"
+  peerDependencies:
+    vue: ^3.2.25
+  checksum: 10c0/b6bebbad1bdb779568ed18d95458c1de2d1adba7818685bf597bca617084b2a33534b8dae2c728aa02dc44425747e4da5ea75ff04cad10058ac460d7d2291851
+  languageName: node
+  linkType: hard
+
+"@vexip-ui/utils@npm:2.16.4, @vexip-ui/utils@npm:^2.16.1":
+  version: 2.16.4
+  resolution: "@vexip-ui/utils@npm:2.16.4"
+  checksum: 10c0/3eff51d3f05d0ee40ec57ba37f7e8d9188380864e2dbcfdef0cec2a4d757fd43f4bea3d5afa77ad072dcc711297981bbba723f75794a046b25114e1194e1d79e
   languageName: node
   linkType: hard
 
@@ -10711,6 +10764,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"grid-layout-plus@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "grid-layout-plus@npm:1.1.0"
+  dependencies:
+    "@vexip-ui/hooks": "npm:^2.8.0"
+    "@vexip-ui/utils": "npm:^2.16.1"
+    interactjs: "npm:^1.10.27"
+  peerDependencies:
+    vue: ^3.0.0
+  checksum: 10c0/9405633d17662803dcea5deff62b20afa7a83e68d5c7e628a6c37edab20c19c2039a4d4ff05b92a230f3ca485e14a4ed047acb2da8c58368ecb788c503f71340
+  languageName: node
+  linkType: hard
+
 "groq-js@npm:^1.16.1, groq-js@npm:^1.17.0":
   version: 1.17.0
   resolution: "groq-js@npm:1.17.0"
@@ -11173,6 +11239,15 @@ __metadata:
     "@types/node":
       optional: true
   checksum: 10c0/926cd50b3adeac55425b5609ce5b1d08b6bd2db103c365ecf64f8b2e8311ab490f43f375128368e6dd26b4b4eaac6e9f4a49e83147815be66d4a3e2a51df5fbb
+  languageName: node
+  linkType: hard
+
+"interactjs@npm:^1.10.27":
+  version: 1.10.27
+  resolution: "interactjs@npm:1.10.27"
+  dependencies:
+    "@interactjs/types": "npm:1.10.27"
+  checksum: 10c0/35532c636fc7cf8273999d314c9738994bfc4a1a384fd64658420055e93456aa6333a865e04b1765d39ee4e29f898854c3f3451a7a88a09141e32115cc6112e2
   languageName: node
   linkType: hard
 
@@ -14516,6 +14591,7 @@ __metadata:
     embla-carousel-autoplay: "npm:^8.6.0"
     embla-carousel-vue: "npm:^8.6.0"
     eslint: "npm:^9.0.0"
+    grid-layout-plus: "npm:^1.1.0"
     groq: "npm:^3.91.0"
     nuxt: "npm:^3.17.5"
     nuxt-svgo: "npm:4.2.2"
