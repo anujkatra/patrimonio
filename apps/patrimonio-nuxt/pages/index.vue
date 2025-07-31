@@ -3,6 +3,12 @@ import {homepageQuery} from '~/sanity/queries'
 import type {HomepageQueryResult} from '~/sanity/types'
 import Arrow from '~/assets/svg/arrow.svg'
 import {ref} from 'vue'
+import emblaCarouselVue from 'embla-carousel-vue'
+import Autoplay from 'embla-carousel-autoplay'
+
+const [emblaRef] = emblaCarouselVue({loop: true}, [
+  Autoplay({delay: 4000, stopOnInteraction: false, stopOnFocusIn: false}),
+])
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
 
@@ -57,13 +63,26 @@ function next(index: number) {
   <main>
     <section class="flex justify-center px-5 py-[50px] md:px-10">
       <div class="flex w-full max-w-[1440px] flex-col gap-5 lg:flex-row">
-        <NuxtImg
+        <div
           v-if="landingCarouselData.length > 0"
-          provider="sanity"
-          :src="`${landingCarouselData[0].picture.asset?._id}`"
-          :alt="`${landingCarouselData[0].picture.alt}`"
-          class="mx-auto w-full max-w-[400px] lg:order-2 lg:flex-1"
-        />
+          ref="emblaRef"
+          class="overflow-hidden lg:order-2 lg:w-fit lg:max-w-[627px] lg:flex-1"
+        >
+          <div class="flex">
+            <div
+              v-for="picture in landingCarouselData"
+              :key="picture.picture.asset?._id"
+              class="flex w-full flex-[0_0_100%] justify-center"
+            >
+              <NuxtImg
+                provider="sanity"
+                :src="`${picture.picture.asset?._id}`"
+                :alt="`${picture.picture.alt}`"
+                class="w-full lg:order-2 lg:max-w-[400px] lg:flex-1"
+              />
+            </div>
+          </div>
+        </div>
         <div
           class="flex w-full flex-col gap-2.5 self-center md:flex-row md:items-center md:gap-0 lg:order-1 lg:max-w-[542px] lg:flex-1 lg:flex-col lg:items-start lg:gap-5"
         >
