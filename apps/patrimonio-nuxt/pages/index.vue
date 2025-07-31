@@ -12,6 +12,8 @@ useSiteMetadata({
   ogImage: '',
 })
 
+const landingCarouselData = homepageData.value?.landingCarousel ?? []
+
 const featuredArtistData =
   homepageData.value?.featuredArtists?.map((artist) => {
     return {name: artist.name, imgSrc: artist.picture.asset?._id ?? '', slug: artist.slug.current}
@@ -56,9 +58,10 @@ function next(index: number) {
     <section class="flex justify-center px-5 py-[50px] md:px-10">
       <div class="flex w-full max-w-[1440px] flex-col gap-5 lg:flex-row">
         <NuxtImg
+          v-if="landingCarouselData.length > 0"
           provider="sanity"
-          :src="`${homepageData?.landingImage.asset?._id}`"
-          :alt="`${homepageData?.landingImage.alt}`"
+          :src="`${landingCarouselData[0].picture.asset?._id}`"
+          :alt="`${landingCarouselData[0].picture.alt}`"
           class="mx-auto w-full max-w-[400px] lg:order-2 lg:flex-1"
         />
         <div

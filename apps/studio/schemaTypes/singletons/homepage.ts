@@ -28,6 +28,22 @@ export const homepage: DocumentDefinition = withSeo({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      title: 'Landing Carousel Paintings',
+      name: 'landingCarousel',
+      type: 'array',
+      description: 'Landing Carousel Paintings (max 20)',
+      validation: (Rule) => Rule.unique().max(20),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'painting'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'landingCta',
       title: 'Landing Call to Action (CTA)',
       type: 'object',
@@ -57,25 +73,6 @@ export const homepage: DocumentDefinition = withSeo({
           ],
         }),
       ],
-    }),
-    defineField({
-      name: 'landingImage',
-      title: 'Landing Image',
-      description: 'Landing Image for the Home Page',
-      type: 'image',
-      fields: [
-        {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative text',
-          description: 'Important for SEO and accessiblity.',
-          validation: (rule) => rule.required(),
-        },
-      ],
-      options: {
-        hotspot: true,
-      },
-      validation: (rule) => rule.required(),
     }),
     defineField({
       title: 'Featured Collections',
