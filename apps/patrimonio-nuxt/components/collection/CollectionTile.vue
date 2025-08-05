@@ -12,7 +12,11 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div :class="twMerge(`group relative h-full max-h-[420px] w-full max-w-[420px]`, props.class)">
+  <div
+    :class="
+      twMerge(`group relative h-full w-full max-lg:max-h-[420px] max-md:max-w-[420px]`, props.class)
+    "
+  >
     <div class="size-full lg:hidden">
       <NuxtLink :to="props.slug" class="w-full">
         <NuxtImg
@@ -28,7 +32,7 @@ const props = defineProps<{
         provider="sanity"
         :src="`${props.imageSrc._id}`"
         :alt="`${props.title} Collection`"
-        class="size-full transition-all duration-300 group-hover:brightness-[40%]"
+        class="size-full object-cover transition-all duration-300 group-hover:brightness-[40%] lg:object-center"
       />
       <BaseLink
         variant="secondary"

@@ -81,6 +81,15 @@ function previous(index: number) {
 function next(index: number) {
   currentActiveEvent.value = index !== featuredEventsData.length - 1 ? index + 1 : 0
 }
+
+const featuredCollectionsLayout = [
+  'lg:row-span-7',
+  'lg:row-span-6',
+  'lg:row-span-5',
+  'lg:row-span-5 lg:col-start-1',
+  'lg:row-span-4 lg:row-start-9 lg:col-start-2',
+  'lg:row-span-7 lg:row-start-6 lg:col-start-3',
+]
 </script>
 
 <template>
@@ -130,7 +139,7 @@ function next(index: number) {
     </section>
 
     <section class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10">
-      <div class="flex w-full max-w-[1440px] flex-col gap-5">
+      <div class="flex w-full max-w-[1300px] flex-col gap-5">
         <div class="flex flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
@@ -142,11 +151,11 @@ function next(index: number) {
             exhibitions, and exclusive showcases.
           </p>
         </div>
-        <div class="grid grid-cols-2 gap-2.5">
+        <div class="grid grid-cols-2 gap-2.5 md:gap-5 lg:auto-rows-[40px] lg:grid-cols-3">
           <div
             v-for="(collection, index) in homepageData?.featuredCollections"
             :key="index"
-            class="col-span-1 flex size-full"
+            :class="`col-span-1 flex size-full ${featuredCollectionsLayout[index]}`"
           >
             <CollectionTile
               v-if="collection?.paintings?.picture?.asset != null"
@@ -156,7 +165,12 @@ function next(index: number) {
             />
             <!-- :slug="collection.slug.current" -->
           </div>
-          <BaseLink variant="secondary" class="col-span-2 w-full lg:mx-auto" icon to="/gallery">
+          <BaseLink
+            variant="secondary"
+            class="col-span-1 h-full min-h-[60px] w-full lg:col-start-2 lg:row-span-2 lg:row-start-7"
+            icon
+            to="/gallery"
+          >
             View All
             <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
           </BaseLink>
