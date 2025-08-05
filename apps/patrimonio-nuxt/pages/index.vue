@@ -95,11 +95,11 @@ const featuredCollectionsLayout = [
 <template>
   <main>
     <section class="flex justify-center px-5 py-[50px] md:px-10">
-      <div class="flex w-full max-w-[1440px] flex-col gap-5 lg:flex-row">
+      <div class="flex w-full max-w-[1440px] flex-col items-center gap-5 lg:flex-row">
         <div
           v-if="landingCarouselData.length > 0"
           ref="emblaRef"
-          class="overflow-hidden lg:order-2 lg:w-fit lg:max-w-[627px] lg:flex-1"
+          class="max-w-xl overflow-hidden lg:order-2 lg:w-fit lg:max-w-[627px] lg:flex-1"
         >
           <div class="flex">
             <div
@@ -167,11 +167,11 @@ const featuredCollectionsLayout = [
           </div>
           <BaseLink
             variant="secondary"
-            class="col-span-1 h-full min-h-[60px] w-full lg:col-start-2 lg:row-span-2 lg:row-start-7"
+            class="col-span-2 h-full min-h-[60px] w-full md:col-span-1 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-7"
             icon
             to="/gallery"
           >
-            View All
+            View All &nbsp;| {{ homepageData?.featuredCollections?.length ?? '' }} |
             <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
           </BaseLink>
         </div>
@@ -358,7 +358,7 @@ const featuredCollectionsLayout = [
               </div>
               <div class="hidden lg:block">
                 <BaseLink variant="primary" class="bg-patrimonio-beige w-full" icon to="/gallery">
-                  View all upcoming events | {{ featuredEventsData.length }} |
+                  View all upcoming events &nbsp;| {{ featuredEventsData.length }} |
                   <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
                 </BaseLink>
               </div>
@@ -367,7 +367,7 @@ const featuredCollectionsLayout = [
         </div>
         <div class="lg:hidden">
           <BaseLink variant="secondary" class="w-full" icon to="/gallery">
-            View all upcoming events | {{ featuredEventsData.length }} |
+            View all upcoming events &nbsp;| {{ featuredEventsData.length }} |
             <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
           </BaseLink>
         </div>

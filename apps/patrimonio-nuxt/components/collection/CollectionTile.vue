@@ -34,15 +34,17 @@ const props = defineProps<{
         :alt="`${props.title} Collection`"
         class="size-full object-cover transition-all duration-300 group-hover:brightness-[40%] lg:object-center"
       />
-      <BaseLink
-        variant="secondary"
-        class="absolute bottom-10 z-[1] mx-5 hidden w-full max-w-[380px] transition-all duration-300 ease-in group-hover:inline-flex"
-        :to="props.slug"
-        icon
-      >
-        {{ props.title }}
-        <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
-      </BaseLink>
+      <div class="relative w-full">
+        <BaseLink
+          variant="secondary"
+          class="absolute bottom-10 z-[1] mx-5 hidden w-full max-w-[380px] transition-all duration-300 ease-in group-hover:inline-flex"
+          :to="props.slug"
+          icon
+        >
+          {{ props.title }}
+          <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
+        </BaseLink>
+      </div>
     </div>
   </div>
 </template>
