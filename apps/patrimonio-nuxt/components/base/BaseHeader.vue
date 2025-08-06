@@ -64,18 +64,18 @@ onBeforeUnmount(() => {
   <header class="font-satoshi sticky top-0 z-50 bg-white text-[#202020]">
     <nav :class="`relative w-full overflow-y-auto ${isMobileMenuOpen ? `min-h-screen` : ``}`">
       <div
-        class="flex justify-between border-b-[0.5px] border-[#202020] px-5 pt-[50px] pb-5 xl:h-[70px] xl:gap-10 xl:px-[70px] xl:py-5"
+        class="flex justify-between border-b-[0.5px] border-[#202020] px-5 pt-[50px] pb-5 md:px-10 xl:h-[70px] xl:gap-10 xl:px-[70px] xl:py-5"
       >
         <NuxtLink class="flex items-center gap-2" to="/">
           <NuxtImg
-            src="/logo.jpg"
+            src="/logo.png"
             class="h-8 w-full max-w-[170px] md:h-[35px] md:max-w-[191px]"
             @click="closeMenu"
           />
         </NuxtLink>
         <ul
           role="list"
-          class="hidden items-center gap-8 text-base leading-none font-normal lg:flex 2xl:gap-10"
+          class="hidden items-center gap-6 text-base leading-none font-normal lg:flex xl:gap-8 2xl:gap-10"
         >
           <li v-for="(header, index) in headerContent" :key="index">
             <NuxtLink

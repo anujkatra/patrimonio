@@ -94,7 +94,7 @@ const featuredCollectionsLayout = [
 
 <template>
   <main>
-    <section class="flex justify-center px-5 py-[50px] md:px-10">
+    <section class="flex justify-center px-5 py-[50px] md:px-10 xl:px-[70px]">
       <div class="flex w-full max-w-[1440px] flex-col items-center gap-5 lg:flex-row">
         <div
           v-if="landingCarouselData.length > 0"
@@ -138,8 +138,10 @@ const featuredCollectionsLayout = [
       </div>
     </section>
 
-    <section class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10">
-      <div class="flex w-full max-w-[1300px] flex-col gap-5">
+    <section
+      class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 xl:px-[70px]"
+    >
+      <div class="flex w-full max-w-[1440px] flex-col gap-5">
         <div class="flex flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
@@ -162,6 +164,7 @@ const featuredCollectionsLayout = [
               :title="collection.title"
               slug="/gallery"
               :image-src="collection?.paintings?.picture?.asset"
+              class="max-md:aspect-square"
             />
             <!-- :slug="collection.slug.current" -->
           </div>
@@ -189,9 +192,9 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
-      class="flex w-full flex-col gap-5 overflow-hidden border-t-[0.5px] border-[#202020] py-[50px] pl-5 md:pl-10"
+      class="flex w-full flex-col gap-5 overflow-hidden border-t-[0.5px] border-[#202020] py-[50px] pl-5 md:pl-10 xl:pl-[70px]"
     >
-      <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5 pr-5 md:pr-10">
+      <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5 pr-5 md:pr-10 xl:pr-[70px]">
         <h2
           class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
         >
@@ -204,7 +207,7 @@ const featuredCollectionsLayout = [
       </div>
       <div class="mx-auto w-full max-w-[1440px]">
         <div
-          class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 [scrollbar-width:thin] md:pr-10"
+          class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 [scrollbar-width:thin] md:pr-10 xl:pr-[70px]"
         >
           <template v-for="(painting, index) in homepageData?.featuredPaintings" :key="index">
             <PaintingTile
@@ -243,7 +246,7 @@ const featuredCollectionsLayout = [
         src="/hp-artist-bg-desktop.png"
         class="pointer-events-none absolute hidden size-full xl:block"
       />
-      <div class="flex w-full max-w-[1440px] flex-col gap-5 px-5 py-[50px] md:px-10">
+      <div class="flex w-full max-w-[1440px] flex-col gap-5 px-5 py-[50px] md:px-10 xl:px-[70px]">
         <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
@@ -292,7 +295,9 @@ const featuredCollectionsLayout = [
       </div>
     </section>
 
-    <section class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10">
+    <section
+      class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 xl:px-[70px]"
+    >
       <div class="flex w-full max-w-[1440px] flex-col gap-5">
         <div class="flex flex-col gap-2.5">
           <h2
@@ -374,7 +379,9 @@ const featuredCollectionsLayout = [
       </div>
     </section>
 
-    <section class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10">
+    <section
+      class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 xl:px-[70px]"
+    >
       <div class="flex w-full max-w-[1440px] flex-col gap-[50px]">
         <div class="flex flex-col gap-2.5">
           <h2
@@ -427,7 +434,7 @@ const featuredCollectionsLayout = [
   </main>
 </template>
 
-<style>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease-in-out;
@@ -439,7 +446,7 @@ const featuredCollectionsLayout = [
 }
 </style>
 
-<style scoped>
+<!-- <style scoped>
 .vgl-layout {
   background-color: #eee;
 }
@@ -466,4 +473,4 @@ const featuredCollectionsLayout = [
   font-size: 24px;
   text-align: center;
 }
-</style>
+</style> -->
