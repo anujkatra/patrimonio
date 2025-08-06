@@ -276,14 +276,14 @@ const featuredCollectionsLayout = [
             </Transition>
           </div>
           <div
-            class="flex w-full gap-2.5 pb-4 text-nowrap max-lg:overflow-x-auto max-lg:[scrollbar-width:none] lg:order-1 lg:flex-1 lg:flex-col lg:justify-center lg:gap-4"
+            class="flex w-full gap-5 pb-4 text-nowrap max-lg:overflow-x-auto max-lg:[scrollbar-width:none] lg:order-1 lg:flex-1 lg:flex-col lg:justify-center"
           >
             <button
               v-for="(artist, index) in featuredArtistData"
               :key="featuredArtistData[index].slug"
-              :class="`h-fit w-full cursor-pointer ${
+              :class="`font-satoshi h-fit w-full cursor-pointer py-2.5 text-lg leading-none font-normal md:text-[22px] ${
                 featuredArtistData[index].slug === featuredArtistData[currentActiveArtist].slug
-                  ? `font-medium underline underline-offset-12`
+                  ? `font-semibold underline underline-offset-10`
                   : ``
               }`"
               @click="change(index)"
