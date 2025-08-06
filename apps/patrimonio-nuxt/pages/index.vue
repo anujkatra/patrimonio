@@ -95,23 +95,25 @@ const featuredCollectionsLayout = [
 <template>
   <main>
     <section class="flex justify-center px-5 py-[50px] md:px-10 xl:px-[70px]">
-      <div class="flex w-full max-w-[1440px] flex-col items-center gap-5 lg:flex-row">
+      <div
+        class="flex w-full max-w-[1440px] flex-col items-center gap-5 lg:flex-row lg:justify-between"
+      >
         <div
           v-if="landingCarouselData.length > 0"
           ref="emblaRef"
-          class="max-w-xl overflow-hidden lg:order-2 lg:w-fit lg:max-w-[627px] lg:flex-1"
+          class="overflow-hidden lg:order-2 lg:flex-1"
         >
           <div class="flex">
             <div
               v-for="picture in landingCarouselData"
               :key="picture.picture.asset?._id"
-              class="flex w-full flex-[0_0_100%] justify-center"
+              class="flex flex-[0_0_100%] justify-end"
             >
               <NuxtImg
                 provider="sanity"
                 :src="`${picture.picture.asset?._id}`"
                 :alt="`${picture.picture.alt}`"
-                class="w-full lg:order-2 lg:max-w-[400px] lg:flex-1"
+                class="lg:max-w-[400px]"
               />
             </div>
           </div>
