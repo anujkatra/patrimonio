@@ -170,7 +170,7 @@ const featuredCollectionsLayout = [
           </div>
           <BaseLink
             variant="secondary"
-            class="col-span-2 h-full min-h-[60px] w-full md:col-span-1 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-7"
+            class="col-span-2 h-full min-h-[60px] w-full lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-7"
             icon
             to="/gallery"
           >
@@ -205,7 +205,7 @@ const featuredCollectionsLayout = [
           exhibitions, and exclusive showcases.
         </p>
       </div>
-      <div class="mx-auto w-full max-w-[1440px]">
+      <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-5">
         <div
           class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 [scrollbar-width:thin] md:pr-10 xl:pr-[70px]"
         >
@@ -229,6 +229,12 @@ const featuredCollectionsLayout = [
               :image-src="painting.picture.asset"
             />
           </template>
+        </div>
+        <div class="flex w-full pr-5 md:justify-end md:pr-10 xl:pr-[70px]">
+          <BaseLink variant="secondary" class="w-full" icon to="/gallery">
+            View All
+            <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
+          </BaseLink>
         </div>
       </div>
     </section>
