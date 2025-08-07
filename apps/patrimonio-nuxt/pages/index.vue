@@ -413,7 +413,7 @@ const featuredCollectionsLayout = [
           >
             <!-- :to="`/press/${press.slug.current}`" -->
             <div
-              class="bg-patrimonio-beige col-span-1 flex h-full w-full flex-col justify-between gap-5 border border-black p-5"
+              class="bg-patrimonio-beige col-span-1 flex h-full w-full max-w-[350px] flex-col justify-between gap-5 border border-black p-5 md:max-w-[462px] lg:max-w-[420px]"
             >
               <div class="flex">
                 <div class="flex flex-col gap-2.5">
