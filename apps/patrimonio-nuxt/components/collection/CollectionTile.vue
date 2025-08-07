@@ -34,10 +34,10 @@ const props = defineProps<{
         :alt="`${props.title} Collection`"
         class="size-full object-cover transition-all duration-300 group-hover:brightness-[40%] lg:object-center"
       />
-      <div class="relative w-full">
+      <div class="absolute bottom-10 z-[1] mx-auto flex w-full justify-center">
         <BaseLink
           variant="secondary"
-          class="absolute bottom-10 z-[1] mx-5 hidden w-full max-w-[380px] transition-all duration-300 ease-in group-hover:inline-flex"
+          class="hidden w-full max-w-[380px] transition-all duration-300 ease-in group-hover:inline-flex lg:mx-4 lg:max-xl:px-5 lg:max-xl:py-[15px] lg:max-xl:pr-[30px] lg:max-xl:text-lg/none lg:max-xl:hover:pr-5 xl:mx-5"
           :to="props.slug"
           icon
         >
