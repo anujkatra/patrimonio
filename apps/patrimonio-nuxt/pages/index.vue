@@ -172,7 +172,7 @@ const featuredCollectionsLayout = [
           </div>
           <BaseLink
             variant="secondary"
-            class="col-span-2 h-full min-h-[60px] w-full lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-7"
+            class="col-span-2 h-full min-h-[60px] w-full lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-7 lg:max-w-[unset]"
             icon
             to="/gallery"
           >
