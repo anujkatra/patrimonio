@@ -94,7 +94,7 @@ const featuredCollectionsLayout = [
 
 <template>
   <main>
-    <section class="flex justify-center px-5 py-[50px] md:px-10 xl:px-[70px]">
+    <section class="flex justify-center px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]">
       <div
         class="flex w-full max-w-[1440px] flex-col items-center gap-5 lg:flex-row lg:justify-between"
       >
@@ -141,7 +141,7 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
-      class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 xl:px-[70px]"
+      class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
     >
       <div class="flex w-full max-w-[1440px] flex-col gap-5">
         <div class="flex flex-col gap-2.5">
@@ -194,7 +194,7 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
-      class="flex w-full flex-col gap-5 overflow-hidden border-t-[0.5px] border-[#202020] py-[50px] pl-5 md:pl-10 xl:pl-[70px]"
+      class="flex w-full flex-col gap-5 overflow-hidden border-t-[0.5px] border-[#202020] py-[50px] pl-5 md:py-[70px] md:pl-10 xl:pl-[70px]"
     >
       <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5 pr-5 md:pr-10 xl:pr-[70px]">
         <h2
@@ -254,7 +254,9 @@ const featuredCollectionsLayout = [
         src="/hp-artist-bg-desktop.png"
         class="pointer-events-none absolute hidden size-full xl:block"
       />
-      <div class="flex w-full max-w-[1440px] flex-col gap-5 px-5 py-[50px] md:px-10 xl:px-[70px]">
+      <div
+        class="flex w-full max-w-[1440px] flex-col gap-5 px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
+      >
         <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
@@ -304,7 +306,7 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
-      class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 xl:px-[70px]"
+      class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
     >
       <div class="flex w-full max-w-[1440px] flex-col gap-5">
         <div class="flex flex-col gap-2.5">
@@ -388,7 +390,7 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
-      class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 xl:px-[70px]"
+      class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
     >
       <div class="flex w-full max-w-[1440px] flex-col gap-[50px]">
         <div class="flex flex-col gap-2.5">
