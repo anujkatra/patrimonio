@@ -413,7 +413,7 @@ const featuredCollectionsLayout = [
           >
             <!-- :to="`/press/${press.slug.current}`" -->
             <div
-              class="bg-patrimonio-beige col-span-1 flex h-full w-full max-w-[350px] flex-col justify-between gap-5 border border-black p-5 md:max-w-[462px] lg:max-w-[420px]"
+              class="bg-patrimonio-beige col-span-1 flex h-full w-full max-w-[350px] flex-col justify-between gap-5 border border-black p-5 md:max-w-[462px] lg:h-[470px] lg:max-w-[420px] lg:justify-between lg:py-[30px]"
             >
               <div class="flex">
                 <div class="flex flex-col gap-2.5">
@@ -426,13 +426,13 @@ const featuredCollectionsLayout = [
                     {{ press.excerpt }}
                   </p>
                 </div>
-                <Arrow class="w-[50px] self-end" :font-controlled="false" />
+                <Arrow class="w-[50px] self-end lg:hidden" :font-controlled="false" />
               </div>
               <NuxtImg
                 provider="sanity"
                 :src="`${press.featuredImage.asset?._id}`"
                 :alt="`${press.featuredImage.alt}`"
-                class="h-40 w-full object-cover"
+                class="h-40 w-full object-cover lg:h-60"
               />
             </div>
           </NuxtLink>
