@@ -30,7 +30,7 @@ import Autoplay from 'embla-carousel-autoplay'
 //   {x: 2, y: 6, w: 2, h: 2, i: '19', static: false},
 // ])
 
-const [emblaRef] = emblaCarouselVue({loop: true}, [
+const [emblaRef] = emblaCarouselVue({loop: true, watchDrag: false}, [
   Autoplay({delay: 4000, stopOnInteraction: false, stopOnFocusIn: false}),
 ])
 
