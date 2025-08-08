@@ -15,6 +15,7 @@ import {opengraph} from './objects/seo/opengraph'
 import {robots} from './objects/seo/robots'
 import {twitter} from './objects/seo/twitter'
 import {collection} from './documents/collection'
+import {press} from './documents/press'
 
 export const schemaTypes = [
   // Singletons
@@ -30,6 +31,7 @@ export const schemaTypes = [
   event,
   medium,
   painting,
+  press,
   // Objects
   dateRange,
   seo,
