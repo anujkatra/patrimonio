@@ -207,7 +207,7 @@ const featuredCollectionsLayout = [
           exhibitions, and exclusive showcases.
         </p>
       </div>
-      <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-5">
+      <div class="mx-auto flex w-full max-w-[1440px] flex-col justify-between gap-5">
         <div
           class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 [scrollbar-width:thin] md:pr-10 xl:pr-[70px]"
         >
