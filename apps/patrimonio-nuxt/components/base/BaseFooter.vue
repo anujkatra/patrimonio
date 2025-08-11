@@ -12,7 +12,9 @@ const footerContent = {
   <footer
     class="bg-patrimonio-beige font-satoshi flex w-full flex-col gap-[50px] border-t-[0.5px] border-[#202020] px-5 pt-[50px] pb-[30px] text-[#202020] md:gap-[65px] md:px-10 md:pt-[70px] xl:px-[70px]"
   >
-    <div class="flex flex-col gap-[50px] sm:flex-row sm:justify-between">
+    <div
+      class="mx-auto flex w-full max-w-[1440px] flex-col gap-[50px] sm:flex-row sm:justify-between"
+    >
       <NuxtLink to="/" class="w-full sm:max-w-[341px] 2xl:max-w-[523px]">
         <NuxtImg src="/logo.png" alt="Website Logo" class="w-full" />
       </NuxtLink>
