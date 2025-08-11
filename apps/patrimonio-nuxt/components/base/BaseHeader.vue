@@ -66,7 +66,7 @@ onBeforeUnmount(() => {
   >
     <nav :class="`relative w-full overflow-y-auto ${isMobileMenuOpen ? `min-h-screen` : ``}`">
       <div
-        :class="`mx-auto flex w-full max-w-[1580px] justify-between px-5 pt-[50px] pb-5 md:px-10 xl:h-[70px] xl:gap-10 xl:px-[70px] xl:py-5 ${isMobileMenuOpen ? `border-b-[0.5px] border-[#202020]` : ``}`"
+        :class="`mx-auto flex w-full max-w-[1440px] justify-between px-5 pt-[50px] pb-5 md:px-10 xl:h-[70px] xl:gap-10 xl:px-[70px] xl:py-5 ${isMobileMenuOpen ? `border-b-[0.5px] border-[#202020]` : ``}`"
       >
         <NuxtLink class="flex items-center gap-2" to="/">
           <NuxtImg

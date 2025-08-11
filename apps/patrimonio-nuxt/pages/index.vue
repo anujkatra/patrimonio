@@ -96,7 +96,7 @@ const featuredCollectionsLayout = [
   <main>
     <section class="flex justify-center px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]">
       <div
-        class="flex w-full max-w-[1440px] flex-col items-center gap-5 lg:flex-row lg:justify-between"
+        class="flex w-full max-w-[1300px] flex-col items-center gap-5 lg:flex-row lg:justify-between"
       >
         <div
           v-if="landingCarouselData.length > 0"
@@ -143,7 +143,7 @@ const featuredCollectionsLayout = [
     <section
       class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
     >
-      <div class="flex w-full max-w-[1440px] flex-col gap-5">
+      <div class="flex w-full max-w-[1300px] flex-col gap-5">
         <div class="flex flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
@@ -194,9 +194,9 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
-      class="flex w-full flex-col gap-5 overflow-hidden border-t-[0.5px] border-[#202020] py-[50px] pl-5 md:py-[70px] md:pl-10 xl:pl-[70px]"
+      class="flex w-full flex-col items-center justify-center gap-5 overflow-hidden border-t-[0.5px] border-[#202020] py-[50px] pl-5 md:py-[70px] md:pl-10 xl:pl-[70px]"
     >
-      <div class="mx-auto flex w-full max-w-[1440px] flex-col gap-2.5 pr-5 md:pr-10 xl:pr-[70px]">
+      <div class="mx-auto flex w-full max-w-[1370px] flex-col gap-2.5 pr-5 md:pr-10 xl:pr-[70px]">
         <h2
           class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
         >
@@ -207,7 +207,7 @@ const featuredCollectionsLayout = [
           exhibitions, and exclusive showcases.
         </p>
       </div>
-      <div class="mx-auto flex w-full max-w-[1440px] flex-col justify-between gap-5">
+      <div class="mx-auto flex w-full max-w-[1370px] flex-col justify-between gap-5">
         <div
           class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 [scrollbar-width:thin] md:pr-10 xl:pr-[70px]"
         >
@@ -308,7 +308,7 @@ const featuredCollectionsLayout = [
     <section
       class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
     >
-      <div class="flex w-full max-w-[1440px] flex-col gap-5">
+      <div class="flex w-full max-w-[1300px] flex-col gap-5">
         <div class="flex flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
@@ -392,7 +392,7 @@ const featuredCollectionsLayout = [
     <section
       class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
     >
-      <div class="flex w-full max-w-[1440px] flex-col gap-[50px]">
+      <div class="flex w-full max-w-[1300px] flex-col gap-[50px]">
         <div class="flex flex-col gap-2.5">
           <h2
             class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
