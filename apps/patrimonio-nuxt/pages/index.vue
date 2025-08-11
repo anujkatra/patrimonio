@@ -107,34 +107,36 @@ const featuredCollectionsLayout = [
             <div
               v-for="picture in landingCarouselData"
               :key="picture.picture.asset?._id"
-              class="flex flex-[0_0_100%] justify-end"
+              class="ml-5 flex w-full flex-[0_0_100%] justify-end"
             >
               <NuxtImg
                 provider="sanity"
                 :src="`${picture.picture.asset?._id}`"
                 :alt="`${picture.picture.alt}`"
-                class="lg:max-w-[400px]"
+                class="aspect-square lg:max-w-[400px]"
               />
             </div>
           </div>
         </div>
-        <div
-          class="flex w-full flex-col gap-2.5 self-center md:flex-row md:items-center md:gap-0 lg:order-1 lg:max-w-[542px] lg:flex-1 lg:flex-col lg:items-start lg:gap-5"
-        >
-          <p
-            class="font-cabinet text-[35px] leading-none font-normal tracking-normal md:flex-1 lg:text-[50px]"
+        <div class="flex w-full self-center lg:order-1 lg:flex-1">
+          <div
+            class="flex w-full flex-col gap-2.5 md:flex-row md:items-center md:gap-0 lg:max-w-[542px] lg:flex-col lg:items-start lg:gap-5"
           >
-            Curating <br class="hidden md:block" />
-            Masterpieces,<br class="hidden md:block" />
-            Celebrating Artists
-          </p>
-          <div class="flex flex-col gap-5 md:flex-1">
-            <p class="font-satoshi text-lg leading-none font-light tracking-normal">
-              {{ homepageData?.landingText }}
+            <p
+              class="font-cabinet text-[35px] leading-none font-normal tracking-normal md:flex-1 lg:text-[50px]"
+            >
+              Curating <br class="hidden md:block" />
+              Masterpieces,<br class="hidden md:block" />
+              Celebrating Artists
             </p>
-            <BaseLink variant="secondary" class="w-full" icon to="/gallery">
-              <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
-            </BaseLink>
+            <div class="flex flex-col gap-5 md:flex-1">
+              <p class="font-satoshi text-lg leading-none font-light tracking-normal">
+                {{ homepageData?.landingText }}
+              </p>
+              <BaseLink variant="secondary" class="w-full" icon to="/gallery">
+                <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
+              </BaseLink>
+            </div>
           </div>
         </div>
       </div>
