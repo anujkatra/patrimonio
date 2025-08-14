@@ -376,6 +376,13 @@ export type Artists = {
   _rev: string
   title: string
   subtitle?: string
+  featuredArtists?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'artist'
+  }>
   seo?: Seo
 }
 
@@ -894,11 +901,89 @@ export type HomepageQueryResult = {
   }> | null
   seo?: Seo
 } | null
+// Variable: artistsPageQuery
+// Query: *[_type == "artists"][0] {	...,	featuredArtists[]->{		name,		slug,		location,		picture{			...,			...asset-> {    			caption,    			...metadata {      				lqip, // the lqip can be used for blurHashUrl or other low-quality placeholders      				...dimensions {        				width,        				height      				}    			}  			}		}	},}
+export type ArtistsPageQueryResult = {
+  _id: string
+  _type: 'artists'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  featuredArtists: Array<{
+    name: string
+    slug: Slug
+    location: string
+    picture:
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          caption: null
+          lqip: string | null
+          width: number | null
+          height: number | null
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          caption: null
+          lqip: string | null
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          caption: null
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        }
+  }> | null
+  seo?: Seo
+} | null
 
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "homepage"][0] {\n\t...,\n\tlandingCarousel[]->{\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedCollections[]->{\n\t\ttitle,\n\t\tslug,\n\t\tpaintings[0]->{\n\t\t\tpicture{\n\t\t\t\t...,\n\t\t\t\tasset->,\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedEvents[]->{\n\t\ttitle,\n\t\tslug,\n\t\tvenue,\n\t\tdateRange,\n\t\tpictures[0]{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t\t"artist":artists[0]->.name,\n\t},\n\tfeaturedPress[]->{\n\t\ttitle,\n\t\tslug,\n\t\texcerpt,\n\t\tfeaturedImage{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t},\n}': HomepageQueryResult
+    '*[_type == "artists"][0] {\n\t...,\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tlocation,\n\t\tpicture{\n\t\t\t...,\n\t\t\t...asset-> {\n    \t\t\tcaption,\n    \t\t\t...metadata {\n      \t\t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n      \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n      \t\t\t\t}\n    \t\t\t}\n  \t\t\t}\n\t\t}\n\t},\n}': ArtistsPageQueryResult
   }
 }
