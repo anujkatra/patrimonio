@@ -13,3 +13,20 @@
   --color-patrimonio-red: #d6332e;
   --color-patrimonio-beige: #fcfbf7;
 }
+
+/* @layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #ffffff;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 100vh;
+  }
+} */

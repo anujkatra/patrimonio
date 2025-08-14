@@ -28,6 +28,22 @@ export const homepage: DocumentDefinition = withSeo({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      title: 'Landing Carousel Paintings',
+      name: 'landingCarousel',
+      type: 'array',
+      description: 'Landing Carousel Paintings (max 20)',
+      validation: (Rule) => Rule.unique().max(20),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'painting'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'landingCta',
       title: 'Landing Call to Action (CTA)',
       type: 'object',
@@ -59,23 +75,20 @@ export const homepage: DocumentDefinition = withSeo({
       ],
     }),
     defineField({
-      name: 'landingImage',
-      title: 'Landing Image',
-      description: 'Landing Image for the Home Page',
-      type: 'image',
-      fields: [
+      title: 'Featured Collections',
+      name: 'featuredCollections',
+      type: 'array',
+      description: 'Featured Collections (max 6)',
+      validation: (Rule) => Rule.unique().max(6),
+      of: [
         {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative text',
-          description: 'Important for SEO and accessiblity.',
-          validation: (rule) => rule.required(),
+          type: 'reference',
+          to: [{type: 'collection'}],
+          options: {
+            disableNew: true,
+          },
         },
       ],
-      options: {
-        hotspot: true,
-      },
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'featuredSection',
@@ -101,6 +114,22 @@ export const homepage: DocumentDefinition = withSeo({
       ],
     }),
     defineField({
+      title: 'Featured Artists',
+      name: 'featuredArtists',
+      type: 'array',
+      description: 'Featured Artists (max 5)',
+      validation: (Rule) => Rule.unique().max(5),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'artist'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
+    defineField({
       title: 'Featured Events',
       name: 'featuredEvents',
       type: 'array',
@@ -110,6 +139,22 @@ export const homepage: DocumentDefinition = withSeo({
         {
           type: 'reference',
           to: [{type: 'event'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
+    defineField({
+      title: 'Featured Press and Media',
+      name: 'featuredPress',
+      type: 'array',
+      description: 'Featured Press and Media (max 6)',
+      validation: (Rule) => Rule.unique().max(6),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'press'}],
           options: {
             disableNew: true,
           },

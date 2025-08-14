@@ -1,18 +1,18 @@
 import {defineArrayMember, defineField, DocumentDefinition} from 'sanity'
-import {UserIcon} from '@sanity/icons'
+import {DocumentIcon} from '@sanity/icons'
 
-export const artist: DocumentDefinition = {
-  name: 'artist',
-  title: 'Artist',
+export const press: DocumentDefinition = {
+  name: 'press',
+  title: 'Press and Media',
   type: 'document',
-  icon: UserIcon,
+  icon: DocumentIcon,
   fields: [
     defineField({
-      name: 'name',
-      title: 'Full Name',
+      name: 'title',
+      title: 'Title',
       type: 'string',
       validation: (Rule) =>
-        Rule.required().max(200).warning(`A name shouldn't be more than 200 characters.`),
+        Rule.required().max(200).warning(`A title shouldn't be more than 200 characters.`),
     }),
     defineField({
       name: 'slug',
@@ -22,16 +22,10 @@ export const artist: DocumentDefinition = {
       //   return !currentUser?.roles.find(({name}) => name === 'administrator')
       // },
       options: {
-        source: 'name',
+        source: 'title',
         slugify: (input) => input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'location',
-      title: 'Location',
-      type: 'string',
-      validation: (Rule) => Rule.required().max(200),
     }),
     defineField({
       name: 'description',
@@ -45,8 +39,8 @@ export const artist: DocumentDefinition = {
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'picture',
-      title: 'Picture',
+      name: 'featuredImage',
+      title: 'Featured Image',
       type: 'image',
       fields: [
         {
@@ -73,22 +67,14 @@ export const artist: DocumentDefinition = {
       name: 'excerpt',
       title: 'Excerpt',
       type: 'text',
-      description: 'A short description of the artist displayed on other pages',
+      description: 'A short description to be displayed on other pages',
       validation: (Rule) => Rule.required(),
     }),
   ],
-  orderings: [
-    {
-      title: 'Name, Alphabetical',
-      name: 'nameAlphabetical',
-      by: [{field: 'name', direction: 'asc'}],
-    },
-  ],
   preview: {
     select: {
-      title: 'name',
-      subtitle: 'location',
-      media: 'picture',
+      title: 'title',
+      media: 'featuredImage',
     },
   },
 }
