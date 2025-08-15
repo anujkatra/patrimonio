@@ -58,6 +58,28 @@ export const homepageQuery = defineQuery(`*[_type == "homepage"][0] {
 	},
 }`)
 
+export const artistsPageQuery = defineQuery(`*[_type == "artists"][0] {
+	...,
+	featuredArtists[]->{
+		name,
+		slug,
+		location,
+		picture{
+			...,
+			...asset-> {
+    			caption,
+    			...metadata {
+      				lqip, // the lqip can be used for blurHashUrl or other low-quality placeholders
+      				...dimensions {
+        				width,
+        				height
+      				}
+    			}
+  			}
+		}
+	},
+}`)
+
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
 // 			...,
