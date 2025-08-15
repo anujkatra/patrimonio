@@ -1,7 +1,8 @@
 import {defineArrayMember, defineField, DocumentDefinition} from 'sanity'
 import {UserIcon} from '@sanity/icons'
+import {withSeo} from '../../helpers/document'
 
-export const artist: DocumentDefinition = {
+export const artist: DocumentDefinition = withSeo({
   name: 'artist',
   title: 'Artist',
   type: 'document',
@@ -91,4 +92,4 @@ export const artist: DocumentDefinition = {
       media: 'picture',
     },
   },
-}
+})
