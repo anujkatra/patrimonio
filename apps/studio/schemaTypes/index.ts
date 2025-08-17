@@ -16,6 +16,7 @@ import {robots} from './objects/seo/robots'
 import {twitter} from './objects/seo/twitter'
 import {collection} from './documents/collection'
 import {press} from './documents/press'
+import { eventsPage } from './singletons/events-page'
 
 export const schemaTypes = [
   // Singletons
@@ -25,6 +26,7 @@ export const schemaTypes = [
   artists,
   shows,
   auctions,
+  eventsPage,
   // Documents
   artist,
   collection,
