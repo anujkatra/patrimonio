@@ -95,7 +95,17 @@ export const artistQuery =
   				}
 			}
 		}
-	}
+	},
+	featuredPaintings[]->{
+		name,
+		"artist":artist->.name,
+		year,
+		"medium":medium->.name,
+		picture{
+			...,
+			asset->,
+		}
+	},
 }`)
 
 // export const pageQuery = defineQuery(/* groq */ `

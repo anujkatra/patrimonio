@@ -77,6 +77,22 @@ export const artist: DocumentDefinition = withSeo({
       description: 'A short description of the artist displayed on other pages',
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      title: 'Featured Paintings',
+      name: 'featuredPaintings',
+      type: 'array',
+      description: 'Paintings to feature on the individual artist page (max 20)',
+      validation: (Rule) => Rule.unique().max(20),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'painting'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
   ],
   orderings: [
     {
