@@ -82,13 +82,13 @@ export const artistsPageQuery = defineQuery(`*[_type == "artists"][0] {
 
 export const eventsPageQuery = defineQuery(`*[_type == "eventsPage"][0] {
 	...,
-	auctions->{
+	auctions[]->{
 		...
 	},
-	artShows->{
+	artShows[]->{
 		...
 	},
-	soloShows->{
+	soloShows[]->{
 		...
 	}
 }`)

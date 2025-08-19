@@ -24,8 +24,6 @@ export const schemaTypes = [
   aboutUs,
   gallery,
   artists,
-  shows,
-  auctions,
   eventsPage,
   // Documents
   artist,
