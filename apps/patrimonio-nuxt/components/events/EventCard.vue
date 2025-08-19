@@ -7,7 +7,7 @@ const props = defineProps<{
   excerpt: string
   title: string
   dateRange:{endDate:string , startDate:string}
-  imageSrc: SanityImageAssetDocument
+  imageSrc: SanityImageAssetDocument | undefined
   class?: string
   link:string
   venue:string
