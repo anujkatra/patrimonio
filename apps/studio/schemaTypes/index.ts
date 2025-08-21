@@ -1,7 +1,7 @@
 import {artist} from './documents/artist'
 import {medium} from './documents/medium'
 import {painting} from './documents/painting'
-import {aboutUs} from './singletons/about-us-page'
+import {ourStory} from './singletons/our-story-page'
 import {artists} from './singletons/artists'
 import {auctions} from './singletons/auctions'
 import {gallery} from './singletons/gallery'
@@ -20,7 +20,7 @@ import {press} from './documents/press'
 export const schemaTypes = [
   // Singletons
   homepage,
-  aboutUs,
+  ourStory,
   gallery,
   artists,
   shows,
