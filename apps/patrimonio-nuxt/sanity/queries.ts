@@ -80,6 +80,8 @@ export const artistsPageQuery = defineQuery(`*[_type == "artists"][0] {
 	},
 }`)
 
+export const ourStoryPageQuery = defineQuery(`*[_type == "ourStory"][0]`)
+
 export const artistQuery =
   defineQuery(`*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {
 	...,

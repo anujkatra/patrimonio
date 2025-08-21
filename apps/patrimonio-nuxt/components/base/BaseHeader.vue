@@ -23,19 +23,19 @@ const headerContent: HeaderContentProps[] = [
   },
   {
     link: 'Our Story',
-    href: '/about-us',
+    href: '/our-story',
   },
   {
     link: 'Blog',
-    href: '/about-us',
+    href: '/our-story',
   },
   {
     link: 'Press & Media',
-    href: '/about-us',
+    href: '/our-story',
   },
   {
     link: 'Contact Us',
-    href: '/about-us',
+    href: '/our-story',
   },
 ]
 
