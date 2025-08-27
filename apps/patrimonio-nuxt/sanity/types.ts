@@ -467,6 +467,11 @@ export type OurStory = {
     }
     _key: string
   }>
+  milestones?: Array<{
+    milestone: string
+    year: string
+    _key: string
+  }>
   seo?: Seo
 }
 
@@ -1071,6 +1076,11 @@ export type OurStoryPageQueryResult = {
       alt?: string
       _type: 'image'
     }
+    _key: string
+  }>
+  milestones?: Array<{
+    milestone: string
+    year: string
     _key: string
   }>
   seo?: Seo

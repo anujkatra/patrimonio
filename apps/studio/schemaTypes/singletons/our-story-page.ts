@@ -20,7 +20,6 @@ export const ourStory: DocumentDefinition = withSeo({
       description: 'title for the landing section',
       validation: (Rule) => Rule.required(),
     }),
-
     defineField({
       name: 'content',
       type: 'array',
@@ -92,6 +91,40 @@ export const ourStory: DocumentDefinition = withSeo({
               validation: (rule) => rule.required(),
             }),
           ],
+        },
+      ],
+    }),
+    defineField({
+      title: 'Milestones',
+      name: 'milestones',
+      type: 'array',
+      description: 'Content for the Milestones Section',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'milestone',
+              title: 'Milestone',
+              type: 'text',
+              description: 'Milestone Content',
+              rows: 1,
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'year',
+              type: 'string',
+              title: 'Year',
+              description: 'Milestone Year(s)/ Year Range',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'milestone',
+              subtitle: 'year',
+            },
+          },
         },
       ],
     }),
