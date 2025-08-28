@@ -1,6 +1,14 @@
 <script lang="ts" setup>
 import {galleryPageQuery} from '~/sanity/queries'
 import type {GalleryPageQueryResult} from '~/sanity/types'
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuLabel,
+//   DropdownMenuSeparator,
+//   DropdownMenuTrigger,
+// } from '@/components/ui/dropdown-menu'
 
 const {data: galleryPageData} = await useSanityQuery<GalleryPageQueryResult>(galleryPageQuery)
 
@@ -24,6 +32,19 @@ console.log('test', galleryPageData.value)
         <h1 class="font-satoshi text-lg/none tracking-normal lg:text-xl/none">
           {{ galleryPageData?.subtitle ?? '' }}
         </h1>
+        <!-- <div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>Subscription</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div> -->
       </div>
     </section>
   </main>
