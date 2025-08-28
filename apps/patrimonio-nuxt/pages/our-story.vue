@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {ourStoryPageQuery} from '~/sanity/queries'
 import type {OurStoryPageQueryResult} from '~/sanity/types'
+import Milestone from '~/assets/svg/milestone.svg'
 
 const {data: ourStoryPageData} = await useSanityQuery<OurStoryPageQueryResult>(ourStoryPageQuery)
 
@@ -98,5 +99,32 @@ console.log('test', ourStoryPageData.value?.ourTeam)
         </template>
       </div>
     </section>
+
+    <template v-if="ourStoryPageData?.milestones">
+      <section class="flex justify-center px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]">
+        <div class="flex w-full max-w-[1300px] flex-col gap-5">
+          <h1 class="font-cabinet text-[35px]/none font-normal tracking-normal">
+            Milestones & Collaborations
+          </h1>
+          <div
+            class="grid w-full grid-cols-1 justify-center gap-[50px] border-[0.5px] border-[#202020] px-10 py-[70px] md:grid-cols-2 lg:grid-cols-3 xl:gap-x-[100px]"
+          >
+            <div
+              v-for="(milestone, index) in ourStoryPageData.milestones"
+              :key="index"
+              class="col-span-1 mx-auto flex w-full max-w-[240px] flex-col gap-2.5"
+            >
+              <p class="font-satoshi text-xl/none font-medium tracking-normal lg:text-2xl/none">
+                {{ milestone.year }}
+              </p>
+              <Milestone class="text-patrimonio-blue w-full" :font-controlled="false" />
+              <p class="font-satoshi text-lg/none font-light tracking-normal lg:text-xl/none">
+                {{ milestone.milestone }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </template>
   </main>
 </template>
