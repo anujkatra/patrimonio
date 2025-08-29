@@ -5,7 +5,14 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   css: ['~/assets/css/main.css'],
   devtools: {enabled: true},
-  modules: ['@nuxtjs/sanity', '@nuxt/image', '@nuxt/eslint', '@nuxt/fonts', 'nuxt-svgo'],
+  modules: [
+    '@nuxtjs/sanity',
+    '@nuxt/image',
+    '@nuxt/eslint',
+    '@nuxt/fonts',
+    'nuxt-svgo',
+    'shadcn-nuxt',
+  ],
   sanity: {
     projectId: process.env.NUXT_SANITY_PROJECT_ID,
     dataset: process.env.NUXT_SANITY_DATASET,
@@ -28,5 +35,16 @@ export default defineNuxtConfig({
   },
   fonts: {
     priority: ['fontshare'],
+  },
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: './components/ui',
   },
 })
