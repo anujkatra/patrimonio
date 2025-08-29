@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {useRoute, useRouter} from 'vue-router'
-
+const sanity = useSanity()
 const route = useRoute()
 const router = useRouter()
 
@@ -19,11 +19,34 @@ onMounted(() => {
   }
 })
 
+const params = computed(() => route.query || '')
+const artist = computed(() => route.query.artist || '')
+const medium = computed(() => route.query.medium || '')
 const page = computed(() => (typeof route.query.page === 'string' ? parseInt(route.query.page) : 1))
 const startIndex = computed(() => (page.value - 1) * 3)
 const endIndex = computed(() => startIndex.value + 3)
+const selectedYear = computed(() =>
+  typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
+)
+
+// watch(
+//   () => route.query,
+//   () => {
+//     selectedYear.value = route.query.year || ''
+//     // refresh()
+//   },
+// )
 
 console.log('page', page.value, startIndex.value, endIndex.value)
+
+function getIdBySlug(object, value) {
+  for (let i = 0; i < object.length; i++) {
+    if (object[i].slug.current === value) {
+      return object[i]._id
+    }
+  }
+  return ''
+}
 
 const {data: galleryPageData} = await useSanityQuery<GalleryPageQueryResult>(galleryPageQuery)
 
@@ -60,7 +83,7 @@ useSiteMetadata({
 //   return result
 // }
 
-const query = groq`*[_type == "painting"] | order(year asc) | order(year desc)[$startIndex...$endIndex]{
+const query = groq`*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear))] | order(year desc)[$startIndex...$endIndex]{
  _id,
   name,
 	"artist":artist->.name,
@@ -70,27 +93,49 @@ const query = groq`*[_type == "painting"] | order(year asc) | order(year desc)[$
   publishedAt,
 }`
 const filterQuery = groq`{
-'startYear': *[_type == "painting"] | order(year asc)[0].year, 
+'startYear': *[_type == "painting"] | order(year asc)[0].year,
 'endYear': *[_type == "painting"] | order(year desc)[0].year,
 'artists': *[_type == "artist"]{_id,name,slug},
 'collections': *[_type == "collection"]{_id,title,slug},
 'mediums': *[_type == "medium"]{_id,name,slug}}`
 const {data: galleryFilterData} = await useSanityQuery(filterQuery)
-const {data: galleryPaintingData} = await useSanityQuery(query, {
-  startIndex: startIndex.value,
-  endIndex: endIndex.value,
-})
-// const {data: galleryPaintingData} = await useAsyncData(
-//   'galleryPaintingData',
-//   () =>
-//     sanity.fetch(query, {
-//       startIndex: startIndex.value,
-//       endIndex: endIndex.value,
-//     }),
-//   {watch: [page]},
-// )
+// const {data: galleryPaintingData} = await useSanityQuery(query, {
+//   startIndex: startIndex.value,
+//   endIndex: endIndex.value,
+// })
+const {data: galleryPaintingData} = await useAsyncData(
+  'galleryPaintingData',
+  () =>
+    sanity.fetch(query, {
+      startIndex: startIndex.value,
+      endIndex: endIndex.value,
+      artist: getIdBySlug(galleryFilterData.value.artists, artist.value),
+      medium: getIdBySlug(galleryFilterData.value.mediums, medium.value),
+      startYear: selectedYear.value,
+      endYear: selectedYear.value + 9,
+    }),
+  {watch: [params]},
+)
 // console.log('test', galleryPageData.value, galleryPaintingData.value)
-console.log('test1', galleryPaintingData.value)
+console.log('test1', galleryPaintingData.value, galleryFilterData.value.artists)
+
+const startYear = galleryFilterData.value.startYear
+const endYear = galleryFilterData.value.endYear
+const startDecade = Math.floor(startYear / 10) * 10
+const endDecade = Math.floor(endYear / 10) * 10
+const decades = []
+for (let i = startDecade; i <= endDecade; i += 10) {
+  decades.push({starDate: i, endDate: i + 9})
+}
+console.log('year', startYear, endYear, params.value.artist)
+
+function filter(key: string, value: string) {
+  router.replace({query: {...route.query, page: 1, [key]: value}})
+  console.log('in filt', artist.value, selectedYear.value)
+}
+function reset() {
+  router.replace({query: {page: 1}})
+}
 </script>
 
 <template>
@@ -113,6 +158,21 @@ console.log('test1', galleryPaintingData.value)
         <div class="flex flex-col gap-5">
           <div class="flex justify-between">
             <div class="flex gap-2.5">
+              <p>{{ params }}</p>
+              <p>{{ selectedYear }}</p>
+              <p><button @click="reset">reset</button></p>
+              <div class="h-10 px-[15px]">
+                <DropdownMenu>
+                  <DropdownMenuTrigger class="cursor-pointer"> Year </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem v-for="(decade, index) in decades" :key="index"
+                      ><button @click="filter('year', decade.starDate)">
+                        {{ decade.starDate }} - {{ decade.endDate }}
+                      </button>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
               <div class="h-10 px-[15px]">
                 <DropdownMenu>
                   <DropdownMenuTrigger class="cursor-pointer"> Artist </DropdownMenuTrigger>
@@ -120,7 +180,9 @@ console.log('test1', galleryPaintingData.value)
                     <DropdownMenuItem
                       v-for="(artist, index) in galleryFilterData?.artists"
                       :key="index"
-                      >{{ artist.name }}</DropdownMenuItem
+                      ><button @click="filter('artist', artist.slug.current)">
+                        {{ artist.name }}
+                      </button></DropdownMenuItem
                     >
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -132,7 +194,9 @@ console.log('test1', galleryPaintingData.value)
                     <DropdownMenuItem
                       v-for="(collection, index) in galleryFilterData?.collections"
                       :key="index"
-                      >{{ collection.title }}</DropdownMenuItem
+                      ><button @click="filter('collection', collection.slug.current)">
+                        {{ collection.title }}
+                      </button></DropdownMenuItem
                     >
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -144,7 +208,9 @@ console.log('test1', galleryPaintingData.value)
                     <DropdownMenuItem
                       v-for="(medium, index) in galleryFilterData?.mediums"
                       :key="index"
-                      >{{ medium.name }}</DropdownMenuItem
+                      ><button @click="filter('medium', medium.slug.current)">
+                        {{ medium.name }}
+                      </button></DropdownMenuItem
                     >
                   </DropdownMenuContent>
                 </DropdownMenu>
