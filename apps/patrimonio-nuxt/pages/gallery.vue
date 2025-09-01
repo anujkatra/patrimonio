@@ -16,6 +16,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination'
 import {useRoute, useRouter} from 'vue-router'
+import FilterDown from '~/assets/svg/filterDown.svg'
 const sanity = useSanity()
 const route = useRoute()
 const router = useRouter()
@@ -27,10 +28,11 @@ onMounted(() => {
   }
 })
 
-const itemsPerPage = 1
+const itemsPerPage = 3
 const params = computed(() => route.query || '')
 const artist = computed(() => route.query.artist || '')
 const medium = computed(() => route.query.medium || '')
+const collection = computed(() => route.query.collection || '')
 const page = computed(() => (typeof route.query.page === 'string' ? parseInt(route.query.page) : 1))
 const startIndex = computed(() => (page.value - 1) * itemsPerPage)
 const endIndex = computed(() => startIndex.value + itemsPerPage)
@@ -183,66 +185,108 @@ function reset() {
 
     <section class="flex justify-center px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]">
       <div class="flex w-full max-w-[1300px] flex-col gap-5 lg:gap-[70px] xl:gap-10">
-        <div class="flex flex-col gap-5">
-          <div class="flex justify-between">
+        <div class="flex flex-col gap-[15px]">
+          <div class="flex justify-between border-y-[0.5px] border-black py-2.5">
             <div class="flex gap-2.5">
-              <p>{{ params }}</p>
-              <p>{{ selectedYear }}</p>
-              <p><button @click="reset">reset</button></p>
-              <div class="h-10 px-[15px]">
+              <!-- <p><button @click="reset">reset</button></p> -->
+              <div class="flex h-10 justify-center px-[15px]">
                 <DropdownMenu>
-                  <DropdownMenuTrigger class="cursor-pointer"> Year </DropdownMenuTrigger>
+                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                    <p class="font-satoshi text-base/none font-normal tracking-normal">Year</p>
+                    <FilterDown class="w-3 fill-white" :font-controlled="false" />
+                  </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
-                    <DropdownMenuItem v-for="(decade, index) in decades" :key="index"
-                      ><button @click="filter('year', decade.starDate)">
+                    <DropdownMenuItem
+                      v-for="(decade, index) in decades"
+                      :key="index"
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal"
+                      ><button class="cursor-pointer" @click="filter('year', decade.starDate)">
                         {{ decade.starDate }} - {{ decade.endDate }}
                       </button>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <div class="h-10 px-[15px]">
+              <div class="flex h-10 justify-center px-[15px]">
                 <DropdownMenu>
-                  <DropdownMenuTrigger class="cursor-pointer"> Artist </DropdownMenuTrigger>
+                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                    <p class="font-satoshi text-base/none font-normal tracking-normal">Artist</p>
+                    <FilterDown class="w-3 fill-white" :font-controlled="false" />
+                  </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
                     <DropdownMenuItem
                       v-for="(artist, index) in galleryFilterData?.artists"
                       :key="index"
-                      ><button @click="filter('artist', artist.slug.current)">
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal"
+                      ><button
+                        class="cursor-pointer"
+                        @click="filter('artist', artist.slug.current)"
+                      >
                         {{ artist.name }}
                       </button></DropdownMenuItem
                     >
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <div class="h-10 px-[15px]">
+              <div class="flex h-10 justify-center px-[15px]">
                 <DropdownMenu>
-                  <DropdownMenuTrigger class="cursor-pointer">Collections</DropdownMenuTrigger>
+                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                    <p class="font-satoshi text-base/none font-normal tracking-normal">
+                      Collection
+                    </p>
+                    <FilterDown class="w-3 fill-white" :font-controlled="false" />
+                  </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
                     <DropdownMenuItem
                       v-for="(collection, index) in galleryFilterData?.collections"
                       :key="index"
-                      ><button @click="filter('collection', collection.slug.current)">
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal"
+                      ><button
+                        class="cursor-pointer"
+                        @click="filter('collection', collection.slug.current)"
+                      >
                         {{ collection.title }}
                       </button></DropdownMenuItem
                     >
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <div class="h-10 px-[15px]">
+              <div class="flex h-10 justify-center px-[15px]">
                 <DropdownMenu>
-                  <DropdownMenuTrigger class="cursor-pointer">Medium</DropdownMenuTrigger>
+                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                    <p class="font-satoshi text-base/none font-normal tracking-normal">Medium</p>
+                    <FilterDown class="w-3 fill-white" :font-controlled="false" />
+                  </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
                     <DropdownMenuItem
                       v-for="(medium, index) in galleryFilterData?.mediums"
                       :key="index"
-                      ><button @click="filter('medium', medium.slug.current)">
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal"
+                      ><button
+                        class="cursor-pointer"
+                        @click="filter('medium', medium.slug.current)"
+                      >
                         {{ medium.name }}
                       </button></DropdownMenuItem
                     >
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
+            </div>
+          </div>
+          <div
+            v-if="artist !== '' || selectedYear !== 0 || medium !== '' || collection !== ''"
+            class="flex justify-between border-b-[0.5px] border-black pb-[15px]"
+          >
+            <div></div>
+            <div class="flex gap-2.5">
+              <button class="cursor-pointer" @click="reset">
+                <p
+                  class="text-patrimonio-blue font-satoshi text-base/none font-medium tracking-normal"
+                >
+                  Reset filters
+                </p>
+              </button>
             </div>
           </div>
         </div>
