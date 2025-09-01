@@ -7,6 +7,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
 import {useRoute, useRouter} from 'vue-router'
 const sanity = useSanity()
 const route = useRoute()
@@ -19,12 +27,13 @@ onMounted(() => {
   }
 })
 
+const itemsPerPage = 1
 const params = computed(() => route.query || '')
 const artist = computed(() => route.query.artist || '')
 const medium = computed(() => route.query.medium || '')
 const page = computed(() => (typeof route.query.page === 'string' ? parseInt(route.query.page) : 1))
-const startIndex = computed(() => (page.value - 1) * 3)
-const endIndex = computed(() => startIndex.value + 3)
+const startIndex = computed(() => (page.value - 1) * itemsPerPage)
+const endIndex = computed(() => startIndex.value + itemsPerPage)
 const selectedYear = computed(() =>
   typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
 )
@@ -92,6 +101,9 @@ const query = groq`*[_type == "painting" && ($artist == '' || artist._ref == $ar
   picture,
   publishedAt,
 }`
+
+const countQuery = groq`count(*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear))])`
+
 const filterQuery = groq`{
 'startYear': *[_type == "painting"] | order(year asc)[0].year,
 'endYear': *[_type == "painting"] | order(year desc)[0].year,
@@ -116,6 +128,18 @@ const {data: galleryPaintingData} = await useAsyncData(
     }),
   {watch: [params]},
 )
+const {data: galleryPaintingDataCount} = await useAsyncData(
+  'galleryPaintingDataCount',
+  () =>
+    sanity.fetch(countQuery, {
+      artist: getIdBySlug(galleryFilterData.value.artists, artist.value),
+      medium: getIdBySlug(galleryFilterData.value.mediums, medium.value),
+      startYear: selectedYear.value,
+      endYear: selectedYear.value + 9,
+    }),
+  {watch: [artist, medium, selectedYear]},
+)
+console.log('count', galleryPaintingDataCount.value)
 // console.log('test', galleryPageData.value, galleryPaintingData.value)
 console.log('test1', galleryPaintingData.value, galleryFilterData.value.artists)
 
@@ -132,6 +156,10 @@ console.log('year', startYear, endYear, params.value.artist)
 function filter(key: string, value: string) {
   router.replace({query: {...route.query, page: 1, [key]: value}})
   console.log('in filt', artist.value, selectedYear.value)
+}
+
+function updatePage(value: number) {
+  router.replace({query: {...route.query, page: value}})
 }
 function reset() {
   router.replace({query: {page: 1}})
@@ -248,6 +276,35 @@ function reset() {
               </div>
             </div>
           </div>
+        </div>
+        <div class="w-full">
+          <Pagination
+            :v-slot="{page}"
+            :sibling-count="1"
+            :items-per-page="itemsPerPage"
+            :total="galleryPaintingDataCount"
+            :default-page="page"
+            :show-edges="true"
+            @update:page="(p) => updatePage(p)"
+          >
+            <PaginationContent v-slot="{items}">
+              <PaginationPrevious />
+
+              <template v-for="(item, index) in items" :key="index">
+                <PaginationItem
+                  v-if="item.type === 'page'"
+                  :value="item.value"
+                  :is-active="item.value === page"
+                >
+                  {{ item.value }}
+                </PaginationItem>
+                <PaginationEllipsis v-else :key="item.type" :index="index">
+                  &#8230;
+                </PaginationEllipsis>
+              </template>
+              <PaginationNext />
+            </PaginationContent>
+          </Pagination>
         </div>
       </div>
     </section>
