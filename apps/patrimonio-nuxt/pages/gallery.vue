@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/pagination'
 import {useRoute, useRouter} from 'vue-router'
 import FilterDown from '~/assets/svg/filterDown.svg'
+import Cancel from '~/assets/svg/cancel.svg'
 const sanity = useSanity()
 const route = useRoute()
 const router = useRouter()
@@ -156,8 +157,10 @@ for (let i = startDecade; i <= endDecade; i += 10) {
 console.log('year', startYear, endYear, params.value.artist)
 
 function filter(key: string, value: string) {
-  router.replace({query: {...route.query, page: 1, [key]: value}})
-  console.log('in filt', artist.value, selectedYear.value)
+  if (value === '' || value === '0') {
+    const {[key]: _, ...currentQuery} = {...route.query}
+    router.replace({query: {...currentQuery, page: 1}})
+  } else router.replace({query: {...route.query, page: 1, [key]: value}})
 }
 
 function updatePage(value: number) {
@@ -189,86 +192,77 @@ function reset() {
           <div class="flex justify-between border-y-[0.5px] border-black py-2.5">
             <div class="flex gap-2.5">
               <!-- <p><button @click="reset">reset</button></p> -->
-              <div class="flex h-10 justify-center px-[15px]">
+              <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
                 <DropdownMenu>
                   <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
                     <p class="font-satoshi text-base/none font-normal tracking-normal">Year</p>
-                    <FilterDown class="w-3 fill-white" :font-controlled="false" />
+                    <FilterDown class="w-3" :font-controlled="false" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
                     <DropdownMenuItem
                       v-for="(decade, index) in decades"
                       :key="index"
-                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal"
-                      ><button class="cursor-pointer" @click="filter('year', decade.starDate)">
-                        {{ decade.starDate }} - {{ decade.endDate }}
-                      </button>
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                      @select="filter('year', decade.starDate)"
+                    >
+                      {{ decade.starDate }} - {{ decade.endDate }}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <div class="flex h-10 justify-center px-[15px]">
+              <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
                 <DropdownMenu>
                   <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
                     <p class="font-satoshi text-base/none font-normal tracking-normal">Artist</p>
-                    <FilterDown class="w-3 fill-white" :font-controlled="false" />
+                    <FilterDown class="w-3" :font-controlled="false" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
                     <DropdownMenuItem
                       v-for="(artist, index) in galleryFilterData?.artists"
                       :key="index"
-                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal"
-                      ><button
-                        class="cursor-pointer"
-                        @click="filter('artist', artist.slug.current)"
-                      >
-                        {{ artist.name }}
-                      </button></DropdownMenuItem
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                      @select="filter('artist', artist.slug.current)"
                     >
+                      {{ artist.name }}
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <div class="flex h-10 justify-center px-[15px]">
+              <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
                 <DropdownMenu>
                   <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
                     <p class="font-satoshi text-base/none font-normal tracking-normal">
                       Collection
                     </p>
-                    <FilterDown class="w-3 fill-white" :font-controlled="false" />
+                    <FilterDown class="w-3" :font-controlled="false" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
                     <DropdownMenuItem
                       v-for="(collection, index) in galleryFilterData?.collections"
                       :key="index"
-                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal"
-                      ><button
-                        class="cursor-pointer"
-                        @click="filter('collection', collection.slug.current)"
-                      >
-                        {{ collection.title }}
-                      </button></DropdownMenuItem
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                      @select="filter('collection', collection.slug.current)"
                     >
+                      {{ collection.title }}
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <div class="flex h-10 justify-center px-[15px]">
+              <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
                 <DropdownMenu>
                   <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
                     <p class="font-satoshi text-base/none font-normal tracking-normal">Medium</p>
-                    <FilterDown class="w-3 fill-white" :font-controlled="false" />
+                    <FilterDown class="w-3" :font-controlled="false" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
                     <DropdownMenuItem
                       v-for="(medium, index) in galleryFilterData?.mediums"
                       :key="index"
-                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal"
-                      ><button
-                        class="cursor-pointer"
-                        @click="filter('medium', medium.slug.current)"
-                      >
-                        {{ medium.name }}
-                      </button></DropdownMenuItem
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                      @select="filter('medium', medium.slug.current)"
                     >
+                      {{ medium.name }}
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -278,7 +272,61 @@ function reset() {
             v-if="artist !== '' || selectedYear !== 0 || medium !== '' || collection !== ''"
             class="flex justify-between border-b-[0.5px] border-black pb-[15px]"
           >
-            <div></div>
+            <div class="flex">
+              <p class="px-[5px]">Showing results for:</p>
+              <div
+                v-if="selectedYear !== 0"
+                class="group/year flex cursor-pointer items-center gap-[5px] px-[5px]"
+                @click="filter('year', '0')"
+              >
+                <p>Year</p>
+                <p class="font-medium">{{ selectedYear }} - {{ selectedYear + 9 }}</p>
+                <div
+                  class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
+                >
+                  <Cancel class="size-2.5" :font-controlled="false" />
+                </div>
+              </div>
+              <div
+                v-if="artist !== ''"
+                class="group/year flex cursor-pointer items-center gap-[5px] px-[5px]"
+                @click="filter('artist', '')"
+              >
+                <p>Artist</p>
+                <p class="font-medium">{{ artist }}</p>
+                <div
+                  class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
+                >
+                  <Cancel class="size-2.5" :font-controlled="false" />
+                </div>
+              </div>
+              <div
+                v-if="collection !== ''"
+                class="group/year flex cursor-pointer items-center gap-[5px] px-[5px]"
+                @click="filter('collection', '')"
+              >
+                <p>Collection</p>
+                <p class="font-medium">{{ collection }}</p>
+                <div
+                  class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
+                >
+                  <Cancel class="size-2.5" :font-controlled="false" />
+                </div>
+              </div>
+              <div
+                v-if="medium !== ''"
+                class="group/year flex cursor-pointer items-center gap-[5px] px-[5px]"
+                @click="filter('medium', '')"
+              >
+                <p>Medium</p>
+                <p class="font-medium">{{ medium }}</p>
+                <div
+                  class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
+                >
+                  <Cancel class="size-2.5" :font-controlled="false" />
+                </div>
+              </div>
+            </div>
             <div class="flex gap-2.5">
               <button class="cursor-pointer" @click="reset">
                 <p
@@ -290,7 +338,7 @@ function reset() {
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-5">
+        <div class="grid grid-cols-3 gap-5 lg:gap-x-[50px] lg:gap-y-[30px]">
           <div
             v-for="(painting, index) in galleryPaintingData"
             :key="index"
@@ -301,7 +349,7 @@ function reset() {
                 provider="sanity"
                 :src="`${painting?.picture.asset?._ref}`"
                 :alt="`${painting?.picture.alt}`"
-                class="aspect-square w-full object-cover object-center"
+                class="aspect-square w-full object-cover object-center transition-all duration-500 md:hover:scale-125"
               />
             </div>
             <div class="flex w-full flex-col gap-[5px] py-5 pr-5">
@@ -323,11 +371,12 @@ function reset() {
         </div>
         <div class="w-full">
           <Pagination
+            :key="galleryPaintingDataCount"
             :v-slot="{page}"
             :sibling-count="1"
             :items-per-page="itemsPerPage"
             :total="galleryPaintingDataCount"
-            :default-page="page"
+            :default-page="1"
             :show-edges="true"
             @update:page="(p) => updatePage(p)"
           >
