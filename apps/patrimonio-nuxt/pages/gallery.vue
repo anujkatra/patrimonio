@@ -381,13 +381,14 @@ function reset() {
             @update:page="(p) => updatePage(p)"
           >
             <PaginationContent v-slot="{items}">
-              <PaginationPrevious />
+              <PaginationPrevious class="cursor-pointer" />
 
               <template v-for="(item, index) in items" :key="index">
                 <PaginationItem
                   v-if="item.type === 'page'"
                   :value="item.value"
                   :is-active="item.value === page"
+                  class="cursor-pointer"
                 >
                   {{ item.value }}
                 </PaginationItem>
@@ -395,7 +396,7 @@ function reset() {
                   &#8230;
                 </PaginationEllipsis>
               </template>
-              <PaginationNext />
+              <PaginationNext class="cursor-pointer" />
             </PaginationContent>
           </Pagination>
         </div>
