@@ -42,6 +42,7 @@ const selectedYear = computed(() =>
   typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
 )
 const forSaleOnly = ref(false)
+const isPaintingOrderAscending = ref(false)
 
 // watch(
 //   () => route.query,
@@ -64,6 +65,10 @@ function getIdBySlug(object, value) {
 
 function handleForSaleOnlyToggle() {
   forSaleOnly.value = !forSaleOnly.value
+}
+
+function handleOrderChange(value: boolean) {
+  isPaintingOrderAscending.value = value
 }
 
 const {data: galleryPageData} = await useSanityQuery<GalleryPageQueryResult>(galleryPageQuery)
@@ -135,8 +140,9 @@ const {data: galleryPaintingData} = await useAsyncData(
       startYear: selectedYear.value,
       endYear: selectedYear.value + 9,
       forSaleOnly: forSaleOnly.value,
+      // order: isPaintingOrderAscending.value ? 'asc' : 'desc',
     }),
-  {watch: [params, forSaleOnly]},
+  {watch: [params, forSaleOnly, isPaintingOrderAscending]},
 )
 const {data: galleryPaintingDataCount} = await useAsyncData(
   'galleryPaintingDataCount',
@@ -291,6 +297,28 @@ function reset() {
                   Show only available artworks
                 </label>
               </div>
+            </div>
+            <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+              <DropdownMenu>
+                <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                  <p class="font-satoshi text-base/none font-normal tracking-normal">Order</p>
+                  <FilterDown class="w-3" :font-controlled="false" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  <DropdownMenuItem
+                    class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                    @select="handleOrderChange(true)"
+                  >
+                    Ascending
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                    @select="handleOrderChange(false)"
+                  >
+                    Descending
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
           <div
