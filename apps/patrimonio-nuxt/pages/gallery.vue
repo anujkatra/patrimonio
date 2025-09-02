@@ -15,6 +15,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import {Checkbox} from '@/components/ui/checkbox'
 import {useRoute, useRouter} from 'vue-router'
 import FilterDown from '~/assets/svg/filterDown.svg'
 import Cancel from '~/assets/svg/cancel.svg'
@@ -40,6 +41,7 @@ const endIndex = computed(() => startIndex.value + itemsPerPage)
 const selectedYear = computed(() =>
   typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
 )
+const forSaleOnly = ref(false)
 
 // watch(
 //   () => route.query,
@@ -58,6 +60,10 @@ function getIdBySlug(object, value) {
     }
   }
   return ''
+}
+
+function handleForSaleOnlyToggle() {
+  forSaleOnly.value = !forSaleOnly.value
 }
 
 const {data: galleryPageData} = await useSanityQuery<GalleryPageQueryResult>(galleryPageQuery)
@@ -95,7 +101,7 @@ useSiteMetadata({
 //   return result
 // }
 
-const query = groq`*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear))] | order(year desc)[$startIndex...$endIndex]{
+const query = groq`*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year desc)[$startIndex...$endIndex]{
  _id,
   name,
 	"artist":artist->.name,
@@ -105,7 +111,7 @@ const query = groq`*[_type == "painting" && ($artist == '' || artist._ref == $ar
   publishedAt,
 }`
 
-const countQuery = groq`count(*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear))])`
+const countQuery = groq`count(*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)])`
 
 const filterQuery = groq`{
 'startYear': *[_type == "painting"] | order(year asc)[0].year,
@@ -128,8 +134,9 @@ const {data: galleryPaintingData} = await useAsyncData(
       medium: getIdBySlug(galleryFilterData.value.mediums, medium.value),
       startYear: selectedYear.value,
       endYear: selectedYear.value + 9,
+      forSaleOnly: forSaleOnly.value,
     }),
-  {watch: [params]},
+  {watch: [params, forSaleOnly]},
 )
 const {data: galleryPaintingDataCount} = await useAsyncData(
   'galleryPaintingDataCount',
@@ -139,8 +146,9 @@ const {data: galleryPaintingDataCount} = await useAsyncData(
       medium: getIdBySlug(galleryFilterData.value.mediums, medium.value),
       startYear: selectedYear.value,
       endYear: selectedYear.value + 9,
+      forSaleOnly: forSaleOnly.value,
     }),
-  {watch: [artist, medium, selectedYear]},
+  {watch: [artist, medium, selectedYear, forSaleOnly]},
 )
 console.log('count', galleryPaintingDataCount.value)
 // console.log('test', galleryPageData.value, galleryPaintingData.value)
@@ -190,81 +198,98 @@ function reset() {
       <div class="flex w-full max-w-[1300px] flex-col gap-5 lg:gap-[70px] xl:gap-10">
         <div class="flex flex-col gap-[15px]">
           <div class="flex justify-between border-y-[0.5px] border-black py-2.5">
-            <div class="flex gap-2.5">
-              <!-- <p><button @click="reset">reset</button></p> -->
-              <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
-                <DropdownMenu>
-                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
-                    <p class="font-satoshi text-base/none font-normal tracking-normal">Year</p>
-                    <FilterDown class="w-3" :font-controlled="false" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                    <DropdownMenuItem
-                      v-for="(decade, index) in decades"
-                      :key="index"
-                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                      @select="filter('year', decade.starDate)"
-                    >
-                      {{ decade.starDate }} - {{ decade.endDate }}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+            <div class="flex items-center gap-5">
+              <div class="flex gap-2.5">
+                <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                      <p class="font-satoshi text-base/none font-normal tracking-normal">Year</p>
+                      <FilterDown class="w-3" :font-controlled="false" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                      <DropdownMenuItem
+                        v-for="(decade, index) in decades"
+                        :key="index"
+                        class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                        @select="filter('year', decade.starDate)"
+                      >
+                        {{ decade.starDate }} - {{ decade.endDate }}
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+                <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                      <p class="font-satoshi text-base/none font-normal tracking-normal">Artist</p>
+                      <FilterDown class="w-3" :font-controlled="false" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                      <DropdownMenuItem
+                        v-for="(artist, index) in galleryFilterData?.artists"
+                        :key="index"
+                        class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                        @select="filter('artist', artist.slug.current)"
+                      >
+                        {{ artist.name }}
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+                <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                      <p class="font-satoshi text-base/none font-normal tracking-normal">
+                        Collection
+                      </p>
+                      <FilterDown class="w-3" :font-controlled="false" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                      <DropdownMenuItem
+                        v-for="(collection, index) in galleryFilterData?.collections"
+                        :key="index"
+                        class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                        @select="filter('collection', collection.slug.current)"
+                      >
+                        {{ collection.title }}
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+                <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                      <p class="font-satoshi text-base/none font-normal tracking-normal">Medium</p>
+                      <FilterDown class="w-3" :font-controlled="false" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                      <DropdownMenuItem
+                        v-for="(medium, index) in galleryFilterData?.mediums"
+                        :key="index"
+                        class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                        @select="filter('medium', medium.slug.current)"
+                      >
+                        {{ medium.name }}
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
-              <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
-                <DropdownMenu>
-                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
-                    <p class="font-satoshi text-base/none font-normal tracking-normal">Artist</p>
-                    <FilterDown class="w-3" :font-controlled="false" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                    <DropdownMenuItem
-                      v-for="(artist, index) in galleryFilterData?.artists"
-                      :key="index"
-                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                      @select="filter('artist', artist.slug.current)"
-                    >
-                      {{ artist.name }}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
-                <DropdownMenu>
-                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
-                    <p class="font-satoshi text-base/none font-normal tracking-normal">
-                      Collection
-                    </p>
-                    <FilterDown class="w-3" :font-controlled="false" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                    <DropdownMenuItem
-                      v-for="(collection, index) in galleryFilterData?.collections"
-                      :key="index"
-                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                      @select="filter('collection', collection.slug.current)"
-                    >
-                      {{ collection.title }}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
-                <DropdownMenu>
-                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
-                    <p class="font-satoshi text-base/none font-normal tracking-normal">Medium</p>
-                    <FilterDown class="w-3" :font-controlled="false" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                    <DropdownMenuItem
-                      v-for="(medium, index) in galleryFilterData?.mediums"
-                      :key="index"
-                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                      @select="filter('medium', medium.slug.current)"
-                    >
-                      {{ medium.name }}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+              <div class="h-8 border-l-[0.5px] border-black"></div>
+              <div class="flex gap-2.5">
+                <label
+                  for="available"
+                  class="font-satoshi text-base/none font-normal tracking-normal"
+                >
+                  <span class="pr-2">
+                    <Checkbox
+                      id="available"
+                      :model-value="forSaleOnly"
+                      @update:model-value="() => handleForSaleOnlyToggle()"
+                    />
+                  </span>
+                  Show only available artworks
+                </label>
               </div>
             </div>
           </div>
