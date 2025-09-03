@@ -281,7 +281,7 @@ function reset() {
                   </DropdownMenu>
                 </div>
               </div>
-              <div class="h-8 border-l-[0.5px] border-black"></div>
+              <div class="h-8 border-l-[0.5px] border-black" />
               <div class="flex gap-2.5">
                 <label
                   for="available"
