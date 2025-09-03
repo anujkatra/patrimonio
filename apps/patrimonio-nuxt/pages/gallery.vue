@@ -15,6 +15,15 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {Checkbox} from '@/components/ui/checkbox'
 import {useRoute, useRouter} from 'vue-router'
 import FilterDown from '~/assets/svg/filterDown.svg'
@@ -25,8 +34,10 @@ const router = useRouter()
 
 onMounted(() => {
   // Check if 'page' query param exists, if not, add a default
-  if (!route.query.page) {
-    router.replace({query: {...route.query, page: 1}})
+  if (!route.query.page || !route.query.order) {
+    router.replace({
+      query: {...route.query, page: route.query.page ?? 1, order: route.query.order ?? 'desc'},
+    })
   }
 })
 
@@ -42,7 +53,7 @@ const selectedYear = computed(() =>
   typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
 )
 const forSaleOnly = ref(false)
-const isPaintingOrderAscending = ref(false)
+const paintingOrder = computed(() => route.query.order || '')
 
 // watch(
 //   () => route.query,
@@ -65,10 +76,6 @@ function getIdBySlug(object, value) {
 
 function handleForSaleOnlyToggle() {
   forSaleOnly.value = !forSaleOnly.value
-}
-
-function handleOrderChange(value: boolean) {
-  isPaintingOrderAscending.value = value
 }
 
 const {data: galleryPageData} = await useSanityQuery<GalleryPageQueryResult>(galleryPageQuery)
@@ -106,7 +113,8 @@ useSiteMetadata({
 //   return result
 // }
 
-const query = groq`*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year desc)[$startIndex...$endIndex]{
+const query = computed(
+  () => groq`*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year ${paintingOrder.value})[$startIndex...$endIndex]{
  _id,
   name,
 	"artist":artist->.name,
@@ -114,7 +122,8 @@ const query = groq`*[_type == "painting" && ($artist == '' || artist._ref == $ar
 	"medium":medium->.name,
   picture,
   publishedAt,
-}`
+}`,
+)
 
 const countQuery = groq`count(*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)])`
 
@@ -132,7 +141,7 @@ const {data: galleryFilterData} = await useSanityQuery(filterQuery)
 const {data: galleryPaintingData} = await useAsyncData(
   'galleryPaintingData',
   () =>
-    sanity.fetch(query, {
+    sanity.fetch(query.value, {
       startIndex: startIndex.value,
       endIndex: endIndex.value,
       artist: getIdBySlug(galleryFilterData.value.artists, artist.value),
@@ -142,7 +151,7 @@ const {data: galleryPaintingData} = await useAsyncData(
       forSaleOnly: forSaleOnly.value,
       // order: isPaintingOrderAscending.value ? 'asc' : 'desc',
     }),
-  {watch: [params, forSaleOnly, isPaintingOrderAscending]},
+  {watch: [params, forSaleOnly, query]},
 )
 const {data: galleryPaintingDataCount} = await useAsyncData(
   'galleryPaintingDataCount',
@@ -181,7 +190,7 @@ function updatePage(value: number) {
   router.replace({query: {...route.query, page: value}})
 }
 function reset() {
-  router.replace({query: {page: 1}})
+  router.replace({query: {page: 1, order: 'desc'}})
 }
 </script>
 
@@ -299,26 +308,27 @@ function reset() {
               </div>
             </div>
             <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
-              <DropdownMenu>
-                <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
-                  <p class="font-satoshi text-base/none font-normal tracking-normal">Order</p>
-                  <FilterDown class="w-3" :font-controlled="false" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start">
-                  <DropdownMenuItem
-                    class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                    @select="handleOrderChange(true)"
-                  >
-                    Ascending
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                    @select="handleOrderChange(false)"
-                  >
-                    Descending
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Select default-value="desc" @update:model-value="(value) => filter('order', value)">
+                <SelectTrigger class="h-10! min-w-[180px] border-none p-0 shadow-none">
+                  <SelectValue placeholder="Order By" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem
+                      value="asc"
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                    >
+                      Oldest First
+                    </SelectItem>
+                    <SelectItem
+                      value="desc"
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                    >
+                      Latest First
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div
