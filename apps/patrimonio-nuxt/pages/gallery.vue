@@ -429,7 +429,7 @@ function reset() {
             :sibling-count="1"
             :items-per-page="itemsPerPage"
             :total="galleryPaintingDataCount"
-            :default-page="1"
+            :default-page="page"
             :show-edges="true"
             @update:page="(p) => updatePage(p)"
           >
