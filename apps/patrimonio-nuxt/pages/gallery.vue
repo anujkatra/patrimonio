@@ -114,9 +114,8 @@ useSiteMetadata({
 //   }
 //   return result
 // }
-
 const query = computed(
-  () => groq`*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year ${paintingOrder.value})[$startIndex...$endIndex]{
+  () => groq`*[_type == "painting" && ($collection == '' || _id in *[_type == "collection" && slug.current == $collection][0].paintings[]._ref) && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year ${paintingOrder.value})[$startIndex...$endIndex]{
  _id,
   name,
 	"artist":artist->.name,
@@ -151,6 +150,7 @@ const {data: galleryPaintingData} = await useAsyncData(
       startYear: selectedYear.value,
       endYear: selectedYear.value + 9,
       forSaleOnly: forSaleOnly.value,
+      collection: collection.value,
       // order: isPaintingOrderAscending.value ? 'asc' : 'desc',
     }),
   {watch: [params, forSaleOnly, query]},
