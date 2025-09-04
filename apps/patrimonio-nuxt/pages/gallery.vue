@@ -28,6 +28,8 @@ import {Checkbox} from '@/components/ui/checkbox'
 import {useRoute, useRouter} from 'vue-router'
 import FilterDown from '~/assets/svg/filterDown.svg'
 import Cancel from '~/assets/svg/cancel.svg'
+import Sort from '~/assets/svg/sort.svg'
+import Filter from '~/assets/svg/filter.svg'
 const sanity = useSanity()
 const route = useRoute()
 const router = useRouter()
@@ -214,6 +216,7 @@ function reset() {
         <div class="flex flex-col gap-[15px]">
           <div class="flex justify-between border-y-[0.5px] border-black py-2.5">
             <div class="flex items-center gap-5">
+              <Filter class="size-5" :font-controlled="false" />
               <div class="flex gap-2.5">
                 <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
                   <DropdownMenu>
@@ -307,9 +310,12 @@ function reset() {
                 </label>
               </div>
             </div>
-            <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+            <div class="flex h-10 justify-center hover:bg-black hover:text-white">
               <Select default-value="desc" @update:model-value="(value) => filter('order', value)">
-                <SelectTrigger class="h-10! min-w-[180px] border-none p-0 shadow-none">
+                <SelectTrigger
+                  class="flex h-10! justify-center gap-[15px] border-none px-[15px] shadow-none"
+                >
+                  <Sort class="size-5 hover:text-white" :font-controlled="false" />
                   <SelectValue placeholder="Order By" />
                 </SelectTrigger>
                 <SelectContent>
