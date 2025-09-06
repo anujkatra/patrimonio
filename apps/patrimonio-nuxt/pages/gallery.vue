@@ -360,7 +360,7 @@ function reset() {
             v-if="artist !== '' || selectedYear !== 0 || medium !== '' || collection !== ''"
             class="flex justify-between border-b-[0.5px] border-black pb-[15px]"
           >
-            <div class="flex">
+            <div class="flex flex-wrap gap-y-5">
               <p class="px-[5px]">Showing results for:</p>
               <div
                 v-if="selectedYear !== 0"
@@ -416,7 +416,7 @@ function reset() {
                 </div>
               </div>
             </div>
-            <div class="flex gap-2.5">
+            <div class="flex min-w-[82px] gap-2.5">
               <button class="cursor-pointer" @click="reset">
                 <p
                   class="text-patrimonio-blue font-satoshi text-base/none font-medium tracking-normal"
