@@ -1085,6 +1085,18 @@ export type OurStoryPageQueryResult = {
   }>
   seo?: Seo
 } | null
+// Variable: galleryPageQuery
+// Query: *[_type == "gallery"][0]
+export type GalleryPageQueryResult = {
+  _id: string
+  _type: 'gallery'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  seo?: Seo
+} | null
 // Variable: artistQuery
 // Query: *[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {	...,	picture{		...,		...asset-> {    		caption,    		...metadata {    			lqip, // the lqip can be used for blurHashUrl or other low-quality placeholders  				...dimensions {        				width,        				height  				}			}		}	},	featuredPaintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	},}
 export type ArtistQueryResult = {
@@ -1220,6 +1232,7 @@ declare module '@sanity/client' {
     '*[_type == "homepage"][0] {\n\t...,\n\tlandingCarousel[]->{\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedCollections[]->{\n\t\ttitle,\n\t\tslug,\n\t\tpaintings[0]->{\n\t\t\tpicture{\n\t\t\t\t...,\n\t\t\t\tasset->,\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedEvents[]->{\n\t\ttitle,\n\t\tslug,\n\t\tvenue,\n\t\tdateRange,\n\t\tpictures[0]{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t\t"artist":artists[0]->.name,\n\t},\n\tfeaturedPress[]->{\n\t\ttitle,\n\t\tslug,\n\t\texcerpt,\n\t\tfeaturedImage{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t},\n}': HomepageQueryResult
     '*[_type == "artists"][0] {\n\t...,\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tlocation,\n\t\tpicture{\n\t\t\t...,\n\t\t\t...asset-> {\n    \t\t\tcaption,\n    \t\t\t...metadata {\n      \t\t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n      \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n      \t\t\t\t}\n    \t\t\t}\n  \t\t\t}\n\t\t}\n\t},\n}': ArtistsPageQueryResult
     '*[_type == "ourStory"][0]': OurStoryPageQueryResult
+    '*[_type == "gallery"][0]': GalleryPageQueryResult
     '*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tpicture{\n\t\t...,\n\t\t...asset-> {\n    \t\tcaption,\n    \t\t...metadata {\n    \t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n  \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n  \t\t\t\t}\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': ArtistQueryResult
   }
 }
