@@ -75,6 +75,14 @@ function getIdBySlug(object, value) {
   }
   return ''
 }
+function getValueBySlug(object, value: string, returnValue: string) {
+  for (let i = 0; i < object.length; i++) {
+    if (object[i].slug.current === value) {
+      return object[i][returnValue]
+    }
+  }
+  return ''
+}
 
 function handleForSaleOnlyToggle() {
   forSaleOnly.value = !forSaleOnly.value
@@ -169,7 +177,17 @@ const {data: galleryPaintingDataCount} = await useAsyncData(
 )
 console.log('count', galleryPaintingDataCount.value)
 // console.log('test', galleryPageData.value, galleryPaintingData.value)
-console.log('test1', galleryPaintingData.value, galleryFilterData.value.artists)
+console.log('test1', galleryPaintingData.value, galleryFilterData.value)
+
+const selectedFilters = computed(() => {
+  return {
+    artist: getValueBySlug(galleryFilterData.value.artists, artist.value, 'name'),
+    collection: getValueBySlug(galleryFilterData.value.collections, collection.value, 'title'),
+    medium: getValueBySlug(galleryFilterData.value.mediums, medium.value, 'name'),
+  }
+})
+
+console.log('abcdefgh', selectedFilters.value)
 
 const startYear = galleryFilterData.value.startYear
 const endYear = galleryFilterData.value.endYear
@@ -297,12 +315,13 @@ function reset() {
               <div class="flex gap-2.5">
                 <label
                   for="available"
-                  class="font-satoshi text-base/none font-normal tracking-normal"
+                  class="font-satoshi cursor-pointer text-base/none font-normal tracking-normal"
                 >
                   <span class="pr-2">
                     <Checkbox
                       id="available"
                       :model-value="forSaleOnly"
+                      class="cursor-pointer"
                       @update:model-value="() => handleForSaleOnlyToggle()"
                     />
                   </span>
@@ -313,7 +332,7 @@ function reset() {
             <div class="flex h-10 justify-center hover:bg-black hover:text-white">
               <Select default-value="desc" @update:model-value="(value) => filter('order', value)">
                 <SelectTrigger
-                  class="flex h-10! justify-center gap-[15px] border-none px-[15px] shadow-none"
+                  class="flex h-10! cursor-pointer justify-center gap-[15px] border-none px-[15px] shadow-none"
                 >
                   <Sort class="size-5 hover:text-white" :font-controlled="false" />
                   <SelectValue placeholder="Order By" />
@@ -358,39 +377,40 @@ function reset() {
               </div>
               <div
                 v-if="artist !== ''"
-                class="group/year flex cursor-pointer items-center gap-[5px] px-[5px]"
+                class="group/artist flex cursor-pointer items-center gap-[5px] px-[5px]"
                 @click="filter('artist', '')"
               >
                 <p>Artist</p>
-                <p class="font-medium">{{ artist }}</p>
+                <p class="font-medium">{{ selectedFilters.artist }}</p>
                 <div
-                  class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
+                  class="flex size-5 items-center justify-center group-hover/artist:bg-black group-hover/artist:text-white"
                 >
                   <Cancel class="size-2.5" :font-controlled="false" />
                 </div>
               </div>
               <div
                 v-if="collection !== ''"
-                class="group/year flex cursor-pointer items-center gap-[5px] px-[5px]"
+                class="group/collection flex cursor-pointer items-center gap-[5px] px-[5px]"
                 @click="filter('collection', '')"
               >
                 <p>Collection</p>
-                <p class="font-medium">{{ collection }}</p>
+                <p class="font-medium">{{ selectedFilters.collection }}</p>
                 <div
-                  class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
+                  class="flex size-5 items-center justify-center group-hover/collection:bg-black group-hover/collection:text-white"
                 >
                   <Cancel class="size-2.5" :font-controlled="false" />
                 </div>
               </div>
               <div
                 v-if="medium !== ''"
-                class="group/year flex cursor-pointer items-center gap-[5px] px-[5px]"
+                class="group/medium flex cursor-pointer items-center gap-[5px] px-[5px]"
                 @click="filter('medium', '')"
               >
                 <p>Medium</p>
-                <p class="font-medium">{{ medium }}</p>
+                <p class="font-medium">{{ selectedFilters.medium }}</p>
+
                 <div
-                  class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
+                  class="flex size-5 items-center justify-center group-hover/medium:bg-black group-hover/medium:text-white"
                 >
                   <Cancel class="size-2.5" :font-controlled="false" />
                 </div>
