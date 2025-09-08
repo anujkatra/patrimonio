@@ -212,6 +212,26 @@ function updatePage(value: number) {
 function reset() {
   router.replace({query: {page: 1, order: 'desc'}})
 }
+
+const isFilterMenuOpen = ref(false)
+
+function closeMenu() {
+  isFilterMenuOpen.value = false
+}
+
+// Disable scroll on body when menu is open
+watch(isFilterMenuOpen, (open) => {
+  if (open) {
+    console.log('open', isFilterMenuOpen.value, open)
+    document.body.classList.add('overflow-hidden')
+  } else {
+    console.log('close', isFilterMenuOpen.value, open)
+    document.body.classList.remove('overflow-hidden')
+  }
+})
+
+const currentActiveMobileFilter = ref(0)
+const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
 </script>
 
 <template>
@@ -233,9 +253,82 @@ function reset() {
       <div class="flex w-full max-w-[1300px] flex-col gap-5 lg:gap-[70px] xl:gap-10">
         <div class="flex flex-col gap-[15px]">
           <div class="flex justify-between border-y-[0.5px] border-black py-2.5">
-            <div class="flex items-center gap-5">
+            <div class="flex lg:hidden">
+              <button
+                class="hover:cursor-pointer focus:outline-none"
+                aria-label="Toggle menu"
+                @click="isFilterMenuOpen = !isFilterMenuOpen"
+              >
+                Filter
+              </button>
+            </div>
+            <Transition mode="out-in" name="fade">
+              <div
+                v-if="isFilterMenuOpen"
+                class="absolute inset-0 z-[60] flex min-h-svh w-full flex-col bg-white text-center lg:hidden"
+              >
+                <div class="flex justify-between border-b-[0.5px] border-[#202020] px-[15px] py-5">
+                  <p class="font-satoshi text-lg/none tracking-normal">Filters</p>
+                  <button
+                    class="hover:cursor-pointer focus:outline-none"
+                    aria-label="Toggle menu"
+                    @click="closeMenu"
+                  >
+                    <Cancel class="size-5" :font-controlled="false" />
+                  </button>
+                </div>
+                <div class="flex h-full px-5">
+                  <div class="border-r-[0.5px] border-[#202020]">
+                    <div
+                      class="font-satoshi flex w-[118px] flex-col text-base/none tracking-normal"
+                    >
+                      <!-- @TODO Switch to font medium after fixing font issue -->
+                      <button
+                        :class="`cursor-pointer ${currentActiveMobileFilter == 0 ? 'font-semibold' : ''}`"
+                        @click="currentActiveMobileFilter = 0"
+                      >
+                        <p class="px-2.5 py-[22px]">Year</p>
+                      </button>
+                      <button
+                        :class="`cursor-pointer ${currentActiveMobileFilter == 1 ? 'font-semibold' : ''}`"
+                        @click="currentActiveMobileFilter = 1"
+                      >
+                        <p class="px-2.5 py-[22px]">Artist</p>
+                      </button>
+                      <button
+                        :class="`cursor-pointer ${currentActiveMobileFilter == 2 ? 'font-semibold' : ''}`"
+                        @click="currentActiveMobileFilter = 2"
+                      >
+                        <p class="px-2.5 py-[22px]">Collection</p>
+                      </button>
+                      <button
+                        :class="`cursor-pointer ${currentActiveMobileFilter == 3 ? 'font-semibold' : ''}`"
+                        @click="currentActiveMobileFilter = 3"
+                      >
+                        <p class="px-2.5 py-[22px]">Medium</p>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="pl-[35px]">
+                    <Transition mode="out-in" name="fade">
+                      <div
+                        :key="currentActiveMobileFilter"
+                        class="font-satoshi w-[118px] text-base/none tracking-normal"
+                      >
+                        <p class="px-2.5 py-[22px]">Year</p>
+                        <p class="px-2.5 py-[22px]">Artist</p>
+                        <p class="px-2.5 py-[22px]">Collection</p>
+                        <p class="px-2.5 py-[22px]">Medium</p>
+                        <p class="px-2.5 py-[22px]">{{ currentActiveMobileFilter }}</p>
+                      </div>
+                    </Transition>
+                  </div>
+                </div>
+              </div>
+            </Transition>
+            <div class="hidden items-center gap-5 lg:flex">
               <Filter class="size-5" :font-controlled="false" />
-              <div class="flex gap-2.5">
+              <div class="flex gap-0 xl:gap-2.5">
                 <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
                   <DropdownMenu>
                     <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
@@ -493,3 +586,15 @@ function reset() {
     </section>
   </main>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
