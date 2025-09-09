@@ -268,7 +268,7 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
                 @click="isFilterMenuOpen = !isFilterMenuOpen"
               >
                 <Filter class="size-5" :font-controlled="false" />
-                <p class="font-satoshi text-base/none font-normal tracking-normal">Filter</p>
+                <p class="font-satoshi text-base/none font-normal tracking-normal">Filters</p>
 
                 <FilterDown class="w-3" :font-controlled="false" />
               </button>
@@ -599,7 +599,9 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-5 lg:gap-x-[50px] lg:gap-y-[30px]">
+        <div
+          class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-[50px] lg:gap-y-[30px]"
+        >
           <div
             v-for="(painting, index) in galleryPaintingData"
             :key="index"
