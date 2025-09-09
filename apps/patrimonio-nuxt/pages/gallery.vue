@@ -20,7 +20,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -57,14 +56,6 @@ const selectedYear = computed(() =>
 const forSaleOnly = ref(false)
 const paintingOrder = computed(() => route.query.order || '')
 
-// watch(
-//   () => route.query,
-//   () => {
-//     selectedYear.value = route.query.year || ''
-//     // refresh()
-//   },
-// )
-
 console.log('page', page.value, startIndex.value, endIndex.value)
 
 function getIdBySlug(object, value) {
@@ -96,32 +87,6 @@ useSiteMetadata({
   ogImage: '',
 })
 
-// const query = groq`*[_type == "painting" && topic == $topic][0..10]`
-// const { data: galleryPaintingData } = useSanityQuery(query, { topic: 'News' })
-
-// groq testing
-// const query = groq`*[_type == "painting" && ($name == '' || artist->.name == $name)][0..10]`
-// const {data: galleryPaintingData} = useSanityQuery(query, {name: ''})
-
-// let lastId = ''
-// async function fetchNextPage() {
-//   if (lastId === null) {
-//     return []
-//   }
-//   const {result} = await fetch(
-//     groq`*[_type == "article" && _id > $lastId] | order(_id) [0...100] {
-//       _id, title, body
-//     }`,
-//     {lastId},
-//   )
-
-//   if (result.length > 0) {
-//     lastId = result[result.length - 1]._id
-//   } else {
-//     lastId = '' // Reached the end
-//   }
-//   return result
-// }
 const query = computed(
   () => groq`*[_type == "painting" && ($collection == '' || _id in *[_type == "collection" && slug.current == $collection][0].paintings[]._ref) && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year ${paintingOrder.value})[$startIndex...$endIndex]{
  _id,
@@ -142,11 +107,9 @@ const filterQuery = groq`{
 'artists': *[_type == "artist"]{_id,name,slug},
 'collections': *[_type == "collection"]{_id,title,slug},
 'mediums': *[_type == "medium"]{_id,name,slug}}`
+
 const {data: galleryFilterData} = await useSanityQuery(filterQuery)
-// const {data: galleryPaintingData} = await useSanityQuery(query, {
-//   startIndex: startIndex.value,
-//   endIndex: endIndex.value,
-// })
+
 const {data: galleryPaintingData} = await useAsyncData(
   'galleryPaintingData',
   () =>
@@ -159,7 +122,6 @@ const {data: galleryPaintingData} = await useAsyncData(
       endYear: selectedYear.value + 9,
       forSaleOnly: forSaleOnly.value,
       collection: selectedCollection.value,
-      // order: isPaintingOrderAscending.value ? 'asc' : 'desc',
     }),
   {watch: [params, forSaleOnly, query]},
 )
@@ -175,9 +137,6 @@ const {data: galleryPaintingDataCount} = await useAsyncData(
     }),
   {watch: [selectedArtist, selectedMedium, selectedYear, forSaleOnly]},
 )
-console.log('count', galleryPaintingDataCount.value)
-// console.log('test', galleryPageData.value, galleryPaintingData.value)
-console.log('test1', galleryPaintingData.value, galleryFilterData.value)
 
 const selectedFilters = computed(() => {
   return {
@@ -191,8 +150,6 @@ const selectedFilters = computed(() => {
   }
 })
 
-console.log('abcdefgh', selectedFilters.value)
-
 const startYear = galleryFilterData.value.startYear
 const endYear = galleryFilterData.value.endYear
 const startDecade = Math.floor(startYear / 10) * 10
@@ -201,7 +158,6 @@ const decades = []
 for (let i = startDecade; i <= endDecade; i += 10) {
   decades.push({starDate: i, endDate: i + 9})
 }
-console.log('year', startYear, endYear, params.value.artist)
 
 function filter(key: string, value: string) {
   if (value === '' || value === '0') {
@@ -230,16 +186,13 @@ function closeMenu() {
 // Disable scroll on body when menu is open
 watch(isFilterMenuOpen, (open) => {
   if (open) {
-    console.log('open', isFilterMenuOpen.value, open)
     document.body.classList.add('overflow-hidden')
   } else {
-    console.log('close', isFilterMenuOpen.value, open)
     document.body.classList.remove('overflow-hidden')
   }
 })
 
 const currentActiveMobileFilter = ref(0)
-const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
 </script>
 
 <template>
