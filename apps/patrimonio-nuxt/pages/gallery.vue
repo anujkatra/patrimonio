@@ -263,11 +263,14 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
           <div class="flex justify-between border-y-[0.5px] border-black py-2.5">
             <div class="flex lg:hidden">
               <button
-                class="hover:cursor-pointer focus:outline-none"
+                class="flex cursor-pointer items-center gap-[15px] px-[15px] hover:bg-black hover:text-white focus:outline-none"
                 aria-label="Toggle menu"
                 @click="isFilterMenuOpen = !isFilterMenuOpen"
               >
-                Filter
+                <Filter class="size-5" :font-controlled="false" />
+                <p class="font-satoshi text-base/none font-normal tracking-normal">Filter</p>
+
+                <FilterDown class="w-3" :font-controlled="false" />
               </button>
             </div>
             <Transition mode="out-in" name="fade">
@@ -485,7 +488,7 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
             <div class="flex h-10 justify-center hover:bg-black hover:text-white">
               <Select default-value="desc" @update:model-value="(value) => filter('order', value)">
                 <SelectTrigger
-                  class="flex h-10! cursor-pointer justify-center gap-[15px] border-none px-[15px] shadow-none"
+                  class="font-satoshi flex h-10! cursor-pointer justify-center gap-[15px] border-none px-[15px] text-base/none font-normal tracking-normal shadow-none"
                 >
                   <Sort class="size-5 hover:text-white" :font-controlled="false" />
                   <SelectValue placeholder="Order By" />
@@ -518,8 +521,19 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
             "
             class="flex justify-between border-b-[0.5px] border-black pb-[15px]"
           >
-            <div class="flex flex-wrap gap-y-5">
-              <p class="px-[5px]">Showing results for:</p>
+            <div class="flex w-full flex-col gap-y-5 md:flex-row md:flex-wrap">
+              <div class="flex w-full justify-between md:w-auto">
+                <p class="px-[5px]">Showing results for:</p>
+                <div class="flex min-w-[82px] gap-2.5 md:hidden">
+                  <button class="h-6 cursor-pointer" @click="reset">
+                    <p
+                      class="text-patrimonio-blue font-satoshi text-base/none font-medium tracking-normal"
+                    >
+                      Reset filters
+                    </p>
+                  </button>
+                </div>
+              </div>
               <div
                 v-if="selectedYear !== 0"
                 class="group/year flex cursor-pointer items-center gap-[5px] px-[5px]"
@@ -574,8 +588,8 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
                 </div>
               </div>
             </div>
-            <div class="flex min-w-[82px] gap-2.5">
-              <button class="cursor-pointer" @click="reset">
+            <div class="hidden min-w-[82px] gap-2.5 md:flex">
+              <button class="h-6 cursor-pointer" @click="reset">
                 <p
                   class="text-patrimonio-blue font-satoshi text-base/none font-medium tracking-normal"
                 >
