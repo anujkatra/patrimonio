@@ -45,9 +45,9 @@ onMounted(() => {
 
 const itemsPerPage = 3
 const params = computed(() => route.query || '')
-const artist = computed(() => route.query.artist || '')
-const medium = computed(() => route.query.medium || '')
-const collection = computed(() => route.query.collection || '')
+const selectedArtist = computed(() => route.query.artist || '')
+const selectedMedium = computed(() => route.query.medium || '')
+const selectedCollection = computed(() => route.query.collection || '')
 const page = computed(() => (typeof route.query.page === 'string' ? parseInt(route.query.page) : 1))
 const startIndex = computed(() => (page.value - 1) * itemsPerPage)
 const endIndex = computed(() => startIndex.value + itemsPerPage)
@@ -153,12 +153,12 @@ const {data: galleryPaintingData} = await useAsyncData(
     sanity.fetch(query.value, {
       startIndex: startIndex.value,
       endIndex: endIndex.value,
-      artist: getIdBySlug(galleryFilterData.value.artists, artist.value),
-      medium: getIdBySlug(galleryFilterData.value.mediums, medium.value),
+      artist: getIdBySlug(galleryFilterData.value.artists, selectedArtist.value),
+      medium: getIdBySlug(galleryFilterData.value.mediums, selectedMedium.value),
       startYear: selectedYear.value,
       endYear: selectedYear.value + 9,
       forSaleOnly: forSaleOnly.value,
-      collection: collection.value,
+      collection: selectedCollection.value,
       // order: isPaintingOrderAscending.value ? 'asc' : 'desc',
     }),
   {watch: [params, forSaleOnly, query]},
@@ -167,13 +167,13 @@ const {data: galleryPaintingDataCount} = await useAsyncData(
   'galleryPaintingDataCount',
   () =>
     sanity.fetch(countQuery, {
-      artist: getIdBySlug(galleryFilterData.value.artists, artist.value),
-      medium: getIdBySlug(galleryFilterData.value.mediums, medium.value),
+      artist: getIdBySlug(galleryFilterData.value.artists, selectedArtist.value),
+      medium: getIdBySlug(galleryFilterData.value.mediums, selectedMedium.value),
       startYear: selectedYear.value,
       endYear: selectedYear.value + 9,
       forSaleOnly: forSaleOnly.value,
     }),
-  {watch: [artist, medium, selectedYear, forSaleOnly]},
+  {watch: [selectedArtist, selectedMedium, selectedYear, forSaleOnly]},
 )
 console.log('count', galleryPaintingDataCount.value)
 // console.log('test', galleryPageData.value, galleryPaintingData.value)
@@ -181,9 +181,13 @@ console.log('test1', galleryPaintingData.value, galleryFilterData.value)
 
 const selectedFilters = computed(() => {
   return {
-    artist: getValueBySlug(galleryFilterData.value.artists, artist.value, 'name'),
-    collection: getValueBySlug(galleryFilterData.value.collections, collection.value, 'title'),
-    medium: getValueBySlug(galleryFilterData.value.mediums, medium.value, 'name'),
+    artist: getValueBySlug(galleryFilterData.value.artists, selectedArtist.value, 'name'),
+    collection: getValueBySlug(
+      galleryFilterData.value.collections,
+      selectedCollection.value,
+      'title',
+    ),
+    medium: getValueBySlug(galleryFilterData.value.mediums, selectedMedium.value, 'name'),
   }
 })
 
@@ -201,6 +205,10 @@ console.log('year', startYear, endYear, params.value.artist)
 
 function filter(key: string, value: string) {
   if (value === '' || value === '0') {
+    const {[key]: _, ...currentQuery} = {...route.query}
+    router.replace({query: {...currentQuery, page: 1}})
+  } else if (isFilterMenuOpen.value && route.query[key] == value) {
+    // Toggle filter if it already exists
     const {[key]: _, ...currentQuery} = {...route.query}
     router.replace({query: {...currentQuery, page: 1}})
   } else router.replace({query: {...route.query, page: 1, [key]: value}})
@@ -265,7 +273,7 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
             <Transition mode="out-in" name="fade">
               <div
                 v-if="isFilterMenuOpen"
-                class="absolute inset-0 z-[60] flex min-h-svh w-full flex-col bg-white text-center lg:hidden"
+                class="fixed inset-0 z-[60] flex min-h-svh w-full flex-col bg-white text-center lg:hidden"
               >
                 <div class="flex justify-between border-b-[0.5px] border-[#202020] px-[15px] py-5">
                   <p class="font-satoshi text-lg/none tracking-normal">Filters</p>
@@ -315,11 +323,63 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
                         :key="currentActiveMobileFilter"
                         class="font-satoshi w-[118px] text-base/none tracking-normal"
                       >
-                        <p class="px-2.5 py-[22px]">Year</p>
-                        <p class="px-2.5 py-[22px]">Artist</p>
-                        <p class="px-2.5 py-[22px]">Collection</p>
-                        <p class="px-2.5 py-[22px]">Medium</p>
-                        <p class="px-2.5 py-[22px]">{{ currentActiveMobileFilter }}</p>
+                        <div v-if="currentActiveMobileFilter === 0" class="flex w-full flex-col">
+                          <button
+                            v-for="(decade, index) in decades"
+                            :key="index"
+                            :class="`cursor-pointer ${decade.starDate == selectedYear ? 'font-semibold' : ''}`"
+                            @click="filter('year', decade.starDate)"
+                          >
+                            <p class="px-2.5 py-[22px]">
+                              {{ decade.starDate }} - {{ decade.endDate }}
+                            </p>
+                          </button>
+                        </div>
+                        <div
+                          v-else-if="currentActiveMobileFilter === 1"
+                          class="flex w-full flex-col"
+                        >
+                          <button
+                            v-for="(artist, index) in galleryFilterData?.artists"
+                            :key="index"
+                            :class="`cursor-pointer ${artist.slug.current == selectedArtist ? 'font-semibold' : ''}`"
+                            @click="filter('artist', artist.slug.current)"
+                          >
+                            <p class="px-2.5 py-[22px]">
+                              {{ artist.name }}
+                            </p>
+                          </button>
+                        </div>
+                        <div
+                          v-else-if="currentActiveMobileFilter === 2"
+                          class="flex w-full flex-col"
+                        >
+                          <button
+                            v-for="(collection, index) in galleryFilterData?.collections"
+                            :key="index"
+                            :class="`cursor-pointer ${collection.slug.current == selectedCollection ? 'font-semibold' : ''}`"
+                            @click="filter('collection', collection.slug.current)"
+                          >
+                            <p class="px-2.5 py-[22px]">
+                              {{ collection.title }}
+                            </p>
+                          </button>
+                        </div>
+                        <div
+                          v-else-if="currentActiveMobileFilter === 3"
+                          class="flex w-full flex-col"
+                        >
+                          <button
+                            v-for="(medium, index) in galleryFilterData?.mediums"
+                            :key="index"
+                            :class="`cursor-pointer ${medium.slug.current == selectedMedium ? 'font-semibold' : ''}`"
+                            @click="filter('medium', medium.slug.current)"
+                          >
+                            <p class="px-2.5 py-[22px]">
+                              {{ medium.name }}
+                            </p>
+                          </button>
+                        </div>
                       </div>
                     </Transition>
                   </div>
@@ -450,7 +510,12 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
             </div>
           </div>
           <div
-            v-if="artist !== '' || selectedYear !== 0 || medium !== '' || collection !== ''"
+            v-if="
+              selectedArtist !== '' ||
+              selectedYear !== 0 ||
+              selectedMedium !== '' ||
+              selectedCollection !== ''
+            "
             class="flex justify-between border-b-[0.5px] border-black pb-[15px]"
           >
             <div class="flex flex-wrap gap-y-5">
@@ -469,7 +534,7 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
                 </div>
               </div>
               <div
-                v-if="artist !== ''"
+                v-if="selectedArtist !== ''"
                 class="group/artist flex cursor-pointer items-center gap-[5px] px-[5px]"
                 @click="filter('artist', '')"
               >
@@ -482,7 +547,7 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
                 </div>
               </div>
               <div
-                v-if="collection !== ''"
+                v-if="selectedCollection !== ''"
                 class="group/collection flex cursor-pointer items-center gap-[5px] px-[5px]"
                 @click="filter('collection', '')"
               >
@@ -495,7 +560,7 @@ const mobileFilters = ['Year', 'Artist', 'Collection', 'Medium']
                 </div>
               </div>
               <div
-                v-if="medium !== ''"
+                v-if="selectedMedium !== ''"
                 class="group/medium flex cursor-pointer items-center gap-[5px] px-[5px]"
                 @click="filter('medium', '')"
               >
