@@ -100,7 +100,7 @@ onBeforeUnmount(() => {
             @click="isMobileMenuOpen = !isMobileMenuOpen"
           >
             <Menu v-if="!isMobileMenuOpen" class="size-6" :font-controlled="false" />
-            <Cancel v-else class="size-6 text-white" :font-controlled="false" />
+            <Cancel v-else class="size-6 bg-white text-black" :font-controlled="false" />
           </button>
         </div>
       </div>

@@ -10,7 +10,6 @@ useSiteMetadata({
   description: ourStoryPageData?.value?.seo?.description ?? 'description',
   ogImage: '',
 })
-console.log('test', ourStoryPageData.value?.ourTeam)
 </script>
 
 <template>
@@ -19,7 +18,7 @@ console.log('test', ourStoryPageData.value?.ourTeam)
       <div class="flex w-full max-w-[1300px] flex-col items-center gap-5 lg:gap-[70px] xl:gap-10">
         <div class="flex w-full border-b-[0.5px] border-solid border-[#202020] pb-5 lg:pb-8">
           <h1
-            class="font-cabinet text-[35px]/none font-normal tracking-normal lg:text-[65px]/none lg:text-[45px] xl:text-[65px]/none"
+            class="font-cabinet text-[35px]/none font-normal tracking-normal lg:text-[45px]/none xl:text-[65px]/none"
           >
             Our Story
           </h1>
