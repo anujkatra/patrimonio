@@ -56,8 +56,6 @@ const selectedYear = computed(() =>
 const forSaleOnly = ref(false)
 const paintingOrder = computed(() => route.query.order || '')
 
-console.log('page', page.value, startIndex.value, endIndex.value)
-
 function getIdBySlug(object, value) {
   for (let i = 0; i < object.length; i++) {
     if (object[i].slug.current === value) {
@@ -603,7 +601,7 @@ const currentActiveMobileFilter = ref(0)
         </div>
         <div class="w-full">
           <Pagination
-            :key="galleryPaintingDataCount"
+            :key="galleryPaintingData"
             :v-slot="{page}"
             :sibling-count="1"
             :items-per-page="itemsPerPage"
@@ -612,15 +610,16 @@ const currentActiveMobileFilter = ref(0)
             :show-edges="true"
             @update:page="(p) => updatePage(p)"
           >
-            <PaginationContent v-slot="{items}">
-              <PaginationPrevious class="cursor-pointer" />
+            <PaginationContent v-slot="{items}" class="gap-3">
+              <PaginationPrevious size="pagination" />
 
               <template v-for="(item, index) in items" :key="index">
                 <PaginationItem
                   v-if="item.type === 'page'"
                   :value="item.value"
                   :is-active="item.value === page"
-                  class="cursor-pointer"
+                  class="data-[selected=true]:text-patrimonio-beige data-[selected=true]:bg-black"
+                  size="pagination"
                 >
                   {{ item.value }}
                 </PaginationItem>
@@ -628,7 +627,7 @@ const currentActiveMobileFilter = ref(0)
                   &#8230;
                 </PaginationEllipsis>
               </template>
-              <PaginationNext class="cursor-pointer" />
+              <PaginationNext size="pagination" />
             </PaginationContent>
           </Pagination>
         </div>
