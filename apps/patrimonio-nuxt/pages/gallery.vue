@@ -87,7 +87,8 @@ useSiteMetadata({
 
 const query = computed(
   () => groq`*[_type == "painting" && ($collection == '' || _id in *[_type == "collection" && slug.current == $collection][0].paintings[]._ref) && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year ${paintingOrder.value})[$startIndex...$endIndex]{
- _id,
+  _id,
+  slug,
   name,
 	"artist":artist->.name,
 	year,
@@ -569,35 +570,37 @@ const currentActiveMobileFilter = ref(0)
         <div
           class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-[50px] lg:gap-y-[30px]"
         >
-          <div
+          <NuxtLink
             v-for="(painting, index) in galleryPaintingData"
             :key="index"
-            class="flex w-full max-w-[400px] flex-col gap-5"
+            :to="`/gallery/${painting.slug.current}`"
           >
-            <div class="w-full overflow-hidden">
-              <NuxtImg
-                provider="sanity"
-                :src="`${painting?.picture.asset?._ref}`"
-                :alt="`${painting?.picture.alt}`"
-                class="aspect-square w-full object-cover object-center transition-all duration-500 md:hover:scale-125"
-              />
-            </div>
-            <div class="flex w-full flex-col gap-[5px] py-5 pr-5">
-              <h3 class="font-cabinet pb-0.5 text-2xl/none font-medium tracking-normal">
-                {{ painting.name }}
-              </h3>
-              <div
-                class="font-satoshi flex flex-col gap-2.5 text-xl/none font-light tracking-normal"
-              >
-                <p class="line-clamp-1 pb-1">by {{ painting.artist }}</p>
-                <div class="flex gap-2.5 text-lg/none">
-                  <p>{{ painting.year }}</p>
-                  <p>|</p>
-                  <p>{{ painting.medium }}</p>
+            <div class="flex w-full max-w-[400px] flex-col gap-5">
+              <div class="w-full overflow-hidden">
+                <NuxtImg
+                  provider="sanity"
+                  :src="`${painting?.picture.asset?._ref}`"
+                  :alt="`${painting?.picture.alt}`"
+                  class="aspect-square w-full object-cover object-center transition-all duration-500 md:hover:scale-125"
+                />
+              </div>
+              <div class="flex w-full flex-col gap-[5px] py-5 pr-5">
+                <h3 class="font-cabinet pb-0.5 text-2xl/none font-medium tracking-normal">
+                  {{ painting.name }}
+                </h3>
+                <div
+                  class="font-satoshi flex flex-col gap-2.5 text-xl/none font-light tracking-normal"
+                >
+                  <p class="line-clamp-1 pb-1">by {{ painting.artist }}</p>
+                  <div class="flex gap-2.5 text-lg/none">
+                    <p>{{ painting.year }}</p>
+                    <p>|</p>
+                    <p>{{ painting.medium }}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </NuxtLink>
         </div>
         <div class="w-full">
           <Pagination
