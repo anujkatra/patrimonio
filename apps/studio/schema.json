@@ -791,6 +791,14 @@
         },
         "optional": false
       },
+      "slug": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
+        },
+        "optional": false
+      },
       "picture": {
         "type": "objectAttribute",
         "value": {
@@ -904,6 +912,13 @@
         },
         "optional": false
       },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "dimensions": {
         "type": "objectAttribute",
         "value": {
@@ -983,6 +998,13 @@
         "optional": true
       },
       "forSale": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "hidden": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"

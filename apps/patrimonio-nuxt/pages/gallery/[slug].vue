@@ -19,8 +19,8 @@ if (paintingData.value === null) {
 console.log('test', paintingData.value)
 
 useSiteMetadata({
-  title: paintingData?.value?.seo?.title ?? 'title',
-  description: paintingData?.value?.seo?.description ?? 'description',
+  title: `${paintingData.value.name} - ${paintingData.value.artist}`,
+  description: paintingData.value.description ?? '',
   ogImage: '',
 })
 </script>
