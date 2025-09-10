@@ -195,8 +195,8 @@ const currentActiveMobileFilter = ref(0)
 
 <template>
   <main>
-    <section class="flex justify-center px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]">
-      <div class="flex w-full max-w-[1300px] flex-col gap-5 lg:gap-[70px] xl:gap-10">
+    <section class="flex justify-center px-5 pt-[50px] pb-2.5 md:px-10 md:pt-[70px] xl:px-[70px]">
+      <div class="flex w-full max-w-[1300px] flex-col gap-2.5">
         <h1
           class="font-cabinet text-[35px]/none font-normal tracking-normal lg:text-[45px]/none xl:text-[65px]/none"
         >
@@ -208,7 +208,7 @@ const currentActiveMobileFilter = ref(0)
       </div>
     </section>
 
-    <section class="flex justify-center px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]">
+    <section class="flex justify-center px-5 pt-2.5 pb-[50px] md:px-10 md:pb-[70px] xl:px-[70px]">
       <div class="flex w-full max-w-[1300px] flex-col gap-5 lg:gap-[70px] xl:gap-10">
         <div class="flex flex-col gap-[15px]">
           <div class="flex justify-between border-y-[0.5px] border-black py-2.5">
