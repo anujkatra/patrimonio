@@ -99,8 +99,16 @@ export const painting: DocumentDefinition = {
       to: [{type: 'medium'}],
     }),
     defineField({
-      title: 'Is the Painting for Sale?',
+      title: 'For Sale',
+      description: 'Is the Painting for Sale?',
       name: 'forSale',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      title: 'Hidden',
+      description: 'Hide painting on gallery page?',
+      name: 'hidden',
       type: 'boolean',
       initialValue: false,
     }),
