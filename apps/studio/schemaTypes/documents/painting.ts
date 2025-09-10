@@ -74,6 +74,12 @@ export const painting: DocumentDefinition = {
         Rule.required().min(1940).max(new Date().getFullYear()).integer().positive(),
     }),
     defineField({
+      title: 'Description',
+      name: 'description',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
       name: 'dimensions',
       title: 'Dimensions',
       type: 'object',
