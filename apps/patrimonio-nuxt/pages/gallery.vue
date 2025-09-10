@@ -345,7 +345,9 @@ const currentActiveMobileFilter = ref(0)
             <div class="hidden items-center gap-5 lg:flex">
               <Filter class="size-5" :font-controlled="false" />
               <div class="flex gap-0 xl:gap-2.5">
-                <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+                <div
+                  class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+                >
                   <DropdownMenu>
                     <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
                       <p class="font-satoshi text-base/none font-normal tracking-normal">Year</p>
@@ -363,7 +365,9 @@ const currentActiveMobileFilter = ref(0)
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
-                <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+                <div
+                  class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+                >
                   <DropdownMenu>
                     <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
                       <p class="font-satoshi text-base/none font-normal tracking-normal">Artist</p>
@@ -381,7 +385,9 @@ const currentActiveMobileFilter = ref(0)
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
-                <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+                <div
+                  class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+                >
                   <DropdownMenu>
                     <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
                       <p class="font-satoshi text-base/none font-normal tracking-normal">
@@ -401,7 +407,9 @@ const currentActiveMobileFilter = ref(0)
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
-                <div class="flex h-10 justify-center px-[15px] hover:bg-black hover:text-white">
+                <div
+                  class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+                >
                   <DropdownMenu>
                     <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
                       <p class="font-satoshi text-base/none font-normal tracking-normal">Medium</p>
@@ -489,55 +497,63 @@ const currentActiveMobileFilter = ref(0)
               </div>
               <div
                 v-if="selectedYear !== 0"
-                class="group/year flex cursor-pointer items-center gap-[5px] px-[5px]"
+                class="group/year flex cursor-pointer justify-between gap-[5px] px-[5px]"
                 @click="filter('year', '0')"
               >
                 <p>Year</p>
-                <p class="font-medium">{{ selectedYear }} - {{ selectedYear + 9 }}</p>
-                <div
-                  class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
-                >
-                  <Cancel class="size-2.5" :font-controlled="false" />
+                <div class="flex items-center gap-[5px]">
+                  <p class="font-medium">{{ selectedYear }} - {{ selectedYear + 9 }}</p>
+                  <div
+                    class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
+                  >
+                    <Cancel class="size-2.5" :font-controlled="false" />
+                  </div>
                 </div>
               </div>
               <div
                 v-if="selectedArtist !== ''"
-                class="group/artist flex cursor-pointer items-center gap-[5px] px-[5px]"
+                class="group/artist flex cursor-pointer justify-between gap-[5px] px-[5px]"
                 @click="filter('artist', '')"
               >
                 <p>Artist</p>
-                <p class="font-medium">{{ selectedFilters.artist }}</p>
-                <div
-                  class="flex size-5 items-center justify-center group-hover/artist:bg-black group-hover/artist:text-white"
-                >
-                  <Cancel class="size-2.5" :font-controlled="false" />
+                <div class="flex items-center gap-[5px]">
+                  <p class="font-medium">{{ selectedFilters.artist }}</p>
+                  <div
+                    class="flex size-5 items-center justify-center group-hover/artist:bg-black group-hover/artist:text-white"
+                  >
+                    <Cancel class="size-2.5" :font-controlled="false" />
+                  </div>
                 </div>
               </div>
               <div
                 v-if="selectedCollection !== ''"
-                class="group/collection flex cursor-pointer items-center gap-[5px] px-[5px]"
+                class="group/collection flex cursor-pointer justify-between gap-[5px] px-[5px]"
                 @click="filter('collection', '')"
               >
                 <p>Collection</p>
-                <p class="font-medium">{{ selectedFilters.collection }}</p>
-                <div
-                  class="flex size-5 items-center justify-center group-hover/collection:bg-black group-hover/collection:text-white"
-                >
-                  <Cancel class="size-2.5" :font-controlled="false" />
+                <div class="flex items-center gap-[5px]">
+                  <p class="font-medium">{{ selectedFilters.collection }}</p>
+                  <div
+                    class="flex size-5 items-center justify-center group-hover/collection:bg-black group-hover/collection:text-white"
+                  >
+                    <Cancel class="size-2.5" :font-controlled="false" />
+                  </div>
                 </div>
               </div>
               <div
                 v-if="selectedMedium !== ''"
-                class="group/medium flex cursor-pointer items-center gap-[5px] px-[5px]"
+                class="group/medium flex cursor-pointer justify-between gap-[5px] px-[5px]"
                 @click="filter('medium', '')"
               >
                 <p>Medium</p>
-                <p class="font-medium">{{ selectedFilters.medium }}</p>
+                <div class="flex items-center gap-[5px]">
+                  <p class="font-medium">{{ selectedFilters.medium }}</p>
 
-                <div
-                  class="flex size-5 items-center justify-center group-hover/medium:bg-black group-hover/medium:text-white"
-                >
-                  <Cancel class="size-2.5" :font-controlled="false" />
+                  <div
+                    class="flex size-5 items-center justify-center group-hover/medium:bg-black group-hover/medium:text-white"
+                  >
+                    <Cancel class="size-2.5" :font-controlled="false" />
+                  </div>
                 </div>
               </div>
             </div>
