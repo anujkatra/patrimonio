@@ -80,6 +80,38 @@ export const artistsPageQuery = defineQuery(`*[_type == "artists"][0] {
 	},
 }`)
 
+export const ourStoryPageQuery = defineQuery(`*[_type == "ourStory"][0]`)
+
+export const galleryPageQuery = defineQuery(`*[_type == "gallery"][0]`)
+
+export const artistQuery =
+  defineQuery(`*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {
+	...,
+	picture{
+		...,
+		...asset-> {
+    		caption,
+    		...metadata {
+    			lqip, // the lqip can be used for blurHashUrl or other low-quality placeholders
+  				...dimensions {
+        				width,
+        				height
+  				}
+			}
+		}
+	},
+	featuredPaintings[]->{
+		name,
+		"artist":artist->.name,
+		year,
+		"medium":medium->.name,
+		picture{
+			...,
+			asset->,
+		}
+	},
+}`)
+
 export const eventsPageQuery = defineQuery(`*[_type == "eventsPage"][0] {
 	...,
 	auctions[]->{

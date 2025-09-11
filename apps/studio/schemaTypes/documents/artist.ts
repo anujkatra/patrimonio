@@ -1,7 +1,8 @@
 import {defineArrayMember, defineField, DocumentDefinition} from 'sanity'
 import {UserIcon} from '@sanity/icons'
+import {withSeo} from '../../helpers/document'
 
-export const artist: DocumentDefinition = {
+export const artist: DocumentDefinition = withSeo({
   name: 'artist',
   title: 'Artist',
   type: 'document',
@@ -76,6 +77,22 @@ export const artist: DocumentDefinition = {
       description: 'A short description of the artist displayed on other pages',
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      title: 'Featured Paintings',
+      name: 'featuredPaintings',
+      type: 'array',
+      description: 'Paintings to feature on the individual artist page (max 20)',
+      validation: (Rule) => Rule.unique().max(20),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'painting'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
   ],
   orderings: [
     {
@@ -91,4 +108,4 @@ export const artist: DocumentDefinition = {
       media: 'picture',
     },
   },
-}
+})

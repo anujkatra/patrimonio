@@ -1,9 +1,9 @@
 /** Singletons */
 
-import {aboutUs} from './about-us-page'
+import {ourStory} from './our-story-page'
 import {artists} from './artists'
-import { eventsPage } from './events-page'
+import {eventsPage} from './events-page'
 import {gallery} from './gallery'
 import {homepage} from './homepage'
 
-export const singletons = [homepage, aboutUs, gallery, artists, eventsPage]
+export const singletons = [homepage, ourStory, gallery, artists, eventsPage]

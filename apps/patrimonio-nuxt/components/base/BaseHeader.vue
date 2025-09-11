@@ -23,19 +23,19 @@ const headerContent: HeaderContentProps[] = [
   },
   {
     link: 'Our Story',
-    href: '/about-us',
+    href: '/our-story',
   },
   {
     link: 'Blog',
-    href: '/about-us',
+    href: '/our-story',
   },
   {
     link: 'Press & Media',
-    href: '/about-us',
+    href: '/our-story',
   },
   {
     link: 'Contact Us',
-    href: '/about-us',
+    href: '/our-story',
   },
 ]
 
@@ -100,7 +100,7 @@ onBeforeUnmount(() => {
             @click="isMobileMenuOpen = !isMobileMenuOpen"
           >
             <Menu v-if="!isMobileMenuOpen" class="size-6" :font-controlled="false" />
-            <Cancel v-else class="size-6 text-white" :font-controlled="false" />
+            <Cancel v-else class="size-6 bg-white text-black" :font-controlled="false" />
           </button>
         </div>
       </div>
