@@ -34,7 +34,7 @@ const showForm = ref(false)
 
 const handleSubmit = () => {
   // You can send the form data to an API or use a backend handler here.
-  // console.log('test Form submitted:', form.value)
+  // console.log('Form submitted:', form.value)
 
   submitted.value = true
 
