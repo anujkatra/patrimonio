@@ -791,6 +791,14 @@
         },
         "optional": false
       },
+      "slug": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "slug"
+        },
+        "optional": false
+      },
       "picture": {
         "type": "objectAttribute",
         "value": {
@@ -903,6 +911,13 @@
           "type": "number"
         },
         "optional": false
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "dimensions": {
         "type": "objectAttribute",

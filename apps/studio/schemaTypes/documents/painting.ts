@@ -17,6 +17,18 @@ export const painting: DocumentDefinition = {
       ],
     }),
     defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      description: 'A slug is required to generate a unique url for the painting',
+      options: {
+        source: 'name',
+        maxLength: 96,
+        isUnique: (value, context) => context.defaultIsUnique(value, context),
+      },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'picture',
       title: 'Picture',
       type: 'image',
@@ -60,6 +72,12 @@ export const painting: DocumentDefinition = {
       initialValue: () => new Date().getFullYear(),
       validation: (Rule) =>
         Rule.required().min(1940).max(new Date().getFullYear()).integer().positive(),
+    }),
+    defineField({
+      title: 'Description',
+      name: 'description',
+      type: 'text',
+      rows: 3,
     }),
     defineField({
       name: 'dimensions',

@@ -138,6 +138,7 @@ export type Painting = {
   _updatedAt: string
   _rev: string
   name: string
+  slug: Slug
   picture: {
     asset?: {
       _ref: string
@@ -158,6 +159,7 @@ export type Painting = {
     [internalGroqTypeReferenceTo]?: 'artist'
   }
   year: number
+  description?: string
   dimensions: {
     height: number
     width: number
@@ -1200,6 +1202,29 @@ export type ArtistQueryResult = {
   }> | null
   seo?: Seo
 } | null
+// Variable: paintingQuery
+// Query: *[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {	name,	slug,	picture,	"artist":artist->.name,	year,	"medium":medium->.name,	description,}
+export type PaintingQueryResult = {
+  name: string
+  slug: Slug
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  artist: string
+  year: number
+  medium: string | null
+  description: string | null
+} | null
 // Variable: eventsPageQuery
 // Query: *[_type == "eventsPage"][0] {	...,	auctions[]->{		...	},	artShows[]->{		...	},	soloShows[]->{		...	}}
 export type EventsPageQueryResult = {
@@ -1408,6 +1433,7 @@ declare module '@sanity/client' {
     '*[_type == "ourStory"][0]': OurStoryPageQueryResult
     '*[_type == "gallery"][0]': GalleryPageQueryResult
     '*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tpicture{\n\t\t...,\n\t\t...asset-> {\n    \t\tcaption,\n    \t\t...metadata {\n    \t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n  \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n  \t\t\t\t}\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': ArtistQueryResult
+    '*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {\n\tname,\n\tslug,\n\tpicture,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n\tdescription,\n}': PaintingQueryResult
     '*[_type == "eventsPage"][0] {\n\t...,\n\tauctions[]->{\n\t\t...\n\t},\n\tartShows[]->{\n\t\t...\n\t},\n\tsoloShows[]->{\n\t\t...\n\t}\n}': EventsPageQueryResult
   }
 }
