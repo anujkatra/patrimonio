@@ -115,6 +115,7 @@ export const artistQuery =
 export const paintingQuery =
   defineQuery(`*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {
 	name,
+	slug,
 	picture,
 	"artist":artist->.name,
 	year,

@@ -1228,9 +1228,10 @@ export type ArtistQueryResult = {
   seo?: Seo
 } | null
 // Variable: paintingQuery
-// Query: *[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {	name,	picture,	"artist":artist->.name,	year,	"medium":medium->.name,	description,}
+// Query: *[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {	name,	slug,	picture,	"artist":artist->.name,	year,	"medium":medium->.name,	description,}
 export type PaintingQueryResult = {
   name: string
+  slug: Slug
   picture: {
     asset?: {
       _ref: string
@@ -1259,6 +1260,6 @@ declare module '@sanity/client' {
     '*[_type == "ourStory"][0]': OurStoryPageQueryResult
     '*[_type == "gallery"][0]': GalleryPageQueryResult
     '*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tpicture{\n\t\t...,\n\t\t...asset-> {\n    \t\tcaption,\n    \t\t...metadata {\n    \t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n  \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n  \t\t\t\t}\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': ArtistQueryResult
-    '*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {\n\tname,\n\tpicture,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n\tdescription,\n}': PaintingQueryResult
+    '*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {\n\tname,\n\tslug,\n\tpicture,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n\tdescription,\n}': PaintingQueryResult
   }
 }
