@@ -123,6 +123,19 @@ export const paintingQuery =
 	description,
 }`)
 
+export const eventsPageQuery = defineQuery(`*[_type == "eventsPage"][0] {
+	...,
+	auctions[]->{
+		...
+	},
+	artShows[]->{
+		...
+	},
+	soloShows[]->{
+		...
+	}
+}`)
+
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
 // 			...,
