@@ -112,6 +112,17 @@ export const artistQuery =
 	},
 }`)
 
+export const paintingQuery =
+  defineQuery(`*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {
+	name,
+	slug,
+	picture,
+	"artist":artist->.name,
+	year,
+	"medium":medium->.name,
+	description,
+}`)
+
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
 // 			...,
