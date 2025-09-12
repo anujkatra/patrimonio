@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import {twMerge} from 'tailwind-merge'
+import type {DateRange} from '~/sanity/types'
 
 const props = defineProps<{
   excerpt?: string
   title?: string
-  dateRange?: {endDate: string; startDate: string}
+  dateRange?: DateRange
   imageSrc?: string
   class?: string
   link?: string
-  venue?: string
+  venue: string
 }>()
 </script>
 
@@ -18,24 +19,41 @@ const props = defineProps<{
     target="_blank"
     :class="
       twMerge(
-        `border-patrimonio-black flex h-[400px] flex-col items-stretch not-first:border-b first:border-y max-md:gap-5 md:flex-row md:justify-between md:py-7 lg:pl-12`,
+        `border-patrimonio-black flex h-full flex-col gap-5 border-b-[0.5px] pb-[50px] md:max-h-[360px] md:flex-row md:justify-between`,
         props.class,
       )
     "
   >
-    <div class="flex h-full flex-col gap-2.5 py-5 md:max-w-2/5 md:flex-1">
+    <div class="flex w-full flex-col gap-2.5 md:max-w-[457px] md:flex-1 md:gap-5">
       <label class="">UPCOMING</label>
-      <h3 class="font-cabinet text-2xl/none font-medium">{{ props.title }}</h3>
-      <p class="font-cabinet text-lg">{{ props.excerpt }}</p>
-      <p class="mt-auto">
-        {{ props?.venue ?? '' }}
-        {{ props?.dateRange?.startDate ? `| ${new Date(props?.dateRange?.startDate)}` : ''
-        }}{{ props?.dateRange?.endDate ? ` -  ${new Date(props.dateRange.endDate)}` : '' }}
-      </p>
+      <div class="flex flex-col gap-2.5 md:gap-5">
+        <h3 class="font-cabinet text-2xl/none font-bold">{{ props.title }}</h3>
+        <p class="font-satoshi text-lg/none font-light">{{ props.excerpt }}</p>
+      </div>
+      <div class="font-satoshi flex h-5 items-center gap-2.5 text-sm/none font-light md:gap-5">
+        <p>{{ props?.venue }}</p>
+        <div class="border-patrimonio-black h-full border-l-[0.5px]" />
+        <div>
+          <NuxtTime
+            :datetime="props.dateRange?.startDate ?? ''"
+            year="numeric"
+            month="short"
+            day="numeric"
+          />
+          <span v-if="props.dateRange?.endDate">
+            -
+            <NuxtTime
+              :datetime="props.dateRange.endDate"
+              year="numeric"
+              month="short"
+              day="numeric"
+          /></span>
+        </div>
+      </div>
     </div>
     <NuxtImg
       provider="sanity"
-      class="md:flex-[0.2]"
+      class="w-full max-w-[630px] object-cover"
       :src="`${props?.imageSrc}`"
       :alt="`${props.title}`"
     />
