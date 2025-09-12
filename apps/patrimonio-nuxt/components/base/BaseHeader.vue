@@ -19,7 +19,7 @@ const headerContent: HeaderContentProps[] = [
   },
   {
     link: 'Events',
-    href: '/artists',
+    href: '/events',
   },
   {
     link: 'Our Story',
