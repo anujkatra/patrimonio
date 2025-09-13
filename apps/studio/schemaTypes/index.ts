@@ -3,10 +3,8 @@ import {medium} from './documents/medium'
 import {painting} from './documents/painting'
 import {ourStory} from './singletons/our-story-page'
 import {artists} from './singletons/artists'
-import {auctions} from './singletons/auctions'
 import {gallery} from './singletons/gallery'
 import {homepage} from './singletons/homepage'
-import {shows} from './singletons/shows'
 import {event} from './documents/event'
 import {dateRange} from './objects/dateRange'
 import {featuredSection} from './objects/featuredSection'
@@ -16,7 +14,8 @@ import {robots} from './objects/seo/robots'
 import {twitter} from './objects/seo/twitter'
 import {collection} from './documents/collection'
 import {press} from './documents/press'
-import { eventsPage } from './singletons/events-page'
+import {eventsPage} from './singletons/events-page'
+import {auctionHouse} from './documents/auction-house'
 
 export const schemaTypes = [
   // Singletons
@@ -32,6 +31,7 @@ export const schemaTypes = [
   medium,
   painting,
   press,
+  auctionHouse,
   // Objects
   dateRange,
   seo,
