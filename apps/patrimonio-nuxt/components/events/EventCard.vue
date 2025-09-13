@@ -20,7 +20,7 @@ const props = defineProps<{
     target="_blank"
     :class="
       twMerge(
-        `border-patrimonio-black group flex h-full flex-col gap-5 border-b-[0.5px] md:max-h-[400px] md:flex-row md:justify-between md:py-[30px]`,
+        `border-patrimonio-black group flex h-full flex-col gap-5 border-b-[0.5px] pb-[50px] md:max-h-[400px] md:flex-row md:justify-between md:py-[30px]`,
         props.class,
       )
     "
