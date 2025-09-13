@@ -1529,6 +1529,13 @@
         },
         "optional": false
       },
+      "upcoming": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "seo": {
         "type": "objectAttribute",
         "value": {
@@ -2137,7 +2144,7 @@
             }
           }
         },
-        "optional": false
+        "optional": true
       },
       "artShows": {
         "type": "objectAttribute",
@@ -2181,7 +2188,7 @@
             }
           }
         },
-        "optional": false
+        "optional": true
       },
       "soloShows": {
         "type": "objectAttribute",
@@ -2225,7 +2232,7 @@
             }
           }
         },
-        "optional": false
+        "optional": true
       },
       "seo": {
         "type": "objectAttribute",

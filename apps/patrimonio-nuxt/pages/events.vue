@@ -36,6 +36,7 @@ useSiteMetadata({
               :image-src="auction?.pictures?.[0]?.asset?._ref"
               :excerpt="auction?.excerpt"
               :venue="auction.venue"
+              :upcoming="auction.upcoming"
             />
           </div>
           <h2 class="my-10 text-2xl">Art Shows</h2>
@@ -46,6 +47,7 @@ useSiteMetadata({
               :image-src="artShow?.pictures?.[0]?.asset?._ref"
               :excerpt="artShow?.excerpt"
               :venue="artShow.venue"
+              :upcoming="artShow.upcoming"
             />
           </div>
           <h2 class="my-10 text-2xl">Solo Shows</h2>
@@ -56,6 +58,7 @@ useSiteMetadata({
               :image-src="soloShow?.pictures?.[0]?.asset?._ref"
               :excerpt="soloShow?.excerpt"
               :venue="soloShow.venue"
+              :upcoming="soloShow.upcoming"
             />
           </div>
         </div>

@@ -10,6 +10,7 @@ const props = defineProps<{
   class?: string
   link?: string
   venue: string
+  upcoming?: boolean
 }>()
 </script>
 
@@ -19,19 +20,18 @@ const props = defineProps<{
     target="_blank"
     :class="
       twMerge(
-        `border-patrimonio-black flex h-full flex-col gap-5 border-b-[0.5px] pb-[50px] md:max-h-[400px] md:flex-row md:justify-between`,
+        `border-patrimonio-black group flex h-full flex-col gap-5 border-b-[0.5px] md:max-h-[400px] md:flex-row md:justify-between md:py-[30px]`,
         props.class,
       )
     "
   >
     <div
-      class="flex w-full flex-col gap-2.5 md:max-w-[457px] md:flex-1 md:justify-between md:gap-5 lg:pl-[50px]"
+      class="flex w-full flex-col gap-2.5 md:max-w-[457px] md:flex-1 md:justify-between md:gap-5 md:py-5 lg:pl-[50px]"
     >
       <div class="flex w-full flex-col gap-2.5 md:gap-5">
-        <p
-          class="font-satoshi text-patrimonio-blue text-[15px]/none font-medium tracking-normal uppercase"
-        >
-          Upcoming
+        <p class="font-satoshi text-[15px]/none font-medium tracking-normal uppercase">
+          <span v-if="props.upcoming" class="text-patrimonio-blue">Upcoming</span>
+          <span v-else class="text-patrimonio-red">Past Event</span>
         </p>
         <div class="flex flex-col gap-2.5 md:gap-5">
           <h3 class="font-cabinet text-2xl/none font-bold">{{ props.title }}</h3>
@@ -59,10 +59,10 @@ const props = defineProps<{
         </div>
       </div>
     </div>
-    <div class="flex w-full max-w-[600px] flex-1">
+    <div class="flex w-full max-w-[600px] flex-1 overflow-hidden">
       <NuxtImg
         provider="sanity"
-        class="w-full object-cover"
+        class="w-full object-cover transition-all duration-500 group-hover:scale-125"
         :src="`${props?.imageSrc}`"
         :alt="`${props.title}`"
       />

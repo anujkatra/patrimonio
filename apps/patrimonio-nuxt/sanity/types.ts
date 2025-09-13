@@ -245,6 +245,7 @@ export type Event = {
     [internalGroqTypeReferenceTo]?: 'artist'
   }>
   excerpt: string
+  upcoming?: boolean
   seo?: Seo
 }
 
@@ -331,21 +332,21 @@ export type EventsPage = {
   _rev: string
   title: string
   subtitle?: string
-  auctions: Array<{
+  auctions?: Array<{
     _ref: string
     _type: 'reference'
     _weak?: boolean
     _key: string
     [internalGroqTypeReferenceTo]?: 'event'
   }>
-  artShows: Array<{
+  artShows?: Array<{
     _ref: string
     _type: 'reference'
     _weak?: boolean
     _key: string
     [internalGroqTypeReferenceTo]?: 'event'
   }>
-  soloShows: Array<{
+  soloShows?: Array<{
     _ref: string
     _type: 'reference'
     _weak?: boolean
@@ -1295,8 +1296,9 @@ export type EventsPageQueryResult = {
       [internalGroqTypeReferenceTo]?: 'artist'
     }>
     excerpt: string
+    upcoming?: boolean
     seo?: Seo
-  }>
+  }> | null
   artShows: Array<{
     _id: string
     _type: 'event'
@@ -1357,8 +1359,9 @@ export type EventsPageQueryResult = {
       [internalGroqTypeReferenceTo]?: 'artist'
     }>
     excerpt: string
+    upcoming?: boolean
     seo?: Seo
-  }>
+  }> | null
   soloShows: Array<{
     _id: string
     _type: 'event'
@@ -1419,8 +1422,9 @@ export type EventsPageQueryResult = {
       [internalGroqTypeReferenceTo]?: 'artist'
     }>
     excerpt: string
+    upcoming?: boolean
     seo?: Seo
-  }>
+  }> | null
   seo?: Seo
 } | null
 
