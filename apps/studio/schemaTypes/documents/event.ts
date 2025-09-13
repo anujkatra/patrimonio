@@ -137,6 +137,13 @@ export const event: DocumentDefinition = withSeo({
       description: 'A short description of the event displayed on other pages',
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      title: 'Upcoming Event?',
+      description: 'Is this an Upcoming Event? (Set false if Past Event)',
+      name: 'upcoming',
+      type: 'boolean',
+      initialValue: true,
+    }),
   ],
   preview: {
     select: {
