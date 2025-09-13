@@ -194,7 +194,12 @@ export type Event = {
   title: string
   slug: Slug
   type: 'art-show' | 'auction' | 'solo-show'
-  auctionHouse?: string
+  auctionHouse?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'auctionHouse'
+  }
   venue: string
   dateRange?: DateRange
   link?: string
@@ -253,6 +258,16 @@ export type DateRange = {
   _type: 'dateRange'
   startDate: string
   endDate?: string
+}
+
+export type AuctionHouse = {
+  _id: string
+  _type: 'auctionHouse'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
 }
 
 export type Collection = {
@@ -669,6 +684,7 @@ export type AllSanitySchemaTypes =
   | Medium
   | Event
   | DateRange
+  | AuctionHouse
   | Collection
   | Artist
   | EventsPage
@@ -1227,7 +1243,7 @@ export type PaintingQueryResult = {
   description: string | null
 } | null
 // Variable: eventsPageQuery
-// Query: *[_type == "eventsPage"][0] {	...,	auctions[]->{		...	},	artShows[]->{		...	},	soloShows[]->{		...	}}
+// Query: *[_type == "eventsPage"][0] {	...,	auctions[]->{		...,		auctionHouse-> {			name,			slug,		},	},	artShows[]->{		...	},	soloShows[]->{		...	}}
 export type EventsPageQueryResult = {
   _id: string
   _type: 'eventsPage'
@@ -1245,7 +1261,10 @@ export type EventsPageQueryResult = {
     title: string
     slug: Slug
     type: 'art-show' | 'auction' | 'solo-show'
-    auctionHouse?: string
+    auctionHouse: {
+      name: string
+      slug: Slug
+    } | null
     venue: string
     dateRange?: DateRange
     link?: string
@@ -1308,7 +1327,12 @@ export type EventsPageQueryResult = {
     title: string
     slug: Slug
     type: 'art-show' | 'auction' | 'solo-show'
-    auctionHouse?: string
+    auctionHouse?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'auctionHouse'
+    }
     venue: string
     dateRange?: DateRange
     link?: string
@@ -1371,7 +1395,12 @@ export type EventsPageQueryResult = {
     title: string
     slug: Slug
     type: 'art-show' | 'auction' | 'solo-show'
-    auctionHouse?: string
+    auctionHouse?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'auctionHouse'
+    }
     venue: string
     dateRange?: DateRange
     link?: string
@@ -1438,6 +1467,6 @@ declare module '@sanity/client' {
     '*[_type == "gallery"][0]': GalleryPageQueryResult
     '*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tpicture{\n\t\t...,\n\t\t...asset-> {\n    \t\tcaption,\n    \t\t...metadata {\n    \t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n  \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n  \t\t\t\t}\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': ArtistQueryResult
     '*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {\n\tname,\n\tslug,\n\tpicture,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n\tdescription,\n}': PaintingQueryResult
-    '*[_type == "eventsPage"][0] {\n\t...,\n\tauctions[]->{\n\t\t...\n\t},\n\tartShows[]->{\n\t\t...\n\t},\n\tsoloShows[]->{\n\t\t...\n\t}\n}': EventsPageQueryResult
+    '*[_type == "eventsPage"][0] {\n\t...,\n\tauctions[]->{\n\t\t...,\n\t\tauctionHouse-> {\n\t\t\tname,\n\t\t\tslug,\n\t\t},\n\t},\n\tartShows[]->{\n\t\t...\n\t},\n\tsoloShows[]->{\n\t\t...\n\t}\n}': EventsPageQueryResult
   }
 }

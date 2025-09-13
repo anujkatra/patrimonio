@@ -126,7 +126,11 @@ export const paintingQuery =
 export const eventsPageQuery = defineQuery(`*[_type == "eventsPage"][0] {
 	...,
 	auctions[]->{
-		...
+		...,
+		auctionHouse-> {
+			name,
+			slug,
+		},
 	},
 	artShows[]->{
 		...
