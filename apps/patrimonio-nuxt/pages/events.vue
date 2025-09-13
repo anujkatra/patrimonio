@@ -1,10 +1,26 @@
 <script lang="ts" setup>
-import {eventsPageQuery} from '~/sanity/queries'
-import type {EventsPageQueryResult} from '~/sanity/types'
+import {eventsPageFilterQuery, eventsPageQuery} from '~/sanity/queries'
+import type {EventsPageFilterQueryResult, EventsPageQueryResult} from '~/sanity/types'
 import EventCard from '~/components/events/EventCard.vue'
 
 const {data: eventsPageData} = await useSanityQuery<EventsPageQueryResult>(eventsPageQuery)
+const {data: eventsPageFilterData} =
+  await useSanityQuery<EventsPageFilterQueryResult>(eventsPageFilterQuery)
 console.log(eventsPageData.value)
+console.log('filter', eventsPageFilterData.value)
+
+// const query = computed(
+//   () => groq`*[_type == "event" && ($type == '' || type == $type) && ($auctionHouse == '' || auctionHouse._ref == $auctionHouse)  && (hidden == false)]{
+//   _id,
+//   slug,
+//   name,
+// 	"artist":artist->.name,
+// 	year,
+// 	"medium":medium->.name,
+//   picture,
+//   publishedAt,
+// }`,
+// )
 
 useSiteMetadata({
   title: eventsPageData?.value?.seo?.title ?? 'Events',

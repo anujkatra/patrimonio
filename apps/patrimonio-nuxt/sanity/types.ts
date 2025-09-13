@@ -1460,6 +1460,22 @@ export type EventsPageQueryResult = {
   }> | null
   seo?: Seo
 } | null
+// Variable: eventsPageFilterQuery
+// Query: {'startYear': *[_type == "event"] | order(dateRange.startDate asc)[0].dateRange.startDate,'endYear': *[_type == "event"] | order(dateRange.startDate desc)[0].dateRange,'artists': *[_type == "artist"]{_id,name,slug},'auctionHouse': *[_type == "auctionHouse"]{_id,name,slug}}
+export type EventsPageFilterQueryResult = {
+  startYear: string | null
+  endYear: DateRange | null
+  artists: Array<{
+    _id: string
+    name: string
+    slug: Slug
+  }>
+  auctionHouse: Array<{
+    _id: string
+    name: string
+    slug: Slug
+  }>
+}
 
 // Query TypeMap
 import '@sanity/client'
@@ -1472,5 +1488,6 @@ declare module '@sanity/client' {
     '*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tpicture{\n\t\t...,\n\t\t...asset-> {\n    \t\tcaption,\n    \t\t...metadata {\n    \t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n  \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n  \t\t\t\t}\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': ArtistQueryResult
     '*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {\n\tname,\n\tslug,\n\tpicture,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n\tdescription,\n}': PaintingQueryResult
     '*[_type == "eventsPage"][0] {\n\t...,\n\tauctions[]->{\n\t\t...,\n\t\tauctionHouse-> {\n\t\t\tname,\n\t\t\tslug,\n\t\t},\n\t},\n\tartShows[]->{\n\t\t...\n\t},\n\tsoloShows[]->{\n\t\t...\n\t}\n}': EventsPageQueryResult
+    '{\n\'startYear\': *[_type == "event"] | order(dateRange.startDate asc)[0].dateRange.startDate,\n\'endYear\': *[_type == "event"] | order(dateRange.startDate desc)[0].dateRange,\n\'artists\': *[_type == "artist"]{_id,name,slug},\n\'auctionHouse\': *[_type == "auctionHouse"]{_id,name,slug}}': EventsPageFilterQueryResult
   }
 }

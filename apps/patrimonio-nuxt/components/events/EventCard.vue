@@ -16,7 +16,7 @@ const props = defineProps<{
 
 <template>
   <NuxtLink
-    :to="link"
+    to="/"
     target="_blank"
     :class="
       twMerge(
@@ -41,7 +41,7 @@ const props = defineProps<{
       <div class="font-satoshi flex h-5 items-center gap-2.5 text-sm/none font-light">
         <p>{{ props?.venue }}</p>
         <div class="border-patrimonio-black h-3.5 border-l-[0.5px]" />
-        <div>
+        <!-- <div>
           <NuxtTime
             :datetime="props.dateRange?.startDate ?? ''"
             year="numeric"
@@ -56,7 +56,7 @@ const props = defineProps<{
               month="short"
               day="numeric"
           /></span>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="flex w-full max-w-[600px] flex-1 overflow-hidden">
