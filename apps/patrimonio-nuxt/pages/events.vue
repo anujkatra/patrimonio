@@ -32,6 +32,7 @@ useSiteMetadata({
           <div v-for="auction in eventsPageData?.auctions" :key="auction._id">
             <EventCard
               :title="auction?.title"
+              :link="auction.slug.current"
               :image-src="auction?.pictures?.[0]?.asset?._ref"
               :excerpt="auction?.excerpt"
               :venue="auction.venue"
@@ -41,6 +42,7 @@ useSiteMetadata({
           <div v-for="artShow in eventsPageData?.artShows" :key="artShow._id">
             <EventCard
               :title="artShow?.title"
+              :link="artShow.slug.current"
               :image-src="artShow?.pictures?.[0]?.asset?._ref"
               :excerpt="artShow?.excerpt"
               :venue="artShow.venue"
@@ -50,6 +52,7 @@ useSiteMetadata({
           <div v-for="soloShow in eventsPageData?.soloShows" :key="soloShow._id">
             <EventCard
               :title="soloShow?.title"
+              :link="soloShow.slug.current"
               :image-src="soloShow?.pictures?.[0]?.asset?._ref"
               :excerpt="soloShow?.excerpt"
               :venue="soloShow.venue"
