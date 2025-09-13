@@ -1559,6 +1559,13 @@
         },
         "optional": true
       },
+      "hidden": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "seo": {
         "type": "objectAttribute",
         "value": {

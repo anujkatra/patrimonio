@@ -251,6 +251,7 @@ export type Event = {
   }>
   excerpt: string
   upcoming?: boolean
+  hidden?: boolean
   seo?: Seo
 }
 
@@ -1316,6 +1317,7 @@ export type EventsPageQueryResult = {
     }>
     excerpt: string
     upcoming?: boolean
+    hidden?: boolean
     seo?: Seo
   }> | null
   artShows: Array<{
@@ -1384,6 +1386,7 @@ export type EventsPageQueryResult = {
     }>
     excerpt: string
     upcoming?: boolean
+    hidden?: boolean
     seo?: Seo
   }> | null
   soloShows: Array<{
@@ -1452,6 +1455,7 @@ export type EventsPageQueryResult = {
     }>
     excerpt: string
     upcoming?: boolean
+    hidden?: boolean
     seo?: Seo
   }> | null
   seo?: Seo

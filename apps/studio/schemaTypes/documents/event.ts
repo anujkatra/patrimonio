@@ -160,6 +160,13 @@ export const event: DocumentDefinition = withSeo({
       type: 'boolean',
       initialValue: true,
     }),
+    defineField({
+      title: 'Hidden',
+      description: 'Hide event on Events page?',
+      name: 'hidden',
+      type: 'boolean',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {
