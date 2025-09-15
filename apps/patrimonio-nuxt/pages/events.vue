@@ -35,6 +35,7 @@ onMounted(() => {
 const params = computed(() => route.query || '')
 const selectedArtist = computed(() => route.query.artist || '')
 const selectedAuctionHouse = computed(() => route.query.auctionHouse || '')
+const selectedType = computed(() => route.query.type || '')
 const selectedYear = computed(() =>
   typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
 )
@@ -86,7 +87,7 @@ const {data: eventsData} = await useAsyncData(
         eventsPageFilterData?.value?.auctionHouse,
         selectedAuctionHouse.value,
       ),
-      type: eventFilterType.value,
+      type: selectedType.value,
       startYear: 0,
       endYear: 9,
     }),
@@ -115,16 +116,13 @@ const selectedFilters = computed(() => {
 const soloShowCount = computed(() => eventsPageData.value?.soloShows?.length ?? 0)
 const auctionCount = computed(() => eventsPageData.value?.auctions?.length ?? 0)
 const artShowCount = computed(() => eventsPageData.value?.artShows?.length ?? 0)
-const eventFilterType = ref('')
 function eventFilter(value: string) {
-  if (eventFilterType.value === value) {
-    eventFilterType.value = ''
+  if (selectedType.value === value) {
     const {type, ...currentQuery} = {...route.query}
     router.replace({query: currentQuery})
   } else {
-    eventFilterType.value = value
     router.replace({
-      query: {...route.query, type: eventFilterType.value},
+      query: {...route.query, type: value},
     })
   }
 }
@@ -194,21 +192,21 @@ const currentActiveMobileFilter = ref(0)
         </div>
         <div class="font-satoshi flex w-full gap-2.5 text-base/none tracking-normal">
           <button
-            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${eventFilterType === 'auction' ? 'text-patrimonio-beige bg-black' : ''}`"
+            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${selectedType === 'auction' ? 'text-patrimonio-beige bg-black' : ''}`"
             @click="eventFilter('auction')"
           >
             <span>Auction</span>
             <span>| {{ auctionCount }} |</span>
           </button>
           <button
-            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${eventFilterType === 'solo-show' ? 'text-patrimonio-beige bg-black' : ''}`"
+            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${selectedType === 'solo-show' ? 'text-patrimonio-beige bg-black' : ''}`"
             @click="eventFilter('solo-show')"
           >
             <span>Solo Show</span>
             <span>| {{ soloShowCount }} |</span>
           </button>
           <button
-            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${eventFilterType === 'art-show' ? 'text-patrimonio-beige bg-black' : ''}`"
+            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${selectedType === 'art-show' ? 'text-patrimonio-beige bg-black' : ''}`"
             @click="eventFilter('art-show')"
           >
             <span>Art Fair</span>
