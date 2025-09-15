@@ -2,6 +2,49 @@
 import {eventsPageFilterQuery, eventsPageQuery} from '~/sanity/queries'
 import type {EventsPageFilterQueryResult, EventsPageQueryResult} from '~/sanity/types'
 import EventCard from '~/components/events/EventCard.vue'
+import Filter from '~/assets/svg/filter.svg'
+import Cancel from '~/assets/svg/cancel.svg'
+import FilterDown from '~/assets/svg/filterDown.svg'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+const sanity = useSanity()
+const route = useRoute()
+const router = useRouter()
+
+// onMounted(() => {
+//   // Check if 'page' query param exists, if not, add a default
+//   if (!route.query.page || !route.query.order) {
+//     router.replace({
+//       query: {...route.query, page: route.query.page ?? 1, order: route.query.order ?? 'desc'},
+//     })
+//   }
+// })
+
+const params = computed(() => route.query || '')
+const selectedArtist = computed(() => route.query.artist || '')
+const selectedAuctionHouse = computed(() => route.query.auctionHouse || '')
+
+function getIdBySlug(object, value) {
+  for (let i = 0; i < object.length; i++) {
+    if (object[i].slug.current === value) {
+      return object[i]._id
+    }
+  }
+  return ''
+}
+
+function getValueBySlug(object, value: string, returnValue: string) {
+  for (let i = 0; i < object.length; i++) {
+    if (object[i].slug.current === value) {
+      return object[i][returnValue]
+    }
+  }
+  return ''
+}
 
 const {data: eventsPageData} = await useSanityQuery<EventsPageQueryResult>(eventsPageQuery)
 const {data: eventsPageFilterData} =
@@ -9,18 +52,31 @@ const {data: eventsPageFilterData} =
 console.log(eventsPageData.value)
 console.log('filter', eventsPageFilterData.value)
 
-// const query = computed(
-//   () => groq`*[_type == "event" && ($type == '' || type == $type) && ($auctionHouse == '' || auctionHouse._ref == $auctionHouse)  && (hidden == false)]{
-//   _id,
-//   slug,
-//   name,
-// 	"artist":artist->.name,
-// 	year,
-// 	"medium":medium->.name,
-//   picture,
-//   publishedAt,
-// }`,
-// )
+const query = computed(
+  () => groq`*[_type == "event" && ($type == '' || type == $type) && ($auctionHouse == '' || auctionHouse._ref == $auctionHouse) && ($artist == '' || $artist in artists[]._ref) && ($startYear == 0 || (year>=$startYear && year<$endYear))]{
+  _id,
+  slug,
+  name,
+	artists,
+ dateRange,
+}`,
+)
+
+const {data: eventsData} = await useAsyncData(
+  'eventsData',
+  () =>
+    sanity.fetch(query.value, {
+      artist: getIdBySlug(eventsPageFilterData?.value?.artists, selectedArtist.value),
+      auctionHouse: getIdBySlug(
+        eventsPageFilterData?.value?.auctionHouse,
+        selectedAuctionHouse.value,
+      ),
+      type: eventFilterType.value,
+      startYear: 0,
+      endYear: 9,
+    }),
+  {watch: [params, query]},
+)
 
 useSiteMetadata({
   title: eventsPageData?.value?.seo?.title ?? 'Events',
@@ -29,14 +85,70 @@ useSiteMetadata({
     'Keep yourself upto date with events conducted by Patrimonio Gallery',
   ogImage: '',
 })
+
+const selectedFilters = computed(() => {
+  return {
+    artist: getValueBySlug(eventsPageFilterData?.value?.artists, selectedArtist.value, 'name'),
+    auctionHouse: getValueBySlug(
+      eventsPageFilterData?.value?.auctionHouse,
+      selectedAuctionHouse.value,
+      'name',
+    ),
+  }
+})
+
 const soloShowCount = computed(() => eventsPageData.value?.soloShows?.length ?? 0)
 const auctionCount = computed(() => eventsPageData.value?.auctions?.length ?? 0)
 const artShowCount = computed(() => eventsPageData.value?.artShows?.length ?? 0)
 const eventFilterType = ref('')
 function eventFilter(value: string) {
-  if (eventFilterType.value === value) eventFilterType.value = ''
-  else eventFilterType.value = value
+  if (eventFilterType.value === value) {
+    eventFilterType.value = ''
+    const {type, ...currentQuery} = {...route.query}
+    router.replace({query: currentQuery})
+  } else {
+    eventFilterType.value = value
+    router.replace({
+      query: {...route.query, type: eventFilterType.value},
+    })
+  }
 }
+
+function filter(key: string, value: string) {
+  if (value === '' || value === '0') {
+    const {[key]: _, ...currentQuery} = {...route.query}
+    router.replace({query: {...currentQuery}})
+  } else if (isFilterMenuOpen.value && route.query[key] == value) {
+    // Toggle filter if it already exists
+    const {[key]: _, ...currentQuery} = {...route.query}
+    router.replace({query: {...currentQuery}})
+  } else router.replace({query: {...route.query, [key]: value}})
+  console.log('test', eventsData.value)
+}
+
+function updatePage(value: number) {
+  router.replace({query: {...route.query, page: value}})
+}
+function reset() {
+  router.replace({query: {}})
+}
+
+const isFilterMenuOpen = ref(false)
+
+function closeMenu() {
+  isFilterMenuOpen.value = false
+}
+
+// Disable scroll on body when menu is open
+watch(isFilterMenuOpen, (open) => {
+  if (open) {
+    document.body.classList.add('overflow-hidden')
+  } else {
+    document.body.classList.remove('overflow-hidden')
+  }
+})
+
+const currentActiveMobileFilter = ref(0)
 </script>
 
 <template>
@@ -75,6 +187,128 @@ function eventFilter(value: string) {
             <span>Art Fair</span>
             <span>| {{ artShowCount }} |</span>
           </button>
+        </div>
+        <div
+          class="border-patrimonio-black hidden w-full items-center gap-5 border-y-[0.5px] py-2.5 lg:flex"
+        >
+          <Filter class="size-5" :font-controlled="false" />
+          <div class="flex gap-0 xl:gap-2.5">
+            <div
+              class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+            >
+              <DropdownMenu>
+                <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                  <p class="font-satoshi text-base/none font-normal tracking-normal">Artist</p>
+                  <FilterDown class="w-3" :font-controlled="false" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  <DropdownMenuItem
+                    v-for="(artist, index) in eventsPageFilterData?.artists"
+                    :key="index"
+                    class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                    @select="filter('artist', artist.slug.current)"
+                  >
+                    {{ artist.name }}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div
+              class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+            >
+              <DropdownMenu>
+                <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                  <p class="font-satoshi text-base/none font-normal tracking-normal">
+                    Auction House
+                  </p>
+                  <FilterDown class="w-3" :font-controlled="false" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start">
+                  <DropdownMenuItem
+                    v-for="(auctionHouse, index) in eventsPageFilterData?.auctionHouse"
+                    :key="index"
+                    class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                    @select="filter('auctionHouse', auctionHouse.slug.current)"
+                  >
+                    {{ auctionHouse.name }}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+        </div>
+        <div
+          v-if="selectedArtist !== '' || selectedAuctionHouse !== ''"
+          class="flex w-full justify-between border-b-[0.5px] border-black pb-[15px]"
+        >
+          <div class="flex w-full flex-col gap-y-5 md:flex-row md:flex-wrap">
+            <div class="flex w-full justify-between md:w-auto">
+              <p class="px-[5px]">Showing results for:</p>
+              <div class="flex min-w-[82px] gap-2.5 md:hidden">
+                <button class="h-6 cursor-pointer" @click="reset">
+                  <p
+                    class="text-patrimonio-blue font-satoshi text-base/none font-medium tracking-normal"
+                  >
+                    Reset filters
+                  </p>
+                </button>
+              </div>
+            </div>
+            <!-- <div
+              v-if="selectedYear !== 0"
+              class="group/year flex cursor-pointer justify-between gap-[5px] px-[5px]"
+              @click="filter('year', '0')"
+            >
+              <p>Year</p>
+              <div class="flex items-center gap-[5px]">
+                <p class="font-medium">{{ selectedYear }} - {{ selectedYear + 9 }}</p>
+                <div
+                  class="flex size-5 items-center justify-center group-hover/year:bg-black group-hover/year:text-white"
+                >
+                  <Cancel class="size-2.5" :font-controlled="false" />
+                </div>
+              </div>
+            </div> -->
+            <div
+              v-if="selectedArtist !== ''"
+              class="group/artist flex cursor-pointer justify-between gap-[5px] px-[5px]"
+              @click="filter('artist', '')"
+            >
+              <p>Artist</p>
+              <div class="flex items-center gap-[5px]">
+                <p class="font-medium">{{ selectedFilters.artist }}</p>
+                <div
+                  class="flex size-5 items-center justify-center group-hover/artist:bg-black group-hover/artist:text-white"
+                >
+                  <Cancel class="size-2.5" :font-controlled="false" />
+                </div>
+              </div>
+            </div>
+            <div
+              v-if="selectedAuctionHouse !== ''"
+              class="group/collection flex cursor-pointer justify-between gap-[5px] px-[5px]"
+              @click="filter('auctionHouse', '')"
+            >
+              <p>Auction House</p>
+              <div class="flex items-center gap-[5px]">
+                <p class="font-medium">{{ selectedFilters.auctionHouse }}</p>
+                <div
+                  class="flex size-5 items-center justify-center group-hover/collection:bg-black group-hover/collection:text-white"
+                >
+                  <Cancel class="size-2.5" :font-controlled="false" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hidden min-w-[82px] gap-2.5 md:flex">
+            <button class="h-6 cursor-pointer" @click="reset">
+              <p
+                class="text-patrimonio-blue font-satoshi text-base/none font-medium tracking-normal"
+              >
+                Reset filters
+              </p>
+            </button>
+          </div>
         </div>
         <div class="flex w-full flex-col gap-10">
           <Transition mode="out-in" name="fade" appear>
