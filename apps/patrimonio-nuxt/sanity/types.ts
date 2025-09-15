@@ -1299,6 +1299,120 @@ export type EventsPageCountQueryResult = {
   artShow: number
   soloShow: number
 }
+// Variable: eventQuery
+// Query: *[_type == "event" && defined(slug.current) && slug.current==$slug][0] {	...,	artists[]->,}
+export type EventQueryResult = {
+  _id: string
+  _type: 'event'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  type: 'art-show' | 'auction' | 'solo-show'
+  auctionHouse?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'auctionHouse'
+  }
+  venue: string
+  dateRange?: DateRange
+  link?: string
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  pictures?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  paintings?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'painting'
+  }>
+  artists: Array<{
+    _id: string
+    _type: 'artist'
+    _createdAt: string
+    _updatedAt: string
+    _rev: string
+    name: string
+    slug: Slug
+    location: string
+    description: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+    excerpt: string
+    featuredPaintings?: Array<{
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      _key: string
+      [internalGroqTypeReferenceTo]?: 'painting'
+    }>
+    seo?: Seo
+  }> | null
+  excerpt: string
+  upcoming?: boolean
+  hidden?: boolean
+  seo?: Seo
+} | null
 
 // Query TypeMap
 import '@sanity/client'
@@ -1313,5 +1427,6 @@ declare module '@sanity/client' {
     '*[_type == "eventsPage"][0]': EventsPageQueryResult
     '{\n\'startYear\': *[_type == "event"] | order(dateRange.startDate asc)[0].dateRange.startDate,\n\'endYear\': *[_type == "event"] | order(dateRange.startDate desc)[0].dateRange,\n\'artists\': *[_type == "artist"]{_id,name,slug},\n\'auctionHouse\': *[_type == "auctionHouse"]{_id,name,slug}}': EventsPageFilterQueryResult
     "{\n'auction': count(*[_type == \"event\" && type == 'auction']),\n'artShow': count(*[_type == \"event\" && type == 'art-show']),\n'soloShow': count(*[_type == \"event\" && type == 'solo-show']),\n}": EventsPageCountQueryResult
+    '*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tartists[]->,\n}': EventQueryResult
   }
 }
