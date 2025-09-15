@@ -478,6 +478,7 @@ const currentActiveMobileFilter = ref(0)
                   :venue="event.venue"
                   :upcoming="event.upcoming"
                   :date-range="event.dateRange"
+                  :slug="event.slug.current"
                 />
               </div>
             </div>
