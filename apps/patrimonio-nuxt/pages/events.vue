@@ -23,10 +23,21 @@ const router = useRouter()
 //     })
 //   }
 // })
+onMounted(() => {
+  // Check if 'page' query param exists, if not, add a default
+  if (!route.query.page) {
+    router.replace({
+      query: {...route.query, page: 1},
+    })
+  }
+})
 
 const params = computed(() => route.query || '')
 const selectedArtist = computed(() => route.query.artist || '')
 const selectedAuctionHouse = computed(() => route.query.auctionHouse || '')
+const selectedYear = computed(() =>
+  typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
+)
 
 function getIdBySlug(object, value) {
   for (let i = 0; i < object.length; i++) {
@@ -49,16 +60,20 @@ function getValueBySlug(object, value: string, returnValue: string) {
 const {data: eventsPageData} = await useSanityQuery<EventsPageQueryResult>(eventsPageQuery)
 const {data: eventsPageFilterData} =
   await useSanityQuery<EventsPageFilterQueryResult>(eventsPageFilterQuery)
-console.log(eventsPageData.value)
-console.log('filter', eventsPageFilterData.value)
+// console.log(eventsPageData.value)
+// console.log('filter', eventsPageFilterData.value)
 
 const query = computed(
-  () => groq`*[_type == "event" && ($type == '' || type == $type) && ($auctionHouse == '' || auctionHouse._ref == $auctionHouse) && ($artist == '' || $artist in artists[]._ref) && ($startYear == 0 || (year>=$startYear && year<$endYear))]{
+  () => groq`*[_type == "event" && ($type == '' || type == $type) && ($auctionHouse == '' || auctionHouse._ref == $auctionHouse) && ($artist == '' || $artist in artists[]._ref)]{
   _id,
   slug,
-  name,
+  title,
 	artists,
- dateRange,
+  excerpt,
+  pictures,
+  dateRange,
+  venue,
+  upcoming,
 }`,
 )
 
@@ -77,7 +92,7 @@ const {data: eventsData} = await useAsyncData(
     }),
   {watch: [params, query]},
 )
-
+// console.log('data', eventsData.value)
 useSiteMetadata({
   title: eventsPageData?.value?.seo?.title ?? 'Events',
   description:
@@ -114,23 +129,35 @@ function eventFilter(value: string) {
   }
 }
 
+const startYear = new Date(eventsPageFilterData?.value?.startYear ?? '').getFullYear()
+const endYear = new Date(
+  eventsPageFilterData?.value?.endYear?.endDate ??
+    eventsPageFilterData?.value?.endYear?.startDate ??
+    '',
+).getFullYear()
+const startDecade = Math.floor(startYear / 10) * 10
+const endDecade = Math.floor(endYear / 10) * 10
+const decades = []
+for (let i = startDecade; i <= endDecade; i += 10) {
+  decades.push({starDate: i, endDate: i + 9})
+}
+
 function filter(key: string, value: string) {
   if (value === '' || value === '0') {
     const {[key]: _, ...currentQuery} = {...route.query}
-    router.replace({query: {...currentQuery}})
+    router.replace({query: {...currentQuery, page: 1}})
   } else if (isFilterMenuOpen.value && route.query[key] == value) {
     // Toggle filter if it already exists
     const {[key]: _, ...currentQuery} = {...route.query}
-    router.replace({query: {...currentQuery}})
-  } else router.replace({query: {...route.query, [key]: value}})
-  console.log('test', eventsData.value)
+    router.replace({query: {...currentQuery, page: 1}})
+  } else router.replace({query: {...route.query, page: 1, [key]: value}})
 }
 
 function updatePage(value: number) {
   router.replace({query: {...route.query, page: value}})
 }
 function reset() {
-  router.replace({query: {}})
+  router.replace({query: {page: 1}})
 }
 
 const isFilterMenuOpen = ref(false)
@@ -174,71 +201,190 @@ const currentActiveMobileFilter = ref(0)
             <span>| {{ auctionCount }} |</span>
           </button>
           <button
-            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${eventFilterType === 'soloShow' ? 'text-patrimonio-beige bg-black' : ''}`"
-            @click="eventFilter('soloShow')"
+            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${eventFilterType === 'solo-show' ? 'text-patrimonio-beige bg-black' : ''}`"
+            @click="eventFilter('solo-show')"
           >
             <span>Solo Show</span>
             <span>| {{ soloShowCount }} |</span>
           </button>
           <button
-            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${eventFilterType === 'artShow' ? 'text-patrimonio-beige bg-black' : ''}`"
-            @click="eventFilter('artShow')"
+            :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${eventFilterType === 'art-show' ? 'text-patrimonio-beige bg-black' : ''}`"
+            @click="eventFilter('art-show')"
           >
             <span>Art Fair</span>
             <span>| {{ artShowCount }} |</span>
           </button>
         </div>
-        <div
-          class="border-patrimonio-black hidden w-full items-center gap-5 border-y-[0.5px] py-2.5 lg:flex"
-        >
-          <Filter class="size-5" :font-controlled="false" />
-          <div class="flex gap-0 xl:gap-2.5">
-            <div
-              class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+        <div class="border-patrimonio-black w-full items-center border-y-[0.5px] py-2.5">
+          <div class="flex lg:hidden">
+            <button
+              class="flex h-10 cursor-pointer items-center gap-[15px] px-[15px] hover:bg-black hover:text-white focus:outline-none"
+              aria-label="Toggle menu"
+              @click="isFilterMenuOpen = !isFilterMenuOpen"
             >
-              <DropdownMenu>
-                <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
-                  <p class="font-satoshi text-base/none font-normal tracking-normal">Artist</p>
-                  <FilterDown class="w-3" :font-controlled="false" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start">
-                  <DropdownMenuItem
-                    v-for="(artist, index) in eventsPageFilterData?.artists"
-                    :key="index"
-                    class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                    @select="filter('artist', artist.slug.current)"
-                  >
-                    {{ artist.name }}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Filter class="size-5" :font-controlled="false" />
+              <p class="font-satoshi text-base/none font-normal tracking-normal">Filters</p>
+
+              <FilterDown class="w-3" :font-controlled="false" />
+            </button>
+          </div>
+          <Transition mode="out-in" name="fade">
+            <div
+              v-if="isFilterMenuOpen"
+              class="fixed inset-0 z-[60] flex min-h-svh w-full flex-col bg-white text-center lg:hidden"
+            >
+              <div class="flex justify-between border-b-[0.5px] border-[#202020] px-[15px] py-5">
+                <p class="font-satoshi text-lg/none tracking-normal">Filters</p>
+                <button
+                  class="hover:cursor-pointer focus:outline-none"
+                  aria-label="Toggle menu"
+                  @click="closeMenu"
+                >
+                  <Cancel class="size-5" :font-controlled="false" />
+                </button>
+              </div>
+              <div class="flex h-full px-5">
+                <div class="border-r-[0.5px] border-[#202020]">
+                  <div class="font-satoshi flex w-[118px] flex-col text-base/none tracking-normal">
+                    <!-- @TODO Switch to font medium after fixing font issue -->
+                    <button
+                      :class="`cursor-pointer ${currentActiveMobileFilter == 0 ? 'font-semibold' : ''}`"
+                      @click="currentActiveMobileFilter = 0"
+                    >
+                      <p class="px-2.5 py-[22px]">Year</p>
+                    </button>
+                    <button
+                      :class="`cursor-pointer ${currentActiveMobileFilter == 1 ? 'font-semibold' : ''}`"
+                      @click="currentActiveMobileFilter = 1"
+                    >
+                      <p class="px-2.5 py-[22px]">Artist</p>
+                    </button>
+                    <button
+                      :class="`cursor-pointer ${currentActiveMobileFilter == 2 ? 'font-semibold' : ''}`"
+                      @click="currentActiveMobileFilter = 2"
+                    >
+                      <p class="px-2.5 py-[22px]">Auction House</p>
+                    </button>
+                  </div>
+                </div>
+                <div class="pl-[35px]">
+                  <Transition mode="out-in" name="fade">
+                    <div
+                      :key="currentActiveMobileFilter"
+                      class="font-satoshi w-[118px] text-base/none tracking-normal"
+                    >
+                      <div v-if="currentActiveMobileFilter === 0" class="flex w-full flex-col">
+                        <button
+                          v-for="(decade, index) in decades"
+                          :key="index"
+                          :class="`cursor-pointer ${decade.starDate == selectedYear ? 'font-semibold' : ''}`"
+                          @click="filter('year', decade.starDate)"
+                        >
+                          <p class="px-2.5 py-[22px]">
+                            {{ decade.starDate }} - {{ decade.endDate }}
+                          </p>
+                        </button>
+                      </div>
+                      <div v-else-if="currentActiveMobileFilter === 1" class="flex w-full flex-col">
+                        <button
+                          v-for="(artist, index) in eventsPageFilterData?.artists"
+                          :key="index"
+                          :class="`cursor-pointer ${artist.slug.current == selectedArtist ? 'font-semibold' : ''}`"
+                          @click="filter('artist', artist.slug.current)"
+                        >
+                          <p class="px-2.5 py-[22px]">
+                            {{ artist.name }}
+                          </p>
+                        </button>
+                      </div>
+                      <div v-else-if="currentActiveMobileFilter === 2" class="flex w-full flex-col">
+                        <button
+                          v-for="(auctionHouse, index) in eventsPageFilterData?.auctionHouse"
+                          :key="index"
+                          :class="`cursor-pointer ${auctionHouse.slug.current == selectedAuctionHouse ? 'font-semibold' : ''}`"
+                          @click="filter('auctionHouse', auctionHouse.slug.current)"
+                        >
+                          <p class="px-2.5 py-[22px]">
+                            {{ auctionHouse.name }}
+                          </p>
+                        </button>
+                      </div>
+                    </div>
+                  </Transition>
+                </div>
+              </div>
             </div>
-            <div
-              class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
-            >
-              <DropdownMenu>
-                <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
-                  <p class="font-satoshi text-base/none font-normal tracking-normal">
-                    Auction House
-                  </p>
-                  <FilterDown class="w-3" :font-controlled="false" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start">
-                  <DropdownMenuItem
-                    v-for="(auctionHouse, index) in eventsPageFilterData?.auctionHouse"
-                    :key="index"
-                    class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                    @select="filter('auctionHouse', auctionHouse.slug.current)"
-                  >
-                    {{ auctionHouse.name }}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+          </Transition>
+          <div class="hidden w-full items-center gap-5 lg:flex">
+            <Filter class="size-5" :font-controlled="false" />
+            <div class="flex gap-0 xl:gap-2.5">
+              <div
+                class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+              >
+                <DropdownMenu>
+                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                    <p class="font-satoshi text-base/none font-normal tracking-normal">Year</p>
+                    <FilterDown class="w-3" :font-controlled="false" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem
+                      v-for="(decade, index) in decades"
+                      :key="index"
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                      @select="filter('year', decade.starDate)"
+                    >
+                      {{ decade.starDate }} - {{ decade.endDate }}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div
+                class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+              >
+                <DropdownMenu>
+                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                    <p class="font-satoshi text-base/none font-normal tracking-normal">Artist</p>
+                    <FilterDown class="w-3" :font-controlled="false" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem
+                      v-for="(artist, index) in eventsPageFilterData?.artists"
+                      :key="index"
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                      @select="filter('artist', artist.slug.current)"
+                    >
+                      {{ artist.name }}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div
+                class="flex h-10 justify-center px-2.5 hover:bg-black hover:text-white xl:px-[15px]"
+              >
+                <DropdownMenu>
+                  <DropdownMenuTrigger class="flex cursor-pointer items-center gap-[15px]">
+                    <p class="font-satoshi text-base/none font-normal tracking-normal">
+                      Auction House
+                    </p>
+                    <FilterDown class="w-3" :font-controlled="false" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem
+                      v-for="(auctionHouse, index) in eventsPageFilterData?.auctionHouse"
+                      :key="index"
+                      class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
+                      @select="filter('auctionHouse', auctionHouse.slug.current)"
+                    >
+                      {{ auctionHouse.name }}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </div>
         </div>
         <div
-          v-if="selectedArtist !== '' || selectedAuctionHouse !== ''"
+          v-if="selectedYear !== 0 || selectedArtist !== '' || selectedAuctionHouse !== ''"
           class="flex w-full justify-between border-b-[0.5px] border-black pb-[15px]"
         >
           <div class="flex w-full flex-col gap-y-5 md:flex-row md:flex-wrap">
@@ -254,7 +400,7 @@ const currentActiveMobileFilter = ref(0)
                 </button>
               </div>
             </div>
-            <!-- <div
+            <div
               v-if="selectedYear !== 0"
               class="group/year flex cursor-pointer justify-between gap-[5px] px-[5px]"
               @click="filter('year', '0')"
@@ -268,7 +414,7 @@ const currentActiveMobileFilter = ref(0)
                   <Cancel class="size-2.5" :font-controlled="false" />
                 </div>
               </div>
-            </div> -->
+            </div>
             <div
               v-if="selectedArtist !== ''"
               class="group/artist flex cursor-pointer justify-between gap-[5px] px-[5px]"
@@ -312,6 +458,22 @@ const currentActiveMobileFilter = ref(0)
         </div>
         <div class="flex w-full flex-col gap-10">
           <Transition mode="out-in" name="fade" appear>
+            <div v-show="eventsData" class="flex w-full flex-col gap-5">
+              <h2 class="font-cabinet text-3xl/none">Events</h2>
+              <div v-for="event in eventsData" :key="event._id">
+                <EventCard
+                  :title="event?.title"
+                  :link="event.slug.current"
+                  :image-src="event?.pictures?.[0]?.asset?._ref"
+                  :excerpt="event?.excerpt"
+                  :venue="event.venue"
+                  :upcoming="event.upcoming"
+                  :date-range="event.dateRange"
+                />
+              </div>
+            </div>
+          </Transition>
+          <!-- <Transition mode="out-in" name="fade" appear>
             <div
               v-show="eventFilterType == 'auction' || eventFilterType == ''"
               class="flex w-full flex-col gap-5"
@@ -329,8 +491,8 @@ const currentActiveMobileFilter = ref(0)
                 />
               </div>
             </div>
-          </Transition>
-          <Transition mode="out-in" name="fade" appear>
+          </Transition> -->
+          <!-- <Transition mode="out-in" name="fade" appear>
             <div
               v-show="eventFilterType == 'artShow' || eventFilterType == ''"
               class="flex w-full flex-col gap-5"
@@ -367,7 +529,7 @@ const currentActiveMobileFilter = ref(0)
                 />
               </div>
             </div>
-          </Transition>
+          </Transition> -->
         </div>
       </div>
     </section>
