@@ -1,6 +1,10 @@
 <script lang="ts" setup>
-import {eventsPageFilterQuery, eventsPageQuery} from '~/sanity/queries'
-import type {EventsPageFilterQueryResult, EventsPageQueryResult} from '~/sanity/types'
+import {eventsPageCountQuery, eventsPageFilterQuery, eventsPageQuery} from '~/sanity/queries'
+import type {
+  EventsPageCountQueryResult,
+  EventsPageFilterQueryResult,
+  EventsPageQueryResult,
+} from '~/sanity/types'
 import EventCard from '~/components/events/EventCard.vue'
 import Filter from '~/assets/svg/filter.svg'
 import Cancel from '~/assets/svg/cancel.svg'
@@ -59,6 +63,8 @@ function getValueBySlug(object, value: string, returnValue: string) {
 }
 
 const {data: eventsPageData} = await useSanityQuery<EventsPageQueryResult>(eventsPageQuery)
+const {data: eventsPageCountData} =
+  await useSanityQuery<EventsPageCountQueryResult>(eventsPageCountQuery)
 const {data: eventsPageFilterData} =
   await useSanityQuery<EventsPageFilterQueryResult>(eventsPageFilterQuery)
 // console.log(eventsPageData.value)
@@ -196,21 +202,27 @@ const currentActiveMobileFilter = ref(0)
             @click="eventFilter('auction')"
           >
             <span>Auction</span>
-            <span>| {{ auctionCount }} |</span>
+            <span v-show="eventsPageCountData?.auction"
+              >| {{ eventsPageCountData?.auction }} |</span
+            >
           </button>
           <button
             :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${selectedType === 'solo-show' ? 'text-patrimonio-beige bg-black' : ''}`"
             @click="eventFilter('solo-show')"
           >
             <span>Solo Show</span>
-            <span>| {{ soloShowCount }} |</span>
+            <span v-show="eventsPageCountData?.soloShow"
+              >| {{ eventsPageCountData?.soloShow }} |</span
+            >
           </button>
           <button
             :class="`hover:text-patrimonio-beige flex h-10 cursor-pointer items-center gap-[5px] px-[15px] hover:bg-black md:gap-[15px] ${selectedType === 'art-show' ? 'text-patrimonio-beige bg-black' : ''}`"
             @click="eventFilter('art-show')"
           >
             <span>Art Fair</span>
-            <span>| {{ artShowCount }} |</span>
+            <span v-show="eventsPageCountData?.artShow"
+              >| {{ eventsPageCountData?.artShow }} |</span
+            >
           </button>
         </div>
         <div class="border-patrimonio-black w-full items-center border-y-[0.5px] py-2.5">

@@ -123,28 +123,19 @@ export const paintingQuery =
 	description,
 }`)
 
-export const eventsPageQuery = defineQuery(`*[_type == "eventsPage"][0] {
-	...,
-	auctions[]->{
-		...,
-		auctionHouse-> {
-			name,
-			slug,
-		},
-	},
-	artShows[]->{
-		...
-	},
-	soloShows[]->{
-		...
-	}
-}`)
+export const eventsPageQuery = defineQuery(`*[_type == "eventsPage"][0]`)
 
 export const eventsPageFilterQuery = defineQuery(`{
 'startYear': *[_type == "event"] | order(dateRange.startDate asc)[0].dateRange.startDate,
 'endYear': *[_type == "event"] | order(dateRange.startDate desc)[0].dateRange,
 'artists': *[_type == "artist"]{_id,name,slug},
 'auctionHouse': *[_type == "auctionHouse"]{_id,name,slug}}`)
+
+export const eventsPageCountQuery = defineQuery(`{
+'auction': count(*[_type == "event" && type == 'auction']),
+'artShow': count(*[_type == "event" && type == 'art-show']),
+'soloShow': count(*[_type == "event" && type == 'solo-show']),
+}`)
 
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
