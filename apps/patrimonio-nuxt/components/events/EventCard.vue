@@ -1,31 +1,73 @@
 <script setup lang="ts">
 import {twMerge} from 'tailwind-merge'
-import { NuxtImg } from '#components';
-import type { SanityImageAssetDocument } from '@sanity/client';
+import type {DateRange} from '~/sanity/types'
 
 const props = defineProps<{
-  excerpt: string
-  title: string
-  dateRange:{endDate:string , startDate:string}
-  imageSrc: SanityImageAssetDocument | undefined
+  excerpt?: string
+  title?: string
+  dateRange?: DateRange
+  imageSrc?: string
   class?: string
-  link:string
-  venue:string
+  link?: string
+  venue: string
+  upcoming?: boolean
 }>()
 </script>
 
 <template>
-    <a :href="link" target="_blank" :class="twMerge(`first:border-y h-[400px] not-first:border-b border-patrimonio-black max-md:gap-5 flex flex-col md:flex-row md:py-7 md:justify-between lg:pl-12 items-stretch`,props.class)">
-        <div class="flex flex-col py-5 h-full gap-2.5 md:max-w-2/5 md:flex-1">
-            <label class="">UPCOMING</label>
-            <h3 class="font-cabinet text-2xl/none font-medium">{{ props.title }}</h3>
-            <p class="font-cabinet text-lg">{{ props.excerpt }}</p>
-            <p class="mt-auto">{{ props?.venue ?? "" }} {{ props?.dateRange?.startDate ? `| ${new Date(props?.dateRange?.startDate)}` : "" }}{{ props?.dateRange?.endDate ? ` -  ${new Date(props.dateRange.endDate)}` : ""}}</p>
+  <NuxtLink
+    to="/"
+    target="_blank"
+    :class="
+      twMerge(
+        `border-patrimonio-black group flex h-full flex-col gap-5 border-b-[0.5px] pb-[50px] md:max-h-[400px] md:flex-row md:justify-between md:py-[30px]`,
+        props.class,
+      )
+    "
+  >
+    <div
+      class="flex w-full flex-col gap-2.5 md:max-w-[457px] md:flex-1 md:justify-between md:gap-5 md:py-5 lg:pl-[50px]"
+    >
+      <div class="flex w-full flex-col gap-2.5 md:gap-5">
+        <p class="font-satoshi text-[15px]/none font-medium tracking-normal uppercase">
+          <span v-if="props.upcoming" class="text-patrimonio-blue">Upcoming</span>
+          <span v-else class="text-patrimonio-red">Past Event</span>
+        </p>
+        <div class="flex flex-col gap-2.5 md:gap-5">
+          <h3 class="font-cabinet text-2xl/none font-bold">{{ props.title }}</h3>
+          <p class="font-satoshi text-lg/none font-light">{{ props.excerpt }}</p>
         </div>
-        <NuxtImg 
+      </div>
+      <div class="font-satoshi flex h-5 items-center gap-2.5 text-sm/none font-light">
+        <p>{{ props?.venue }}</p>
+        <div class="border-patrimonio-black h-3.5 border-l-[0.5px]" />
+        <div>
+          <NuxtTime
+            :datetime="props.dateRange?.startDate ?? ''"
+            year="numeric"
+            month="short"
+            day="numeric"
+            locale="en-IN"
+          />
+          <span v-if="props.dateRange?.endDate">
+            -
+            <NuxtTime
+              :datetime="props.dateRange.endDate"
+              year="numeric"
+              month="short"
+              day="numeric"
+              locale="en-IN"
+          /></span>
+        </div>
+      </div>
+    </div>
+    <div class="flex w-full max-w-[600px] flex-1 overflow-hidden">
+      <NuxtImg
         provider="sanity"
-        class="md:flex-[0.2]"
-        :src="`${props?.imageSrc?._ref}`"
-        :alt="`${props.title}`" />
-    </a>
+        class="w-full object-cover transition-all duration-500 group-hover:scale-125"
+        :src="`${props?.imageSrc}`"
+        :alt="`${props.title}`"
+      />
+    </div>
+  </NuxtLink>
 </template>

@@ -35,7 +35,6 @@ const formatter = new Intl.DateTimeFormat('en-US', {
 const featuredEventsData =
   homepageData.value?.featuredEvents?.map((event) => {
     const startDate = new Date(event.dateRange?.startDate ?? '')
-    const endDate = new Date(event.dateRange?.endDate ?? '')
     return {
       title: event.title,
       artist: event.artist ?? '',
@@ -43,7 +42,6 @@ const featuredEventsData =
       slug: event.slug.current,
       venue: event.venue,
       startDate: formatter.format(startDate),
-      endDate: formatter.format(endDate),
     }
   }) ?? []
 const currentActiveEvent = ref(0)

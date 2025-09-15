@@ -8,6 +8,12 @@ const eventTypes = [
   {title: 'Solo Show', value: 'solo-show'},
 ]
 
+type validationContext = {
+  parent: {
+    type: string
+  }
+}
+
 export const event: DocumentDefinition = withSeo({
   name: 'event',
   title: 'Event',
@@ -48,8 +54,18 @@ export const event: DocumentDefinition = withSeo({
     defineField({
       name: 'auctionHouse',
       title: 'Auction House',
-      type: 'string',
+      type: 'reference',
+      to: [{type: 'auctionHouse'}],
       hidden: ({document}) => document?.type !== 'auction',
+      validation: (rule) => {
+        return rule.custom((auctionHouse, context) => {
+          const {parent} = context as validationContext
+          if (parent.type && parent.type === 'auction' && !auctionHouse) {
+            return 'Required'
+          }
+          return true
+        })
+      },
     }),
     defineField({
       name: 'venue',
@@ -136,6 +152,20 @@ export const event: DocumentDefinition = withSeo({
       type: 'text',
       description: 'A short description of the event displayed on other pages',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      title: 'Upcoming Event?',
+      description: 'Is this an Upcoming Event? (Set false if Past Event)',
+      name: 'upcoming',
+      type: 'boolean',
+      initialValue: true,
+    }),
+    defineField({
+      title: 'Hidden',
+      description: 'Hide event on Events page?',
+      name: 'hidden',
+      type: 'boolean',
+      initialValue: false,
     }),
   ],
   preview: {
