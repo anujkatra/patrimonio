@@ -99,7 +99,6 @@ const {data: eventsData} = await useAsyncData(
     }),
   {watch: [params, query]},
 )
-// console.log('data', eventsData.value)
 useSiteMetadata({
   title: eventsPageData?.value?.seo?.title ?? 'Events',
   description:
