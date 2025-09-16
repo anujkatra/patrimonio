@@ -83,5 +83,43 @@ useSiteMetadata({
         </div>
       </div>
     </section>
+
+    <section
+      class="border-patrimonio-black flex w-full flex-col items-center justify-center gap-5 overflow-hidden border-b-[0.5px] py-[50px] pl-5 md:py-[70px] md:pl-10 xl:pl-[70px]"
+    >
+      <div class="mx-auto flex w-full max-w-[1370px] flex-col gap-2.5 pr-5 md:pr-10 xl:pr-[70px]">
+        <h2
+          class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
+        >
+          Displayed Works
+        </h2>
+      </div>
+      <div class="mx-auto flex w-full max-w-[1370px] flex-col justify-between gap-5">
+        <div
+          class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 [scrollbar-width:thin] md:pr-10 xl:pr-[70px]"
+        >
+          <template v-for="(painting, index) in eventData?.paintings" :key="index">
+            <PaintingTile
+              v-if="painting?.picture?.asset != null"
+              :name="painting.name"
+              :artist="painting.artist"
+              :year="painting.year"
+              :medium="painting.medium ?? ``"
+              :image-src="painting.picture.asset"
+            />
+          </template>
+          <template v-for="(painting, index) in eventData?.paintings" :key="index">
+            <PaintingTile
+              v-if="painting?.picture?.asset != null"
+              :name="painting.name"
+              :artist="painting.artist"
+              :year="painting.year"
+              :medium="painting.medium ?? ``"
+              :image-src="painting.picture.asset"
+            />
+          </template>
+        </div>
+      </div>
+    </section>
   </main>
 </template>

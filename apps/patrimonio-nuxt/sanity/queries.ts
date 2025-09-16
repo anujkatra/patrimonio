@@ -141,6 +141,16 @@ export const eventQuery =
   defineQuery(`*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {
 	...,
 	artists[]->,
+	paintings[]->{
+		name,
+		"artist":artist->.name,
+		year,
+		"medium":medium->.name,
+		picture{
+			...,
+			asset->,
+		}
+	},
 }`)
 
 // export const pageQuery = defineQuery(/* groq */ `

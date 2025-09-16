@@ -1300,7 +1300,7 @@ export type EventsPageCountQueryResult = {
   soloShow: number
 }
 // Variable: eventQuery
-// Query: *[_type == "event" && defined(slug.current) && slug.current==$slug][0] {	...,	artists[]->,}
+// Query: *[_type == "event" && defined(slug.current) && slug.current==$slug][0] {	...,	artists[]->,	paintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	},}
 export type EventQueryResult = {
   _id: string
   _type: 'event'
@@ -1351,13 +1351,41 @@ export type EventQueryResult = {
     _type: 'image'
     _key: string
   }>
-  paintings?: Array<{
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    _key: string
-    [internalGroqTypeReferenceTo]?: 'painting'
-  }>
+  paintings: Array<{
+    name: string
+    artist: string
+    year: number
+    medium: string | null
+    picture: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
   artists: Array<{
     _id: string
     _type: 'artist'
@@ -1427,6 +1455,6 @@ declare module '@sanity/client' {
     '*[_type == "eventsPage"][0]': EventsPageQueryResult
     '{\n\'startYear\': *[_type == "event"] | order(dateRange.startDate asc)[0].dateRange.startDate,\n\'endYear\': *[_type == "event"] | order(dateRange.startDate desc)[0].dateRange,\n\'artists\': *[_type == "artist"]{_id,name,slug},\n\'auctionHouse\': *[_type == "auctionHouse"]{_id,name,slug}}': EventsPageFilterQueryResult
     "{\n'auction': count(*[_type == \"event\" && type == 'auction']),\n'artShow': count(*[_type == \"event\" && type == 'art-show']),\n'soloShow': count(*[_type == \"event\" && type == 'solo-show']),\n}": EventsPageCountQueryResult
-    '*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tartists[]->,\n}': EventQueryResult
+    '*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tartists[]->,\n\tpaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': EventQueryResult
   }
 }
