@@ -158,5 +158,31 @@ useSiteMetadata({
         </div>
       </div>
     </section>
+
+    <section
+      class="flex w-full flex-col items-center justify-center gap-5 overflow-hidden py-[50px] pl-5 md:py-[70px] md:pl-10 xl:pl-[70px]"
+    >
+      <div class="mx-auto flex w-full max-w-[1370px] flex-col gap-2.5 pr-5 md:pr-10 xl:pr-[70px]">
+        <h2
+          class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
+        >
+          Media & Gallery
+        </h2>
+      </div>
+      <div class="mx-auto flex w-full max-w-[1370px] flex-col justify-between gap-5">
+        <div
+          class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 pb-2.5 [scrollbar-width:thin] md:gap-5 md:pr-10 md:pb-5 xl:pr-[70px]"
+        >
+          <template v-for="(picture, index) in eventData?.pictures" :key="index">
+            <NuxtImg
+              provider="sanity"
+              class="aspect-square w-[300px] object-cover object-center md:w-[400px]"
+              :src="picture?.asset?._ref"
+              :alt="picture?.alt"
+            />
+          </template>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
