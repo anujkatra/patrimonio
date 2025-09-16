@@ -137,6 +137,26 @@ export const eventsPageCountQuery = defineQuery(`{
 'soloShow': count(*[_type == "event" && type == 'solo-show']),
 }`)
 
+export const eventQuery =
+  defineQuery(`*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {
+	...,
+	artists[]->{
+		name,
+		slug,
+		picture,
+	},
+	paintings[]->{
+		name,
+		"artist":artist->.name,
+		year,
+		"medium":medium->.name,
+		picture{
+			...,
+			asset->,
+		}
+	},
+}`)
+
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
 // 			...,
