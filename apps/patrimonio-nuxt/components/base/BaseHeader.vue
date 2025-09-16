@@ -31,7 +31,7 @@ const headerContent: HeaderContentProps[] = [
   },
   {
     link: 'Press & Media',
-    href: '/our-story',
+    href: '/press',
   },
   {
     link: 'Contact Us',
