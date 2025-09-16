@@ -121,5 +121,42 @@ useSiteMetadata({
         </div>
       </div>
     </section>
+
+    <section
+      class="border-patrimonio-black flex w-full flex-col items-center justify-center gap-5 overflow-hidden border-b-[0.5px] py-[50px] pl-5 md:py-[70px] md:pl-10 xl:pl-[70px]"
+    >
+      <div class="mx-auto flex w-full max-w-[1370px] flex-col gap-2.5 pr-5 md:pr-10 xl:pr-[70px]">
+        <h2
+          class="font-cabinet text-[32px] leading-none font-normal tracking-normal lg:flex-1 lg:text-[50px]"
+        >
+          Participating Artists
+        </h2>
+      </div>
+      <div class="mx-auto flex w-full max-w-[1370px] flex-col justify-between gap-5">
+        <div
+          class="flex h-full w-full gap-2.5 overflow-x-auto overflow-y-hidden pr-5 pb-2.5 [scrollbar-width:thin] md:gap-5 md:pr-10 md:pb-5 xl:pr-[70px]"
+        >
+          <template v-for="(artist, index) in eventData?.artists" :key="index">
+            <NuxtLink class="group w-full" :to="`/artists/${artist.slug.current}`">
+              <div class="flex w-[300px] flex-col gap-2.5 md:w-[400px] md:gap-5">
+                <div class="w-full overflow-hidden">
+                  <NuxtImg
+                    provider="sanity"
+                    class="aspect-square w-full object-cover object-center transition duration-300 ease-out lg:scale-[1.2] lg:group-hover:scale-100"
+                    :src="artist?.picture.asset?._ref"
+                    :alt="artist?.picture?.alt"
+                  />
+                </div>
+                <p
+                  class="font-cabinet pb-2.5 text-lg/none font-medium tracking-normal md:pb-5 md:text-2xl/none"
+                >
+                  {{ artist.name }}
+                </p>
+              </div>
+            </NuxtLink>
+          </template>
+        </div>
+      </div>
+    </section>
   </main>
 </template>

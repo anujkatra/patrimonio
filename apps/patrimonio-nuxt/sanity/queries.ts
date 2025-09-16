@@ -140,7 +140,11 @@ export const eventsPageCountQuery = defineQuery(`{
 export const eventQuery =
   defineQuery(`*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {
 	...,
-	artists[]->,
+	artists[]->{
+		name,
+		slug,
+		picture,
+	},
 	paintings[]->{
 		name,
 		"artist":artist->.name,
