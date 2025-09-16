@@ -16,6 +16,7 @@ import {collection} from './documents/collection'
 import {press} from './documents/press'
 import {eventsPage} from './singletons/events-page'
 import {auctionHouse} from './documents/auction-house'
+import {pressPage} from './singletons/press-page'
 
 export const schemaTypes = [
   // Singletons
@@ -24,6 +25,7 @@ export const schemaTypes = [
   gallery,
   artists,
   eventsPage,
+  pressPage,
   // Documents
   artist,
   collection,
