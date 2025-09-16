@@ -11,7 +11,6 @@ useSiteMetadata({
   description: pressPageData?.value?.seo?.description ?? 'description',
   ogImage: '',
 })
-console.log('test', pressPageData.value, pressData.value)
 </script>
 
 <template>
