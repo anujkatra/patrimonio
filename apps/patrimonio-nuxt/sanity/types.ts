@@ -97,6 +97,7 @@ export type Press = {
   _rev: string
   title: string
   slug: Slug
+  link: string
   description: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -129,6 +130,7 @@ export type Press = {
     _type: 'image'
   }
   excerpt: string
+  hidden?: boolean
 }
 
 export type Painting = {
@@ -337,6 +339,17 @@ export type Artist = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'painting'
   }>
+  seo?: Seo
+}
+
+export type PressPage = {
+  _id: string
+  _type: 'pressPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
   seo?: Seo
 }
 
@@ -688,6 +701,7 @@ export type AllSanitySchemaTypes =
   | AuctionHouse
   | Collection
   | Artist
+  | PressPage
   | EventsPage
   | Artists
   | Gallery
@@ -1408,6 +1422,63 @@ export type EventQueryResult = {
   hidden?: boolean
   seo?: Seo
 } | null
+// Variable: pressPageQuery
+// Query: *[_type == "pressPage"][0]
+export type PressPageQueryResult = {
+  _id: string
+  _type: 'pressPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  seo?: Seo
+} | null
+// Variable: pressQuery
+// Query: *[_type == "press" && hidden==false]
+export type PressQueryResult = Array<{
+  _id: string
+  _type: 'press'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  link: string
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  excerpt: string
+  hidden?: boolean
+}>
 
 // Query TypeMap
 import '@sanity/client'
@@ -1423,5 +1494,7 @@ declare module '@sanity/client' {
     '{\n\'startYear\': *[_type == "event"] | order(dateRange.startDate asc)[0].dateRange.startDate,\n\'endYear\': *[_type == "event"] | order(dateRange.startDate desc)[0].dateRange,\n\'artists\': *[_type == "artist"]{_id,name,slug},\n\'auctionHouse\': *[_type == "auctionHouse"]{_id,name,slug}}': EventsPageFilterQueryResult
     "{\n'auction': count(*[_type == \"event\" && type == 'auction']),\n'artShow': count(*[_type == \"event\" && type == 'art-show']),\n'soloShow': count(*[_type == \"event\" && type == 'solo-show']),\n}": EventsPageCountQueryResult
     '*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tartists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture,\n\t},\n\tpaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': EventQueryResult
+    '*[_type == "pressPage"][0]': PressPageQueryResult
+    '*[_type == "press" && hidden==false]': PressQueryResult
   }
 }
