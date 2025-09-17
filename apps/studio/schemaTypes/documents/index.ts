@@ -7,5 +7,6 @@ import {event} from './event'
 import {collection} from './collection'
 import {press} from './press'
 import {auctionHouse} from './auction-house'
+import {blog} from './blog'
 
-export const documents = [artist, painting, medium, event, collection, press, auctionHouse]
+export const documents = [artist, painting, medium, event, collection, press, auctionHouse, blog]
