@@ -28,6 +28,13 @@ export const press: DocumentDefinition = {
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      title: 'Link',
+      name: 'link',
+      type: 'url',
+      description: 'Link to Press/Media article',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'array',
@@ -69,6 +76,13 @@ export const press: DocumentDefinition = {
       type: 'text',
       description: 'A short description to be displayed on other pages',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      title: 'Hidden',
+      description: 'Hide Media/Press article on press page?',
+      name: 'hidden',
+      type: 'boolean',
+      initialValue: false,
     }),
   ],
   preview: {

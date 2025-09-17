@@ -1,0 +1,29 @@
+import {defineField, DocumentDefinition} from 'sanity'
+import {DocumentIcon} from '@sanity/icons'
+import {withSeo} from '../../helpers/document'
+
+export const pressPage: DocumentDefinition = withSeo({
+  name: 'pressPage',
+  title: 'Press and Media Page',
+  type: 'document',
+  icon: DocumentIcon,
+  preview: {
+    prepare: () => ({
+      title: 'Press and Media Page',
+    }),
+  },
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required().max(200),
+    }),
+    defineField({
+      name: 'subtitle',
+      title: 'Subtitle',
+      description: 'A tagline/subtitle for the Press and Media Page',
+      type: 'text',
+    }),
+  ],
+})

@@ -157,6 +157,10 @@ export const eventQuery =
 	},
 }`)
 
+export const pressPageQuery = defineQuery(`*[_type == "pressPage"][0]`)
+
+export const pressQuery = defineQuery(`*[_type == "press" && hidden==false]`)
+
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
 // 			...,
