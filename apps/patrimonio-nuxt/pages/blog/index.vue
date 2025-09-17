@@ -36,7 +36,7 @@ useSiteMetadata({
             :key="blog.slug.current"
             class="border-patrimonio-black flex w-full flex-col gap-5 border-t-[0.5px] pt-5 pb-[50px] last:border-b-[0.5px] md:flex-row lg:gap-[50px]"
           >
-            <div class="w-full md:flex-1">
+            <div class="flex w-full md:flex-1">
               <NuxtImg
                 provider="sanity"
                 class="w-full object-cover object-center"
@@ -52,9 +52,10 @@ useSiteMetadata({
                   {{ blog.subtitle }}
                 </p>
                 <p class="font-cabinet tracking-none text-2xl/none font-medium">{{ blog.title }}</p>
+                <p class="font-satoshi tracking-none text-lg/none">{{ blog.excerpt }}</p>
               </div>
               <div
-                class="border-patrimonio-black flex justify-between border-t-[0.5px] pt-[15px] md:h-full md:flex-col lg:h-auto lg:max-w-[457px] lg:pt-[25px]"
+                class="border-patrimonio-black flex justify-between gap-2.5 border-t-[0.5px] pt-[15px] md:h-full md:flex-col lg:h-auto lg:max-w-[457px] lg:pt-[25px]"
               >
                 <p class="font-satoshi tracking-none text-[15px]/none">
                   {{ blog.author }} |

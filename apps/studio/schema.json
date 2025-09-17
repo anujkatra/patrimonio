@@ -747,6 +747,13 @@
         },
         "optional": false
       },
+      "excerpt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "author": {
         "type": "objectAttribute",
         "value": {

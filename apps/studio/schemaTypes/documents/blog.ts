@@ -69,6 +69,13 @@ export const blog: DocumentDefinition = {
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'excerpt',
+      title: 'Excerpt',
+      type: 'text',
+      description: 'A short description of the blog displayed on other pages',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'author',
       title: 'Blog Author',
       type: 'string',

@@ -129,6 +129,7 @@ export type Blog = {
     _type: 'block'
     _key: string
   }>
+  excerpt: string
   author: string
   publishDate: string
   hidden?: boolean
@@ -1591,6 +1592,7 @@ export type BlogQueryResult = Array<{
     _type: 'block'
     _key: string
   }>
+  excerpt: string
   author: string
   publishDate: string
   hidden?: boolean
