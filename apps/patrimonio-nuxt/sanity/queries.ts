@@ -163,6 +163,8 @@ export const pressQuery = defineQuery(`*[_type == "press" && hidden==false]`)
 
 export const blogPageQuery = defineQuery(`*[_type == "blogPage"][0]`)
 
+export const blogQuery = defineQuery(`*[_type == "blog" && hidden==false]`)
+
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
 // 			...,

@@ -89,6 +89,51 @@ export type Opengraph = {
   title?: string
 }
 
+export type Blog = {
+  _id: string
+  _type: 'blog'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  subtitle?: string
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  author: string
+  publishDate: string
+  hidden?: boolean
+}
+
 export type Press = {
   _id: string
   _type: 'press'
@@ -704,6 +749,7 @@ export type AllSanitySchemaTypes =
   | Robots
   | Twitter
   | Opengraph
+  | Blog
   | Press
   | Painting
   | Medium
@@ -1503,6 +1549,52 @@ export type BlogPageQueryResult = {
   subtitle?: string
   seo?: Seo
 } | null
+// Variable: blogQuery
+// Query: *[_type == "blog" && hidden==false]
+export type BlogQueryResult = Array<{
+  _id: string
+  _type: 'blog'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  subtitle?: string
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  author: string
+  publishDate: string
+  hidden?: boolean
+}>
 
 // Query TypeMap
 import '@sanity/client'
@@ -1521,5 +1613,6 @@ declare module '@sanity/client' {
     '*[_type == "pressPage"][0]': PressPageQueryResult
     '*[_type == "press" && hidden==false]': PressQueryResult
     '*[_type == "blogPage"][0]': BlogPageQueryResult
+    '*[_type == "blog" && hidden==false]': BlogQueryResult
   }
 }

@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import {blogPageQuery} from '~/sanity/queries'
-import type {BlogPageQueryResult} from '~/sanity/types'
+import {blogPageQuery, blogQuery} from '~/sanity/queries'
+import type {BlogPageQueryResult, BlogQueryResult} from '~/sanity/types'
+import Arrow from '~/assets/svg/arrow.svg'
 
 const {data: blogPageData} = await useSanityQuery<BlogPageQueryResult>(blogPageQuery)
-// const {data: pressData} = await useSanityQuery<PressQueryResult>(pressQuery)
+const {data: blogData} = await useSanityQuery<BlogQueryResult>(blogQuery)
 
 useSiteMetadata({
   title: blogPageData?.value?.seo?.title ?? 'title',
@@ -28,6 +29,47 @@ useSiteMetadata({
           >
             {{ blogPageData?.subtitle }}
           </p>
+        </div>
+        <div class="flex w-full flex-col gap-5">
+          <div
+            v-for="blog in blogData"
+            :key="blog.slug.current"
+            class="border-patrimonio-black flex w-full flex-col gap-5 border-t-[0.5px] pt-5 pb-[50px] last:border-b-[0.5px] md:flex-row lg:gap-[50px]"
+          >
+            <div class="w-full md:flex-1">
+              <NuxtImg
+                provider="sanity"
+                class="w-full object-cover object-center"
+                :src="blog?.featuredImage.asset?._ref"
+                :alt="blog?.featuredImage?.alt"
+              />
+            </div>
+            <div
+              class="flex w-full flex-col gap-[15px] md:flex-1 md:gap-5 lg:gap-[25px] lg:pt-2.5 xl:pt-5"
+            >
+              <div class="flex w-full flex-col gap-2.5 lg:max-w-[457px]">
+                <p class="font-satoshi tracking-none text-[15px]/none uppercase">
+                  {{ blog.subtitle }}
+                </p>
+                <p class="font-cabinet tracking-none text-2xl/none font-medium">{{ blog.title }}</p>
+              </div>
+              <div
+                class="border-patrimonio-black flex justify-between border-t-[0.5px] pt-[15px] md:h-full md:flex-col lg:h-auto lg:max-w-[457px] lg:pt-[25px]"
+              >
+                <p class="font-satoshi tracking-none text-[15px]/none">
+                  {{ blog.author }} |
+                  <NuxtTime
+                    :datetime="blog.publishDate"
+                    year="numeric"
+                    month="short"
+                    day="numeric"
+                    locale="en-IN"
+                  />
+                </p>
+                <Arrow class="w-[50px] lg:hidden" :font-controlled="false" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
