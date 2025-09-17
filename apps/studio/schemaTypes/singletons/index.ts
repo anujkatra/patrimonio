@@ -6,5 +6,6 @@ import {eventsPage} from './events-page'
 import {gallery} from './gallery'
 import {homepage} from './homepage'
 import {pressPage} from './press-page'
+import {blogPage} from './blog-page'
 
-export const singletons = [homepage, ourStory, gallery, artists, eventsPage, pressPage]
+export const singletons = [homepage, ourStory, gallery, artists, eventsPage, pressPage, blogPage]

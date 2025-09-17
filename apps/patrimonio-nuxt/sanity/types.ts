@@ -342,6 +342,17 @@ export type Artist = {
   seo?: Seo
 }
 
+export type BlogPage = {
+  _id: string
+  _type: 'blogPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  seo?: Seo
+}
+
 export type PressPage = {
   _id: string
   _type: 'pressPage'
@@ -701,6 +712,7 @@ export type AllSanitySchemaTypes =
   | AuctionHouse
   | Collection
   | Artist
+  | BlogPage
   | PressPage
   | EventsPage
   | Artists
@@ -1479,6 +1491,18 @@ export type PressQueryResult = Array<{
   excerpt: string
   hidden?: boolean
 }>
+// Variable: blogPageQuery
+// Query: *[_type == "blogPage"][0]
+export type BlogPageQueryResult = {
+  _id: string
+  _type: 'blogPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  seo?: Seo
+} | null
 
 // Query TypeMap
 import '@sanity/client'
@@ -1496,5 +1520,6 @@ declare module '@sanity/client' {
     '*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tartists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture,\n\t},\n\tpaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': EventQueryResult
     '*[_type == "pressPage"][0]': PressPageQueryResult
     '*[_type == "press" && hidden==false]': PressQueryResult
+    '*[_type == "blogPage"][0]': BlogPageQueryResult
   }
 }

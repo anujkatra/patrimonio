@@ -1,4 +1,16 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import {blogPageQuery} from '~/sanity/queries'
+import type {BlogPageQueryResult} from '~/sanity/types'
+
+const {data: blogPageData} = await useSanityQuery<BlogPageQueryResult>(blogPageQuery)
+// const {data: pressData} = await useSanityQuery<PressQueryResult>(pressQuery)
+
+useSiteMetadata({
+  title: blogPageData?.value?.seo?.title ?? 'title',
+  description: blogPageData?.value?.seo?.description ?? 'description',
+  ogImage: '',
+})
+</script>
 
 <template>
   <main>
@@ -8,11 +20,13 @@
           <h1
             class="font-cabinet text-[35px] leading-none font-normal tracking-normal md:flex-1 lg:text-[50px]"
           >
-            Blog page
-            <!-- {{ eventsPageData?.title }} -->
+            {{ blogPageData?.title }}
           </h1>
-          <p class="font-satoshi text-lg leading-none font-light tracking-normal">
-            <!-- {{ eventsPageData?.subtitle ?? '' }} -->
+          <p
+            v-if="blogPageData?.subtitle"
+            class="font-satoshi text-lg leading-none font-light tracking-normal"
+          >
+            {{ blogPageData?.subtitle }}
           </p>
         </div>
       </div>
