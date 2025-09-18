@@ -1,10 +1,43 @@
 <script lang="ts" setup>
-import {blogPageQuery, blogQuery} from '~/sanity/queries'
-import type {BlogPageQueryResult, BlogQueryResult} from '~/sanity/types'
+import {blogPageQuery, blogQuery, blogCountQuery} from '~/sanity/queries'
+import type {BlogCountQueryResult, BlogPageQueryResult, BlogQueryResult} from '~/sanity/types'
 import Arrow from '~/assets/svg/arrow.svg'
+const sanity = useSanity()
+const route = useRoute()
+const router = useRouter()
+
+onMounted(() => {
+  // Check if 'page' query param exists, if not, add a default
+  if (!route.query.page) {
+    router.replace({
+      query: {...route.query, page: 1},
+    })
+  }
+})
+
+const itemsPerPage = 1
+const page = computed(() => (typeof route.query.page === 'string' ? parseInt(route.query.page) : 1))
+const startIndex = computed(() => (page.value - 1) * itemsPerPage)
+const endIndex = computed(() => startIndex.value + itemsPerPage)
+
+function updatePage(value: number) {
+  router.replace({query: {...route.query, page: value}})
+}
+
+const blogsQuery = blogQuery
+
+const {data: blogData} = await useAsyncData(
+  'blogData',
+  () =>
+    sanity.fetch<BlogQueryResult>(blogsQuery, {
+      startIndex: startIndex.value,
+      endIndex: endIndex.value,
+    }),
+  {watch: [startIndex]},
+)
 
 const {data: blogPageData} = await useSanityQuery<BlogPageQueryResult>(blogPageQuery)
-const {data: blogData} = await useSanityQuery<BlogQueryResult>(blogQuery)
+const {data: blogCountData} = await useSanityQuery<BlogCountQueryResult>(blogCountQuery)
 
 useSiteMetadata({
   title: blogPageData?.value?.seo?.title ?? 'title',
@@ -71,6 +104,38 @@ useSiteMetadata({
               </div>
             </div>
           </div>
+        </div>
+        <div class="w-full">
+          <Pagination
+            :key="page"
+            :v-slot="{page}"
+            :sibling-count="1"
+            :items-per-page="itemsPerPage"
+            :total="blogCountData ?? 1"
+            :default-page="page"
+            :show-edges="true"
+            @update:page="(p) => updatePage(p)"
+          >
+            <PaginationContent v-slot="{items}" class="gap-3">
+              <PaginationPrevious size="pagination" />
+
+              <template v-for="(item, index) in items" :key="index">
+                <PaginationItem
+                  v-if="item.type === 'page'"
+                  :value="item.value"
+                  :is-active="item.value === page"
+                  class="data-[selected=true]:text-patrimonio-beige data-[selected=true]:bg-black"
+                  size="pagination"
+                >
+                  {{ item.value }}
+                </PaginationItem>
+                <PaginationEllipsis v-else :key="item.type" :index="index">
+                  &#8230;
+                </PaginationEllipsis>
+              </template>
+              <PaginationNext size="pagination" />
+            </PaginationContent>
+          </Pagination>
         </div>
       </div>
     </section>

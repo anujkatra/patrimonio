@@ -1551,7 +1551,7 @@ export type BlogPageQueryResult = {
   seo?: Seo
 } | null
 // Variable: blogQuery
-// Query: *[_type == "blog" && hidden==false]
+// Query: *[_type == "blog" && hidden==false][$startIndex...$endIndex]
 export type BlogQueryResult = Array<{
   _id: string
   _type: 'blog'
@@ -1597,6 +1597,9 @@ export type BlogQueryResult = Array<{
   publishDate: string
   hidden?: boolean
 }>
+// Variable: blogCountQuery
+// Query: count(*[_type == "blog" && hidden==false])
+export type BlogCountQueryResult = number
 
 // Query TypeMap
 import '@sanity/client'
@@ -1615,6 +1618,7 @@ declare module '@sanity/client' {
     '*[_type == "pressPage"][0]': PressPageQueryResult
     '*[_type == "press" && hidden==false]': PressQueryResult
     '*[_type == "blogPage"][0]': BlogPageQueryResult
-    '*[_type == "blog" && hidden==false]': BlogQueryResult
+    '*[_type == "blog" && hidden==false][$startIndex...$endIndex]': BlogQueryResult
+    'count(*[_type == "blog" && hidden==false])': BlogCountQueryResult
   }
 }
