@@ -17,6 +17,8 @@ import {press} from './documents/press'
 import {eventsPage} from './singletons/events-page'
 import {auctionHouse} from './documents/auction-house'
 import {pressPage} from './singletons/press-page'
+import {blogPage} from './singletons/blog-page'
+import {blog} from './documents/blog'
 
 export const schemaTypes = [
   // Singletons
@@ -26,6 +28,7 @@ export const schemaTypes = [
   artists,
   eventsPage,
   pressPage,
+  blogPage,
   // Documents
   artist,
   collection,
@@ -34,6 +37,7 @@ export const schemaTypes = [
   painting,
   press,
   auctionHouse,
+  blog,
   // Objects
   dateRange,
   seo,

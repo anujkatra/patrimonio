@@ -27,7 +27,7 @@ const headerContent: HeaderContentProps[] = [
   },
   {
     link: 'Blog',
-    href: '/our-story',
+    href: '/blog',
   },
   {
     link: 'Press & Media',

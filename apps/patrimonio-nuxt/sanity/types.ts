@@ -89,6 +89,52 @@ export type Opengraph = {
   title?: string
 }
 
+export type Blog = {
+  _id: string
+  _type: 'blog'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  subtitle?: string
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  excerpt: string
+  author: string
+  publishDate: string
+  hidden?: boolean
+}
+
 export type Press = {
   _id: string
   _type: 'press'
@@ -339,6 +385,17 @@ export type Artist = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'painting'
   }>
+  seo?: Seo
+}
+
+export type BlogPage = {
+  _id: string
+  _type: 'blogPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
   seo?: Seo
 }
 
@@ -693,6 +750,7 @@ export type AllSanitySchemaTypes =
   | Robots
   | Twitter
   | Opengraph
+  | Blog
   | Press
   | Painting
   | Medium
@@ -701,6 +759,7 @@ export type AllSanitySchemaTypes =
   | AuctionHouse
   | Collection
   | Artist
+  | BlogPage
   | PressPage
   | EventsPage
   | Artists
@@ -1479,6 +1538,68 @@ export type PressQueryResult = Array<{
   excerpt: string
   hidden?: boolean
 }>
+// Variable: blogPageQuery
+// Query: *[_type == "blogPage"][0]
+export type BlogPageQueryResult = {
+  _id: string
+  _type: 'blogPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  seo?: Seo
+} | null
+// Variable: blogQuery
+// Query: *[_type == "blog" && hidden==false][$startIndex...$endIndex]
+export type BlogQueryResult = Array<{
+  _id: string
+  _type: 'blog'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  subtitle?: string
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  excerpt: string
+  author: string
+  publishDate: string
+  hidden?: boolean
+}>
+// Variable: blogCountQuery
+// Query: count(*[_type == "blog" && hidden==false])
+export type BlogCountQueryResult = number
 
 // Query TypeMap
 import '@sanity/client'
@@ -1496,5 +1617,8 @@ declare module '@sanity/client' {
     '*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tartists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture,\n\t},\n\tpaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': EventQueryResult
     '*[_type == "pressPage"][0]': PressPageQueryResult
     '*[_type == "press" && hidden==false]': PressQueryResult
+    '*[_type == "blogPage"][0]': BlogPageQueryResult
+    '*[_type == "blog" && hidden==false][$startIndex...$endIndex]': BlogQueryResult
+    'count(*[_type == "blog" && hidden==false])': BlogCountQueryResult
   }
 }
