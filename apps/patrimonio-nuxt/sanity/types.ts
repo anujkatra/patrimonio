@@ -133,6 +133,7 @@ export type Blog = {
   author: string
   publishDate: string
   hidden?: boolean
+  seo?: Seo
 }
 
 export type Press = {
@@ -1596,6 +1597,7 @@ export type BlogQueryResult = Array<{
   author: string
   publishDate: string
   hidden?: boolean
+  seo?: Seo
 }>
 // Variable: blogCountQuery
 // Query: count(*[_type == "blog" && hidden==false])
