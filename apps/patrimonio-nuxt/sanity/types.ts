@@ -133,6 +133,7 @@ export type Blog = {
   author: string
   publishDate: string
   hidden?: boolean
+  seo?: Seo
 }
 
 export type Press = {
@@ -1596,10 +1597,52 @@ export type BlogQueryResult = Array<{
   author: string
   publishDate: string
   hidden?: boolean
+  seo?: Seo
 }>
 // Variable: blogCountQuery
 // Query: count(*[_type == "blog" && hidden==false])
 export type BlogCountQueryResult = number
+// Variable: individualBlogQuery
+// Query: *[_type == "blog" && defined(slug.current) && slug.current==$slug && hidden==false][0] {	title,	subtitle,	featuredImage,	description,	author,	publishDate,	slug,	seo,  }
+export type IndividualBlogQueryResult = {
+  title: string
+  subtitle: string | null
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  author: string
+  publishDate: string
+  slug: Slug
+  seo: Seo | null
+} | null
 
 // Query TypeMap
 import '@sanity/client'
@@ -1620,5 +1663,6 @@ declare module '@sanity/client' {
     '*[_type == "blogPage"][0]': BlogPageQueryResult
     '*[_type == "blog" && hidden==false][$startIndex...$endIndex]': BlogQueryResult
     'count(*[_type == "blog" && hidden==false])': BlogCountQueryResult
+    '*[_type == "blog" && defined(slug.current) && slug.current==$slug && hidden==false][0] {\n\ttitle,\n\tsubtitle,\n\tfeaturedImage,\n\tdescription,\n\tauthor,\n\tpublishDate,\n\tslug,\n\tseo,\n  }': IndividualBlogQueryResult
   }
 }

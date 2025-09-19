@@ -1,7 +1,8 @@
 import {defineArrayMember, defineField, DocumentDefinition} from 'sanity'
 import {DocumentIcon} from '@sanity/icons'
+import {withSeo} from '../../helpers/document'
 
-export const blog: DocumentDefinition = {
+export const blog: DocumentDefinition = withSeo({
   name: 'blog',
   title: 'Blog',
   type: 'document',
@@ -95,4 +96,4 @@ export const blog: DocumentDefinition = {
       initialValue: false,
     }),
   ],
-}
+})

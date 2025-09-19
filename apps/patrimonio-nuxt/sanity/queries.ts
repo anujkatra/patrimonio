@@ -167,6 +167,19 @@ export const blogQuery = defineQuery(`*[_type == "blog" && hidden==false][$start
 
 export const blogCountQuery = defineQuery(`count(*[_type == "blog" && hidden==false])`)
 
+export const individualBlogQuery = defineQuery(
+  `*[_type == "blog" && defined(slug.current) && slug.current==$slug && hidden==false][0] {
+	title,
+	subtitle,
+	featuredImage,
+	description,
+	author,
+	publishDate,
+	slug,
+	seo,
+  }`,
+)
+
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
 // 			...,
