@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-// import {ourStoryPageQuery} from '~/sanity/queries'
-// import type {OurStoryPageQueryResult} from '~/sanity/types'
+import {contactUsPageQuery} from '~/sanity/queries'
+import type {ContactUsPageQueryResult} from '~/sanity/types'
 
-// const {data: ourStoryPageData} = await useSanityQuery<OurStoryPageQueryResult>(ourStoryPageQuery)
+const {data: contactUsPageData} = await useSanityQuery<ContactUsPageQueryResult>(contactUsPageQuery)
 
-// useSiteMetadata({
-//   title: ourStoryPageData?.value?.seo?.title ?? 'title',
-//   description: ourStoryPageData?.value?.seo?.description ?? 'description',
-//   ogImage: '',
-// })
+useSiteMetadata({
+  title: contactUsPageData?.value?.seo?.title ?? 'title',
+  description: contactUsPageData?.value?.seo?.description ?? 'description',
+  ogImage: '',
+})
+console.log('test', contactUsPageData.value)
 </script>
 
 <template>

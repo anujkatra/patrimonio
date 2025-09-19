@@ -180,6 +180,8 @@ export const individualBlogQuery = defineQuery(
   }`,
 )
 
+export const contactUsPageQuery = defineQuery(`*[_type == "contactUsPage"][0]`)
+
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
 // 			...,

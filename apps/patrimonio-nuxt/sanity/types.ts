@@ -389,6 +389,34 @@ export type Artist = {
   seo?: Seo
 }
 
+export type ContactUsPage = {
+  _id: string
+  _type: 'contactUsPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  seo?: Seo
+}
+
 export type BlogPage = {
   _id: string
   _type: 'blogPage'
@@ -760,6 +788,7 @@ export type AllSanitySchemaTypes =
   | AuctionHouse
   | Collection
   | Artist
+  | ContactUsPage
   | BlogPage
   | PressPage
   | EventsPage
@@ -1643,6 +1672,35 @@ export type IndividualBlogQueryResult = {
   slug: Slug
   seo: Seo | null
 } | null
+// Variable: contactUsPageQuery
+// Query: *[_type == "contactUsPage"][0]
+export type ContactUsPageQueryResult = {
+  _id: string
+  _type: 'contactUsPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  seo?: Seo
+} | null
 
 // Query TypeMap
 import '@sanity/client'
@@ -1664,5 +1722,6 @@ declare module '@sanity/client' {
     '*[_type == "blog" && hidden==false][$startIndex...$endIndex]': BlogQueryResult
     'count(*[_type == "blog" && hidden==false])': BlogCountQueryResult
     '*[_type == "blog" && defined(slug.current) && slug.current==$slug && hidden==false][0] {\n\ttitle,\n\tsubtitle,\n\tfeaturedImage,\n\tdescription,\n\tauthor,\n\tpublishDate,\n\tslug,\n\tseo,\n  }': IndividualBlogQueryResult
+    '*[_type == "contactUsPage"][0]': ContactUsPageQueryResult
   }
 }
