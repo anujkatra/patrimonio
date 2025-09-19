@@ -35,7 +35,7 @@ const headerContent: HeaderContentProps[] = [
   },
   {
     link: 'Contact Us',
-    href: '/our-story',
+    href: '/contact-us',
   },
 ]
 
