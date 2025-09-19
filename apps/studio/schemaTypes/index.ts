@@ -19,6 +19,7 @@ import {auctionHouse} from './documents/auction-house'
 import {pressPage} from './singletons/press-page'
 import {blogPage} from './singletons/blog-page'
 import {blog} from './documents/blog'
+import {contactUsPage} from './singletons/contact-us-page'
 
 export const schemaTypes = [
   // Singletons
@@ -29,6 +30,7 @@ export const schemaTypes = [
   eventsPage,
   pressPage,
   blogPage,
+  contactUsPage,
   // Documents
   artist,
   collection,

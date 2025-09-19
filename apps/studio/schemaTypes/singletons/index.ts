@@ -7,5 +7,15 @@ import {gallery} from './gallery'
 import {homepage} from './homepage'
 import {pressPage} from './press-page'
 import {blogPage} from './blog-page'
+import {contactUsPage} from './contact-us-page'
 
-export const singletons = [homepage, ourStory, gallery, artists, eventsPage, pressPage, blogPage]
+export const singletons = [
+  homepage,
+  ourStory,
+  gallery,
+  artists,
+  eventsPage,
+  pressPage,
+  blogPage,
+  contactUsPage,
+]
