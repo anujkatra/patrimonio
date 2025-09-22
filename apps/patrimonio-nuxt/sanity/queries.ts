@@ -84,6 +84,30 @@ export const ourStoryPageQuery = defineQuery(`*[_type == "ourStory"][0]`)
 
 export const galleryPageQuery = defineQuery(`*[_type == "gallery"][0]`)
 
+export const galleryFilterQuery = defineQuery(`{
+	'startYear': *[_type == "painting"] | order(year asc)[0].year,
+	'endYear': *[_type == "painting"] | order(year desc)[0].year,
+	'artists': *[_type == "artist"]{_id,name,slug},
+	'collections': *[_type == "collection"]{_id,title,slug},
+	'mediums': *[_type == "medium"]{_id,name,slug}
+	}`)
+
+export const galleryCountQuery = defineQuery(
+  `count(*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)])`,
+)
+
+export const galleryPaintingFilterQuery =
+  defineQuery(`*[_type == "painting" && ($collection == '' || _id in *[_type == "collection" && slug.current == $collection][0].paintings[]._ref) && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year desc)[$startIndex...$endIndex]{
+	_id,
+  	slug,
+  	name,
+	"artist":artist->.name,
+	year,
+	"medium":medium->.name,
+  	picture,
+  	publishedAt,
+}`)
+
 export const artistQuery =
   defineQuery(`*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {
 	...,

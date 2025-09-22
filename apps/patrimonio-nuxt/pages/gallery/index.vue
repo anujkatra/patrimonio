@@ -1,6 +1,11 @@
 <script lang="ts" setup>
-import {galleryPageQuery} from '~/sanity/queries'
-import type {GalleryPageQueryResult} from '~/sanity/types'
+import {galleryPageQuery, galleryFilterQuery, galleryCountQuery} from '~/sanity/queries'
+import type {
+  GalleryPageQueryResult,
+  GalleryFilterQueryResult,
+  GalleryCountQueryResult,
+  GalleryPaintingFilterQueryResult,
+} from '~/sanity/types'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,6 +38,11 @@ const sanity = useSanity()
 const route = useRoute()
 const router = useRouter()
 
+interface DateObject {
+  startDate: number
+  endDate: number
+}
+
 onMounted(() => {
   // Check if 'page' query param exists, if not, add a default
   if (!route.query.page || !route.query.order) {
@@ -56,7 +66,7 @@ const selectedYear = computed(() =>
 const forSaleOnly = ref(false)
 const paintingOrder = computed(() => route.query.order || '')
 
-function getIdBySlug(object, value) {
+function getIdBySlug(object, value: string) {
   for (let i = 0; i < object.length; i++) {
     if (object[i].slug.current === value) {
       return object[i]._id
@@ -98,25 +108,16 @@ const query = computed(
 }`,
 )
 
-const countQuery = groq`count(*[_type == "painting" && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)])`
-
-const filterQuery = groq`{
-'startYear': *[_type == "painting"] | order(year asc)[0].year,
-'endYear': *[_type == "painting"] | order(year desc)[0].year,
-'artists': *[_type == "artist"]{_id,name,slug},
-'collections': *[_type == "collection"]{_id,title,slug},
-'mediums': *[_type == "medium"]{_id,name,slug}}`
-
-const {data: galleryFilterData} = await useSanityQuery(filterQuery)
+const {data: galleryFilterData} = await useSanityQuery<GalleryFilterQueryResult>(galleryFilterQuery)
 
 const {data: galleryPaintingData} = await useAsyncData(
   'galleryPaintingData',
   () =>
-    sanity.fetch(query.value, {
+    sanity.fetch<GalleryPaintingFilterQueryResult>(query.value, {
       startIndex: startIndex.value,
       endIndex: endIndex.value,
-      artist: getIdBySlug(galleryFilterData.value.artists, selectedArtist.value),
-      medium: getIdBySlug(galleryFilterData.value.mediums, selectedMedium.value),
+      artist: getIdBySlug(galleryFilterData?.value?.artists, selectedArtist.value as string),
+      medium: getIdBySlug(galleryFilterData?.value?.mediums, selectedMedium.value as string),
       startYear: selectedYear.value,
       endYear: selectedYear.value + 9,
       forSaleOnly: forSaleOnly.value,
@@ -124,12 +125,13 @@ const {data: galleryPaintingData} = await useAsyncData(
     }),
   {watch: [params, forSaleOnly, query]},
 )
+
 const {data: galleryPaintingDataCount} = await useAsyncData(
   'galleryPaintingDataCount',
   () =>
-    sanity.fetch(countQuery, {
-      artist: getIdBySlug(galleryFilterData.value.artists, selectedArtist.value),
-      medium: getIdBySlug(galleryFilterData.value.mediums, selectedMedium.value),
+    sanity.fetch<GalleryCountQueryResult>(galleryCountQuery, {
+      artist: getIdBySlug(galleryFilterData?.value?.artists, selectedArtist.value as string),
+      medium: getIdBySlug(galleryFilterData?.value?.mediums, selectedMedium.value as string),
       startYear: selectedYear.value,
       endYear: selectedYear.value + 9,
       forSaleOnly: forSaleOnly.value,
@@ -139,23 +141,31 @@ const {data: galleryPaintingDataCount} = await useAsyncData(
 
 const selectedFilters = computed(() => {
   return {
-    artist: getValueBySlug(galleryFilterData.value.artists, selectedArtist.value, 'name'),
+    artist: getValueBySlug(
+      galleryFilterData?.value?.artists,
+      selectedArtist.value as string,
+      'name',
+    ),
     collection: getValueBySlug(
-      galleryFilterData.value.collections,
-      selectedCollection.value,
+      galleryFilterData?.value?.collections,
+      selectedCollection.value as string,
       'title',
     ),
-    medium: getValueBySlug(galleryFilterData.value.mediums, selectedMedium.value, 'name'),
+    medium: getValueBySlug(
+      galleryFilterData?.value?.mediums,
+      selectedMedium.value as string,
+      'name',
+    ),
   }
 })
 
-const startYear = galleryFilterData.value.startYear
-const endYear = galleryFilterData.value.endYear
+const startYear = galleryFilterData?.value?.startYear ?? 0
+const endYear = galleryFilterData?.value?.endYear ?? 0
 const startDecade = Math.floor(startYear / 10) * 10
 const endDecade = Math.floor(endYear / 10) * 10
-const decades = []
+const decades: DateObject[] = []
 for (let i = startDecade; i <= endDecade; i += 10) {
-  decades.push({starDate: i, endDate: i + 9})
+  decades.push({startDate: i, endDate: i + 9})
 }
 
 function filter(key: string, value: string) {
@@ -282,11 +292,11 @@ const currentActiveMobileFilter = ref(0)
                           <button
                             v-for="(decade, index) in decades"
                             :key="index"
-                            :class="`cursor-pointer ${decade.starDate == selectedYear ? 'font-semibold' : ''}`"
-                            @click="filter('year', decade.starDate)"
+                            :class="`cursor-pointer ${decade.startDate == selectedYear ? 'font-semibold' : ''}`"
+                            @click="filter('year', `${decade.startDate}`)"
                           >
                             <p class="px-2.5 py-[22px]">
-                              {{ decade.starDate }} - {{ decade.endDate }}
+                              {{ decade.startDate }} - {{ decade.endDate }}
                             </p>
                           </button>
                         </div>
@@ -357,9 +367,9 @@ const currentActiveMobileFilter = ref(0)
                         v-for="(decade, index) in decades"
                         :key="index"
                         class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                        @select="filter('year', decade.starDate)"
+                        @select="filter('year', `${decade.startDate}`)"
                       >
-                        {{ decade.starDate }} - {{ decade.endDate }}
+                        {{ decade.startDate }} - {{ decade.endDate }}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
