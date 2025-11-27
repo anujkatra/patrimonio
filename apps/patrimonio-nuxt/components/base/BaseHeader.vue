@@ -41,7 +41,7 @@ const headerContent: HeaderContentProps[] = [
 
 const isMobileMenuOpen = ref(false)
 
-const whatsappNumber = '9920234237' // placeholder number
+const whatsappNumber = '919821017338'
 
 function closeMenu() {
   isMobileMenuOpen.value = false
