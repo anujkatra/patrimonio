@@ -41,6 +41,8 @@ const headerContent: HeaderContentProps[] = [
 
 const isMobileMenuOpen = ref(false)
 
+const whatsappNumber = '919821017338'
+
 function closeMenu() {
   isMobileMenuOpen.value = false
 }
@@ -87,13 +89,21 @@ onBeforeUnmount(() => {
             >
           </li>
           <li>
-            <NuxtImg src="/whatsapp.png" class="h-[35px] w-full" />
+            <NuxtLink :to="`https://wa.me/${whatsappNumber}`" target="_blank" class="w-full">
+              <NuxtImg src="/whatsapp.png" class="h-[35px]" />
+            </NuxtLink>
           </li>
         </ul>
         <!-- Mobile Toggle -->
         <div class="flex gap-[15px] lg:hidden">
-          <NuxtImg src="/whatsapp-mobile.png" class="size-6 self-center sm:hidden" />
-          <NuxtImg src="/whatsapp.png" class="hidden h-[35px] w-full sm:block" />
+          <NuxtLink
+            :to="`https://wa.me/${whatsappNumber}`"
+            target="_blank"
+            class="max-sm:self-center"
+            ><NuxtImg src="/whatsapp-mobile.png" class="size-6 sm:hidden" />
+            <NuxtImg src="/whatsapp.png" class="hidden h-[35px] w-full sm:block" />
+          </NuxtLink>
+
           <button
             class="hover:cursor-pointer focus:outline-none"
             aria-label="Toggle menu"
