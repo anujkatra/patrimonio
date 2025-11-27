@@ -117,6 +117,7 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
+      v-if="homepageData?.featuredCollections && homepageData?.featuredCollections.length > 0"
       class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
     >
       <div class="flex w-full max-w-[1300px] flex-col gap-5">
@@ -160,6 +161,7 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
+      v-if="homepageData?.featuredPaintings && homepageData?.featuredPaintings.length > 0"
       class="flex w-full flex-col items-center justify-center gap-5 overflow-hidden border-t-[0.5px] border-[#202020] py-[50px] pl-5 md:py-[70px] md:pl-10 xl:pl-[70px]"
     >
       <div class="mx-auto flex w-full max-w-[1370px] flex-col gap-2.5 pr-5 md:pr-10 xl:pr-[70px]">
@@ -207,7 +209,10 @@ const featuredCollectionsLayout = [
       </div>
     </section>
 
-    <section class="relative flex w-full justify-center border-t-[0.5px] border-[#202020]">
+    <section
+      v-if="homepageData?.featuredArtists && homepageData?.featuredArtists.length > 0"
+      class="relative flex w-full justify-center border-t-[0.5px] border-[#202020]"
+    >
       <NuxtImg
         src="/hp-artist-bg-mobile.png"
         class="pointer-events-none absolute size-full opacity-50 md:hidden"
@@ -234,10 +239,7 @@ const featuredCollectionsLayout = [
             exhibitions, and exclusive showcases.
           </p>
         </div>
-        <div
-          v-if="featuredArtistData.length !== 0"
-          class="relative flex flex-col gap-2.5 lg:flex-row"
-        >
+        <div class="relative flex flex-col gap-2.5 lg:flex-row">
           <div
             class="relative flex min-h-[400px] w-full max-w-[650px] self-center sm:min-h-[500px] lg:order-2 lg:max-h-[510px] lg:max-w-full lg:flex-1"
           >
@@ -272,6 +274,7 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
+      v-if="featuredEventsData.length > 0"
       class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
     >
       <div class="flex w-full max-w-[1300px] flex-col gap-5">
@@ -286,9 +289,7 @@ const featuredCollectionsLayout = [
             exhibitions, and exclusive showcases.
           </p>
         </div>
-        <div
-         v-if="featuredEventsData.length !== 0"
-        class="flex h-full">
+        <div class="flex h-full">
           <div
             class="relative inset-0 flex w-full flex-col items-center justify-center md:grid md:grid-cols-2"
           >
@@ -358,6 +359,7 @@ const featuredCollectionsLayout = [
     </section>
 
     <section
+      v-if="homepageData?.featuredPress && homepageData?.featuredPress.length > 0"
       class="flex justify-center border-t-[0.5px] border-[#202020] px-5 py-[50px] md:px-10 md:py-[70px] xl:px-[70px]"
     >
       <div class="flex w-full max-w-[1300px] flex-col gap-[50px]">
