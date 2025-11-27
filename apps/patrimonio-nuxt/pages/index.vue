@@ -286,7 +286,9 @@ const featuredCollectionsLayout = [
             exhibitions, and exclusive showcases.
           </p>
         </div>
-        <div class="flex h-full">
+        <div
+         v-if="featuredEventsData.length !== 0"
+        class="flex h-full">
           <div
             class="relative inset-0 flex w-full flex-col items-center justify-center md:grid md:grid-cols-2"
           >
