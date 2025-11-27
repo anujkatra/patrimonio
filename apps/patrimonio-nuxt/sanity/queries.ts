@@ -51,6 +51,7 @@ export const homepageQuery = defineQuery(`*[_type == "homepage"][0] {
 		title,
 		slug,
 		excerpt,
+		link,
 		featuredImage{
 			...,
 			asset->,

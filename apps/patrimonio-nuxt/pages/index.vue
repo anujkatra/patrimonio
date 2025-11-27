@@ -141,11 +141,10 @@ const featuredCollectionsLayout = [
             <CollectionTile
               v-if="collection?.paintings?.picture?.asset != null"
               :title="collection.title"
-              slug="/gallery"
+              :slug="collection.slug.current"
               :image-src="collection?.paintings?.picture?.asset"
               class="max-md:aspect-square"
             />
-            <!-- :slug="collection.slug.current" -->
           </div>
           <BaseLink
             variant="secondary"
@@ -380,10 +379,9 @@ const featuredCollectionsLayout = [
           <NuxtLink
             v-for="press in homepageData?.featuredPress"
             :key="press.slug.current"
-            :to="`/gallery`"
+            :to="press.link"
             class="h-full w-full"
           >
-            <!-- :to="`/press/${press.slug.current}`" -->
             <div
               class="bg-patrimonio-beige col-span-1 flex h-full w-full max-w-[350px] flex-col justify-between gap-5 border border-black p-5 md:max-w-[462px] lg:h-[470px] lg:max-w-[420px] lg:justify-between lg:py-[30px]"
             >
