@@ -15,7 +15,7 @@ onMounted(() => {
   }
 })
 
-const itemsPerPage = 1
+const itemsPerPage = 3
 const page = computed(() => (typeof route.query.page === 'string' ? parseInt(route.query.page) : 1))
 const startIndex = computed(() => (page.value - 1) * itemsPerPage)
 const endIndex = computed(() => startIndex.value + itemsPerPage)
@@ -63,16 +63,14 @@ useSiteMetadata({
             {{ blogPageData?.subtitle }}
           </p>
         </div>
-        <div class="flex w-full flex-col gap-5">
+        <div class="flex w-full flex-col">
           <NuxtLink
             v-for="blog in blogData"
             :key="blog.slug.current"
-            class="w-full"
+            class="border-patrimonio-black w-full border-t-[0.5px] last:border-b-[0.5px]"
             :to="`/blog/${blog.slug.current}`"
           >
-            <div
-              class="border-patrimonio-black flex w-full flex-col gap-5 border-t-[0.5px] pt-5 pb-[50px] last:border-b-[0.5px] md:flex-row lg:gap-[50px]"
-            >
+            <div class="flex w-full flex-col gap-5 pt-5 pb-[50px] md:flex-row lg:gap-[50px]">
               <div class="flex w-full md:flex-1">
                 <NuxtImg
                   provider="sanity"
