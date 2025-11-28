@@ -42,7 +42,7 @@ onMounted(() => {
   }
 })
 
-const itemsPerPage = 3
+const itemsPerPage = 12
 const params = computed(() => route.query || '')
 const selectedArtist = computed(() => route.query.artist || '')
 const selectedMedium = computed(() => route.query.medium || '')
