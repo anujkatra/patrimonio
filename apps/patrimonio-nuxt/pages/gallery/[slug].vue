@@ -4,6 +4,7 @@ import type {PaintingQueryResult} from '~/sanity/types'
 import Arrow from '~/assets/svg/arrow.svg'
 
 const route = useRoute()
+const sanity = useSanity()
 const {data: paintingData} = await useSanityQuery<PaintingQueryResult>(paintingQuery, {
   slug: route.params.slug,
 })
@@ -27,23 +28,32 @@ const form = ref({
   paintingSlug: paintingData.value.slug.current,
   name: '',
   email: '',
+  createdAt: '',
 })
 
 const submitted = ref(false)
 const showForm = ref(false)
 
-const handleSubmit = () => {
-  // You can send the form data to an API or use a backend handler here.
-  // console.log('test Form submitted:', form.value)
-
+const handleSubmit = async () => {
   submitted.value = true
+  try {
+    form.value.createdAt = new Date(Date.now()).toLocaleString('en-IN', {timeZoneName: 'short'})
+    const response = await sanity.client.create({
+      _type: 'paintingForm',
+      ...form.value,
+    })
 
-  // Optionally reset the form
-  form.value = {
-    paintingName: paintingData?.value?.name ?? '',
-    paintingSlug: paintingData?.value?.slug?.current ?? '',
-    name: '',
-    email: '',
+    form.value = {
+      paintingName: paintingData?.value?.name ?? '',
+      paintingSlug: paintingData?.value?.slug?.current ?? '',
+      name: '',
+      email: '',
+      createdAt: '',
+    }
+  } catch (e) {
+    console.error('Error submitting painting form', e)
+  } finally {
+    submitted.value = false
   }
 }
 </script>
@@ -239,6 +249,7 @@ const handleSubmit = () => {
 
             <button
               type="submit"
+              :disabled="submitted"
               class="font-cabinet h-[60px] w-full cursor-pointer border-[0.5px] border-[#202020] bg-white bg-[linear-gradient(264.83deg,rgba(252,251,247,0.5)_-4.61%,rgba(129,178,219,0.5)_44.28%,rgba(214,51,46,0.5)_112.37%)] px-[30px] text-center text-[20px] transition-all duration-300 ease-out hover:bg-black hover:bg-none hover:text-white"
             >
               Send
