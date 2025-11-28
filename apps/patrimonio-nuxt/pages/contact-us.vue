@@ -39,8 +39,6 @@ const handleSubmit = async () => {
     }
   } catch (e) {
     console.error('Error submitting painting form', e)
-  } finally {
-    submitted.value = false
   }
 }
 </script>
