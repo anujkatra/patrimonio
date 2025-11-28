@@ -9,6 +9,7 @@ import {press} from './press'
 import {auctionHouse} from './auction-house'
 import {blog} from './blog'
 import {paintingForm} from './painting-form'
+import {contactUsForm} from './contact-us-form'
 
 export const documents = [
   artist,
@@ -20,4 +21,5 @@ export const documents = [
   auctionHouse,
   blog,
   paintingForm,
+  contactUsForm,
 ]

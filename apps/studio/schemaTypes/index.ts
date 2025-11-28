@@ -21,6 +21,7 @@ import {blogPage} from './singletons/blog-page'
 import {blog} from './documents/blog'
 import {contactUsPage} from './singletons/contact-us-page'
 import {paintingForm} from './documents/painting-form'
+import {contactUsForm} from './documents/contact-us-form'
 
 export const schemaTypes = [
   // Singletons
@@ -42,6 +43,7 @@ export const schemaTypes = [
   auctionHouse,
   blog,
   paintingForm,
+  contactUsForm,
   // Objects
   dateRange,
   seo,
