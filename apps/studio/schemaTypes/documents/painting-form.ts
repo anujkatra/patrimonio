@@ -16,7 +16,7 @@ export const paintingForm: DocumentDefinition = {
     }),
     defineField({
       name: 'paintingSlug',
-      title: 'Painting Name',
+      title: 'Painting Slug',
       type: 'string',
       readOnly: true,
       validation: (rule) => [rule.required()],
