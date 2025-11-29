@@ -811,7 +811,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "homepage"][0] {	...,	landingCarousel[]->{		picture{			...,			asset->,		}	},	featuredCollections[]->{		title,		slug,		paintings[0]->{			picture{				...,				asset->,			}		}	},	featuredPaintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	},	featuredArtists[]->{		name,		slug,		picture{			...,			asset->,		}	},	featuredEvents[]->{		title,		slug,		venue,		dateRange,		pictures[0]{			...,			asset->,		},		"artist":artists[0]->.name,	},	featuredPress[]->{		title,		slug,		excerpt,		featuredImage{			...,			asset->,		},	},}
+// Query: *[_type == "homepage"][0] {	...,	landingCarousel[]->{		picture{			...,			asset->,		}	},	featuredCollections[]->{		title,		slug,		paintings[0]->{			picture{				...,				asset->,			}		}	},	featuredPaintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	},	featuredArtists[]->{		name,		slug,		picture{			...,			asset->,		}	},	featuredEvents[]->{		title,		slug,		venue,		dateRange,		pictures[0]{			...,			asset->,		},		"artist":artists[0]->.name,	},	featuredPress[]->{		title,		slug,		excerpt,		link,		featuredImage{			...,			asset->,		},	},}
 export type HomepageQueryResult = {
   _id: string
   _type: 'homepage'
@@ -1004,6 +1004,7 @@ export type HomepageQueryResult = {
     title: string
     slug: Slug
     excerpt: string
+    link: string
     featuredImage: {
       asset: {
         _id: string
@@ -1754,7 +1755,7 @@ export type ContactUsPageQueryResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "homepage"][0] {\n\t...,\n\tlandingCarousel[]->{\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedCollections[]->{\n\t\ttitle,\n\t\tslug,\n\t\tpaintings[0]->{\n\t\t\tpicture{\n\t\t\t\t...,\n\t\t\t\tasset->,\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedEvents[]->{\n\t\ttitle,\n\t\tslug,\n\t\tvenue,\n\t\tdateRange,\n\t\tpictures[0]{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t\t"artist":artists[0]->.name,\n\t},\n\tfeaturedPress[]->{\n\t\ttitle,\n\t\tslug,\n\t\texcerpt,\n\t\tfeaturedImage{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t},\n}': HomepageQueryResult
+    '*[_type == "homepage"][0] {\n\t...,\n\tlandingCarousel[]->{\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedCollections[]->{\n\t\ttitle,\n\t\tslug,\n\t\tpaintings[0]->{\n\t\t\tpicture{\n\t\t\t\t...,\n\t\t\t\tasset->,\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedEvents[]->{\n\t\ttitle,\n\t\tslug,\n\t\tvenue,\n\t\tdateRange,\n\t\tpictures[0]{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t\t"artist":artists[0]->.name,\n\t},\n\tfeaturedPress[]->{\n\t\ttitle,\n\t\tslug,\n\t\texcerpt,\n\t\tlink,\n\t\tfeaturedImage{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t},\n}': HomepageQueryResult
     '*[_type == "artists"][0] {\n\t...,\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tlocation,\n\t\tpicture{\n\t\t\t...,\n\t\t\t...asset-> {\n    \t\t\tcaption,\n    \t\t\t...metadata {\n      \t\t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n      \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n      \t\t\t\t}\n    \t\t\t}\n  \t\t\t}\n\t\t}\n\t},\n}': ArtistsPageQueryResult
     '*[_type == "ourStory"][0]': OurStoryPageQueryResult
     '*[_type == "gallery"][0]': GalleryPageQueryResult

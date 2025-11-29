@@ -7,7 +7,6 @@ import {gallery} from './singletons/gallery'
 import {homepage} from './singletons/homepage'
 import {event} from './documents/event'
 import {dateRange} from './objects/dateRange'
-import {featuredSection} from './objects/featuredSection'
 import {seo} from './objects/seo'
 import {opengraph} from './objects/seo/opengraph'
 import {robots} from './objects/seo/robots'
@@ -46,5 +45,4 @@ export const schemaTypes = [
   robots,
   opengraph,
   twitter,
-  featuredSection,
 ]

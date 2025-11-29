@@ -52,7 +52,7 @@ onMounted(() => {
   }
 })
 
-const itemsPerPage = 3
+const itemsPerPage = 12
 const params = computed(() => route.query || '')
 const selectedArtist = computed(() => route.query.artist || '')
 const selectedMedium = computed(() => route.query.medium || '')
@@ -282,7 +282,7 @@ const currentActiveMobileFilter = ref(0)
                       </button>
                     </div>
                   </div>
-                  <div class="pl-[35px]">
+                  <div class="w-full overflow-y-auto pl-[35px]">
                     <Transition mode="out-in" name="fade">
                       <div
                         :key="currentActiveMobileFilter"
