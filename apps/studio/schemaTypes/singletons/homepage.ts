@@ -91,13 +91,6 @@ export const homepage: DocumentDefinition = withSeo({
       ],
     }),
     defineField({
-      name: 'featuredSection',
-      title: 'Featured Section',
-      description: 'Landing Page Featured Sections',
-      type: 'array',
-      of: [{type: 'featuredSection'}],
-    }),
-    defineField({
       title: 'Featured Paintings',
       name: 'featuredPaintings',
       type: 'array',
