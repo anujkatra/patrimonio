@@ -47,7 +47,7 @@ onMounted(() => {
   // Check if 'page' query param exists, if not, add a default
   if (!route.query.page || !route.query.order) {
     router.replace({
-      query: {...route.query, page: route.query.page ?? 1, order: route.query.order ?? 'desc'},
+      query: {page: route.query.page ?? 1, order: route.query.order ?? 'desc', ...route.query},
     })
   }
 })
@@ -135,8 +135,9 @@ const {data: galleryPaintingDataCount} = await useAsyncData(
       startYear: selectedYear.value,
       endYear: selectedYear.value + 9,
       forSaleOnly: forSaleOnly.value,
+      collection: selectedCollection.value,
     }),
-  {watch: [selectedArtist, selectedMedium, selectedYear, forSaleOnly]},
+  {watch: [selectedArtist, selectedMedium, selectedYear, forSaleOnly, selectedCollection]},
 )
 
 const selectedFilters = computed(() => {
@@ -177,6 +178,7 @@ function filter(key: string, value: string) {
     const {[key]: _, ...currentQuery} = {...route.query}
     router.replace({query: {...currentQuery, page: 1}})
   } else router.replace({query: {...route.query, page: 1, [key]: value}})
+  console.log('test', galleryPaintingData.value, galleryPaintingDataCount.value)
 }
 
 function updatePage(value: number) {
