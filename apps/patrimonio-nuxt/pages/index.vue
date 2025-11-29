@@ -147,7 +147,7 @@ const featuredCollectionsLayout = [
             <CollectionTile
               v-if="collection?.paintings?.picture?.asset != null"
               :title="collection.title"
-              :slug="collection.slug.current"
+              :slug="`/gallery?collection=${collection.slug.current}`"
               :image-src="collection?.paintings?.picture?.asset"
               class="max-md:aspect-square"
             />
