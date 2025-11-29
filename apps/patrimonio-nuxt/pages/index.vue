@@ -194,16 +194,6 @@ const featuredCollectionsLayout = [
               :image-src="painting.picture.asset"
             />
           </template>
-          <template v-for="(painting, index) in homepageData?.featuredPaintings" :key="index">
-            <PaintingTile
-              v-if="painting?.picture?.asset != null"
-              :name="painting.name"
-              :artist="painting.artist"
-              :year="painting.year"
-              :medium="painting.medium ?? ``"
-              :image-src="painting.picture.asset"
-            />
-          </template>
         </div>
         <div class="flex w-full pr-5 md:justify-end md:pr-10 xl:pr-[70px]">
           <BaseLink variant="secondary" class="w-full" icon to="/gallery">
@@ -346,7 +336,7 @@ const featuredCollectionsLayout = [
                 </button>
               </div>
               <div class="hidden lg:block">
-                <BaseLink variant="primary" class="bg-patrimonio-beige w-full" icon to="/gallery">
+                <BaseLink variant="primary" class="bg-patrimonio-beige w-full" icon to="/events">
                   View all upcoming events &nbsp;| {{ featuredEventsData.length }} |
                   <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
                 </BaseLink>
