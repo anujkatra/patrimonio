@@ -107,7 +107,13 @@ const featuredCollectionsLayout = [
               <p class="font-satoshi text-lg leading-none font-light tracking-normal">
                 {{ homepageData?.landingText }}
               </p>
-              <BaseLink variant="secondary" class="w-full" icon to="/gallery">
+              <BaseLink
+                variant="secondary"
+                class="w-full"
+                icon
+                :to="`${homepageData?.landingCta?.ctaLink ?? '/gallery'}`"
+              >
+                {{ homepageData?.landingCta?.ctaText ?? 'Explore' }}
                 <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
               </BaseLink>
             </div>
