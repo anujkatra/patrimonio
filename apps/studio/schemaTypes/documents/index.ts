@@ -8,5 +8,18 @@ import {collection} from './collection'
 import {press} from './press'
 import {auctionHouse} from './auction-house'
 import {blog} from './blog'
+import {paintingForm} from './painting-form'
+import {contactUsForm} from './contact-us-form'
 
-export const documents = [artist, painting, medium, event, collection, press, auctionHouse, blog]
+export const documents = [
+  artist,
+  painting,
+  medium,
+  event,
+  collection,
+  press,
+  auctionHouse,
+  blog,
+  paintingForm,
+  contactUsForm,
+]

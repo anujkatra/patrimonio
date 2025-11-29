@@ -3,6 +3,7 @@ import {contactUsPageQuery} from '~/sanity/queries'
 import type {ContactUsPageQueryResult} from '~/sanity/types'
 
 const {data: contactUsPageData} = await useSanityQuery<ContactUsPageQueryResult>(contactUsPageQuery)
+const sanity = useSanity()
 
 useSiteMetadata({
   title: contactUsPageData?.value?.seo?.title ?? 'title',
@@ -15,22 +16,29 @@ const form = ref({
   email: '',
   phone: '',
   message: '',
+  createdAt: '',
 })
 
 const submitted = ref(false)
 
-const handleSubmit = () => {
-  // You can send the form data to an API or use a backend handler here.
-  // console.log('test Form submitted:', form.value)
-
+const handleSubmit = async () => {
   submitted.value = true
+  try {
+    form.value.createdAt = new Date(Date.now()).toLocaleString('en-IN', {timeZoneName: 'short'})
+    const response = await sanity.client.create({
+      _type: 'contactUsForm',
+      ...form.value,
+    })
 
-  // Optionally reset the form
-  form.value = {
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
+    form.value = {
+      name: '',
+      email: '',
+      phone: '',
+      message: '',
+      createdAt: '',
+    }
+  } catch (e) {
+    console.error('Error submitting painting form', e)
   }
 }
 </script>
@@ -105,11 +113,18 @@ const handleSubmit = () => {
 
             <button
               type="submit"
+              :disabled="submitted"
               class="font-cabinet h-[60px] w-full cursor-pointer border-[0.5px] border-[#202020] bg-white bg-[linear-gradient(264.83deg,rgba(252,251,247,0.5)_-4.61%,rgba(129,178,219,0.5)_44.28%,rgba(214,51,46,0.5)_112.37%)] px-[30px] text-center text-[20px] transition-all duration-300 ease-out hover:bg-black hover:bg-none hover:text-white"
             >
               Submit
             </button>
           </form>
+
+          <div v-if="submitted" class="pt-4">
+            <p class="font-satoshi text-lg/none tracking-normal">
+              Thank you! Your message has been submitted.
+            </p>
+          </div>
         </div>
       </div>
     </section>
