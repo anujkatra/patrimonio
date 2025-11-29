@@ -42,7 +42,7 @@ onMounted(() => {
   }
 })
 
-const itemsPerPage = 3
+const itemsPerPage = 12
 const params = computed(() => route.query || '')
 const selectedArtist = computed(() => route.query.artist || '')
 const selectedMedium = computed(() => route.query.medium || '')
@@ -149,13 +149,15 @@ const selectedFilters = computed(() => {
   }
 })
 
-const startYear = galleryFilterData.value.startYear
-const endYear = galleryFilterData.value.endYear
+const startYear = galleryFilterData.value.startYear ?? 0
+const endYear = galleryFilterData.value.endYear ?? 0
 const startDecade = Math.floor(startYear / 10) * 10
 const endDecade = Math.floor(endYear / 10) * 10
 const decades = []
-for (let i = startDecade; i <= endDecade; i += 10) {
-  decades.push({starDate: i, endDate: i + 9})
+if (startYear !== 0 && endYear !== 0) {
+  for (let i = startDecade; i <= endDecade; i += 10) {
+    decades.push({startDate: i, endDate: i + 9})
+  }
 }
 
 function filter(key: string, value: string) {
@@ -272,7 +274,7 @@ const currentActiveMobileFilter = ref(0)
                       </button>
                     </div>
                   </div>
-                  <div class="pl-[35px]">
+                  <div class="w-full overflow-y-auto pl-[35px]">
                     <Transition mode="out-in" name="fade">
                       <div
                         :key="currentActiveMobileFilter"
@@ -282,11 +284,11 @@ const currentActiveMobileFilter = ref(0)
                           <button
                             v-for="(decade, index) in decades"
                             :key="index"
-                            :class="`cursor-pointer ${decade.starDate == selectedYear ? 'font-semibold' : ''}`"
-                            @click="filter('year', decade.starDate)"
+                            :class="`cursor-pointer ${decade.startDate == selectedYear ? 'font-semibold' : ''}`"
+                            @click="filter('year', decade.startDate)"
                           >
                             <p class="px-2.5 py-[22px]">
-                              {{ decade.starDate }} - {{ decade.endDate }}
+                              {{ decade.startDate }} - {{ decade.endDate }}
                             </p>
                           </button>
                         </div>
@@ -357,9 +359,9 @@ const currentActiveMobileFilter = ref(0)
                         v-for="(decade, index) in decades"
                         :key="index"
                         class="font-satoshi min-h-[50px] cursor-pointer px-[15px] text-base/none font-normal tracking-normal data-[highlighted]:bg-black data-[highlighted]:text-white"
-                        @select="filter('year', decade.starDate)"
+                        @select="filter('year', decade.startDate)"
                       >
-                        {{ decade.starDate }} - {{ decade.endDate }}
+                        {{ decade.startDate }} - {{ decade.endDate }}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
