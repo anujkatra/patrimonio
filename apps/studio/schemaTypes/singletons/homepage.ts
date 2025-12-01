@@ -28,25 +28,10 @@ export const homepage: DocumentDefinition = withSeo({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      title: 'Landing Carousel Paintings',
-      name: 'landingCarousel',
-      type: 'array',
-      description: 'Landing Carousel Paintings (max 20)',
-      validation: (Rule) => Rule.unique().max(20),
-      of: [
-        {
-          type: 'reference',
-          to: [{type: 'painting'}],
-          options: {
-            disableNew: true,
-          },
-        },
-      ],
-    }),
-    defineField({
       name: 'landingCta',
       title: 'Landing Call to Action (CTA)',
       type: 'object',
+      description: 'Links to gallery page if left empty',
       fields: [
         defineField({
           name: 'ctaText',
@@ -66,12 +51,29 @@ export const homepage: DocumentDefinition = withSeo({
           name: 'ctaLink',
           title: 'CTA Link',
           type: 'url',
+          description: 'Can be an external or relative URL (eg. https://google.com or /artists)',
           validation: (Rule) => [
             Rule.uri({
-              scheme: ['https', 'mailto', 'tel'],
+              allowRelative: true,
             }),
           ],
         }),
+      ],
+    }),
+    defineField({
+      title: 'Landing Carousel Paintings',
+      name: 'landingCarousel',
+      type: 'array',
+      description: 'Landing Carousel Paintings (max 20)',
+      validation: (Rule) => Rule.unique().max(20),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'painting'}],
+          options: {
+            disableNew: true,
+          },
+        },
       ],
     }),
     defineField({
@@ -89,13 +91,6 @@ export const homepage: DocumentDefinition = withSeo({
           },
         },
       ],
-    }),
-    defineField({
-      name: 'featuredSection',
-      title: 'Featured Section',
-      description: 'Landing Page Featured Sections',
-      type: 'array',
-      of: [{type: 'featuredSection'}],
     }),
     defineField({
       title: 'Featured Paintings',
