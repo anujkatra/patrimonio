@@ -10,7 +10,6 @@ export default defineEventHandler(async (event) => {
   try {
     const body: BodyProps = await readBody(event)
     const sanity = useSanity()
-    console.log('body in api', body)
     const response = await sanity.client.create({
       _type: 'paintingForm',
       ...body,
