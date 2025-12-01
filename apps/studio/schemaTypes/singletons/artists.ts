@@ -25,5 +25,21 @@ export const artists: DocumentDefinition = withSeo({
       description: 'A tagline/subtitle for the Artists Page',
       type: 'string',
     }),
+    defineField({
+      title: 'Featured Artists',
+      name: 'featuredArtists',
+      type: 'array',
+      description: 'Featured Artists',
+      validation: (Rule) => Rule.unique(),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'artist'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
   ],
 })

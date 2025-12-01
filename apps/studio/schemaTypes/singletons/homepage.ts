@@ -31,6 +31,7 @@ export const homepage: DocumentDefinition = withSeo({
       name: 'landingCta',
       title: 'Landing Call to Action (CTA)',
       type: 'object',
+      description: 'Links to gallery page if left empty',
       fields: [
         defineField({
           name: 'ctaText',
@@ -50,39 +51,46 @@ export const homepage: DocumentDefinition = withSeo({
           name: 'ctaLink',
           title: 'CTA Link',
           type: 'url',
+          description: 'Can be an external or relative URL (eg. https://google.com or /artists)',
           validation: (Rule) => [
             Rule.uri({
-              scheme: ['https', 'mailto', 'tel'],
+              allowRelative: true,
             }),
           ],
         }),
       ],
     }),
     defineField({
-      name: 'landingImage',
-      title: 'Landing Image',
-      description: 'Landing Image for the Home Page',
-      type: 'image',
-      fields: [
+      title: 'Landing Carousel Paintings',
+      name: 'landingCarousel',
+      type: 'array',
+      description: 'Landing Carousel Paintings (max 20)',
+      validation: (Rule) => Rule.unique().max(20),
+      of: [
         {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative text',
-          description: 'Important for SEO and accessiblity.',
-          validation: (rule) => rule.required(),
+          type: 'reference',
+          to: [{type: 'painting'}],
+          options: {
+            disableNew: true,
+          },
         },
       ],
-      options: {
-        hotspot: true,
-      },
-      validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'featuredSection',
-      title: 'Featured Section',
-      description: 'Landing Page Featured Sections',
+      title: 'Featured Collections',
+      name: 'featuredCollections',
       type: 'array',
-      of: [{type: 'featuredSection'}],
+      description: 'Featured Collections (max 6)',
+      validation: (Rule) => Rule.unique().max(6),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'collection'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
     }),
     defineField({
       title: 'Featured Paintings',
@@ -101,6 +109,22 @@ export const homepage: DocumentDefinition = withSeo({
       ],
     }),
     defineField({
+      title: 'Featured Artists',
+      name: 'featuredArtists',
+      type: 'array',
+      description: 'Featured Artists (max 5)',
+      validation: (Rule) => Rule.unique().max(5),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'artist'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
+    defineField({
       title: 'Featured Events',
       name: 'featuredEvents',
       type: 'array',
@@ -110,6 +134,22 @@ export const homepage: DocumentDefinition = withSeo({
         {
           type: 'reference',
           to: [{type: 'event'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+    }),
+    defineField({
+      title: 'Featured Press and Media',
+      name: 'featuredPress',
+      type: 'array',
+      description: 'Featured Press and Media (max 6)',
+      validation: (Rule) => Rule.unique().max(6),
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'press'}],
           options: {
             disableNew: true,
           },

@@ -17,6 +17,18 @@ export const painting: DocumentDefinition = {
       ],
     }),
     defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      description: 'A slug is required to generate a unique url for the painting',
+      options: {
+        source: 'name',
+        maxLength: 96,
+        isUnique: (value, context) => context.defaultIsUnique(value, context),
+      },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'picture',
       title: 'Picture',
       type: 'image',
@@ -62,6 +74,12 @@ export const painting: DocumentDefinition = {
         Rule.required().min(1940).max(new Date().getFullYear()).integer().positive(),
     }),
     defineField({
+      title: 'Description',
+      name: 'description',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
       name: 'dimensions',
       title: 'Dimensions',
       type: 'object',
@@ -99,8 +117,16 @@ export const painting: DocumentDefinition = {
       to: [{type: 'medium'}],
     }),
     defineField({
-      title: 'Is the Painting for Sale?',
+      title: 'For Sale',
+      description: 'Is the Painting for Sale?',
       name: 'forSale',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
+      title: 'Hidden',
+      description: 'Hide painting on gallery page?',
+      name: 'hidden',
       type: 'boolean',
       initialValue: false,
     }),

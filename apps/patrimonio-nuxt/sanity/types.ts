@@ -89,6 +89,151 @@ export type Opengraph = {
   title?: string
 }
 
+export type Blog = {
+  _id: string
+  _type: 'blog'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  subtitle?: string
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  excerpt: string
+  author: string
+  publishDate: string
+  hidden?: boolean
+  seo?: Seo
+}
+
+export type Press = {
+  _id: string
+  _type: 'press'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  link: string
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  excerpt: string
+  hidden?: boolean
+}
+
+export type Painting = {
+  _id: string
+  _type: 'painting'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  artist: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'artist'
+  }
+  year: number
+  description?: string
+  dimensions: {
+    height: number
+    width: number
+    unit: 'in' | 'ft' | 'cm' | 'm'
+  }
+  medium?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'medium'
+  }
+  forSale?: boolean
+  hidden?: boolean
+}
+
+export type Medium = {
+  _id: string
+  _type: 'medium'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+}
+
 export type Event = {
   _id: string
   _type: 'event'
@@ -98,7 +243,12 @@ export type Event = {
   title: string
   slug: Slug
   type: 'art-show' | 'auction' | 'solo-show'
-  auctionHouse?: string
+  auctionHouse?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'auctionHouse'
+  }
   venue: string
   dateRange?: DateRange
   link?: string
@@ -149,6 +299,8 @@ export type Event = {
     [internalGroqTypeReferenceTo]?: 'artist'
   }>
   excerpt: string
+  upcoming?: boolean
+  hidden?: boolean
   seo?: Seo
 }
 
@@ -158,55 +310,32 @@ export type DateRange = {
   endDate?: string
 }
 
-export type Painting = {
+export type AuctionHouse = {
   _id: string
-  _type: 'painting'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  name: string
-  picture: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
-  }
-  artist: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'artist'
-  }
-  year: number
-  dimensions: {
-    height: number
-    width: number
-    unit: 'in' | 'ft' | 'cm' | 'm'
-  }
-  medium?: {
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: 'medium'
-  }
-  forSale?: boolean
-}
-
-export type Medium = {
-  _id: string
-  _type: 'medium'
+  _type: 'auctionHouse'
   _createdAt: string
   _updatedAt: string
   _rev: string
   name: string
   slug: Slug
+}
+
+export type Collection = {
+  _id: string
+  _type: 'collection'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  paintings?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'painting'
+  }>
+  seo?: Seo
 }
 
 export type Artist = {
@@ -250,16 +379,24 @@ export type Artist = {
     _type: 'image'
   }
   excerpt: string
+  featuredPaintings?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'painting'
+  }>
+  seo?: Seo
 }
 
-export type Auctions = {
+export type ContactUsPage = {
   _id: string
-  _type: 'auctions'
+  _type: 'contactUsPage'
   _createdAt: string
   _updatedAt: string
   _rev: string
-  title: string
-  content: Array<{
+  title?: string
+  content?: Array<{
     children?: Array<{
       marks?: Array<string>
       text?: string
@@ -280,30 +417,56 @@ export type Auctions = {
   seo?: Seo
 }
 
-export type Shows = {
+export type BlogPage = {
   _id: string
-  _type: 'shows'
+  _type: 'blogPage'
   _createdAt: string
   _updatedAt: string
   _rev: string
   title: string
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      href?: string
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
+  subtitle?: string
+  seo?: Seo
+}
+
+export type PressPage = {
+  _id: string
+  _type: 'pressPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  seo?: Seo
+}
+
+export type EventsPage = {
+  _id: string
+  _type: 'eventsPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  auctions?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
     _key: string
+    [internalGroqTypeReferenceTo]?: 'event'
+  }>
+  artShows?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'event'
+  }>
+  soloShows?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'event'
   }>
   seo?: Seo
 }
@@ -316,6 +479,13 @@ export type Artists = {
   _rev: string
   title: string
   subtitle?: string
+  featuredArtists?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'artist'
+  }>
   seo?: Seo
 }
 
@@ -330,9 +500,9 @@ export type Gallery = {
   seo?: Seo
 }
 
-export type AboutUs = {
+export type OurStory = {
   _id: string
-  _type: 'aboutUs'
+  _type: 'ourStory'
   _createdAt: string
   _updatedAt: string
   _rev: string
@@ -355,18 +525,46 @@ export type AboutUs = {
     _type: 'block'
     _key: string
   }>
-  pictures?: Array<{
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+  ourTeam?: Array<{
+    title: string
+    name: string
+    designation?: string
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
     }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt?: string
-    _type: 'image'
+    _key: string
+  }>
+  milestones?: Array<{
+    milestone: string
+    year: string
     _key: string
   }>
   seo?: Seo
@@ -380,23 +578,24 @@ export type Homepage = {
   _rev: string
   title: string
   landingText: string
+  landingCarousel?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'painting'
+  }>
   landingCta?: {
     ctaText?: string
     ctaLink?: string
   }
-  landingImage: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt: string
-    _type: 'image'
-  }
+  featuredCollections?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'collection'
+  }>
   featuredSection?: Array<
     {
       _key: string
@@ -409,12 +608,26 @@ export type Homepage = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'painting'
   }>
+  featuredArtists?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'artist'
+  }>
   featuredEvents?: Array<{
     _ref: string
     _type: 'reference'
     _weak?: boolean
     _key: string
     [internalGroqTypeReferenceTo]?: 'event'
+  }>
+  featuredPress?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'press'
   }>
   seo?: Seo
 }
@@ -566,16 +779,22 @@ export type AllSanitySchemaTypes =
   | Robots
   | Twitter
   | Opengraph
-  | Event
-  | DateRange
+  | Blog
+  | Press
   | Painting
   | Medium
+  | Event
+  | DateRange
+  | AuctionHouse
+  | Collection
   | Artist
-  | Auctions
-  | Shows
+  | ContactUsPage
+  | BlogPage
+  | PressPage
+  | EventsPage
   | Artists
   | Gallery
-  | AboutUs
+  | OurStory
   | Homepage
   | Seo
   | SanityImagePaletteSwatch
@@ -592,7 +811,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/queries.ts
 // Variable: homepageQuery
-// Query: *[_type == "homepage"][0] {	...,	landingImage{	...,	asset->,	}	}
+// Query: *[_type == "homepage"][0] {	...,	landingCarousel[]->{		picture{			...,			asset->,		}	},	featuredCollections[]->{		title,		slug,		paintings[0]->{			picture{				...,				asset->,			}		}	},	featuredPaintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	},	featuredArtists[]->{		name,		slug,		picture{			...,			asset->,		}	},	featuredEvents[]->{		title,		slug,		venue,		dateRange,		pictures[0]{			...,			asset->,		},		"artist":artists[0]->.name,	},	featuredPress[]->{		title,		slug,		excerpt,		link,		featuredImage{			...,			asset->,		},	},}
 export type HomepageQueryResult = {
   _id: string
   _type: 'homepage'
@@ -601,52 +820,606 @@ export type HomepageQueryResult = {
   _rev: string
   title: string
   landingText: string
+  landingCarousel: Array<{
+    picture: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
   landingCta?: {
     ctaText?: string
     ctaLink?: string
   }
-  landingImage: {
-    asset: {
-      _id: string
-      _type: 'sanity.imageAsset'
-      _createdAt: string
-      _updatedAt: string
-      _rev: string
-      originalFilename?: string
-      label?: string
-      title?: string
-      description?: string
-      altText?: string
-      sha1hash?: string
-      extension?: string
-      mimeType?: string
-      size?: number
-      assetId?: string
-      uploadId?: string
-      path?: string
-      url?: string
-      metadata?: SanityImageMetadata
-      source?: SanityAssetSourceData
+  featuredCollections: Array<{
+    title: string
+    slug: Slug
+    paintings: {
+      picture: {
+        asset: {
+          _id: string
+          _type: 'sanity.imageAsset'
+          _createdAt: string
+          _updatedAt: string
+          _rev: string
+          originalFilename?: string
+          label?: string
+          title?: string
+          description?: string
+          altText?: string
+          sha1hash?: string
+          extension?: string
+          mimeType?: string
+          size?: number
+          assetId?: string
+          uploadId?: string
+          path?: string
+          url?: string
+          metadata?: SanityImageMetadata
+          source?: SanityAssetSourceData
+        } | null
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+      }
     } | null
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    alt: string
-    _type: 'image'
-  }
+  }> | null
   featuredSection?: Array<
     {
       _key: string
     } & FeaturedSection
   >
-  featuredPaintings?: Array<{
+  featuredPaintings: Array<{
+    name: string
+    artist: string
+    year: number
+    medium: string | null
+    picture: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
+  featuredArtists: Array<{
+    name: string
+    slug: Slug
+    picture: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
+  featuredEvents: Array<{
+    title: string
+    slug: Slug
+    venue: string
+    dateRange: DateRange | null
+    pictures: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+      _key: string
+    } | null
+    artist: string | null
+  }> | null
+  featuredPress: Array<{
+    title: string
+    slug: Slug
+    excerpt: string
+    link: string
+    featuredImage: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
+  seo?: Seo
+} | null
+// Variable: artistsPageQuery
+// Query: *[_type == "artists"][0] {	...,	featuredArtists[]->{		name,		slug,		location,		picture{			...,			...asset-> {    			caption,    			...metadata {      				lqip, // the lqip can be used for blurHashUrl or other low-quality placeholders      				...dimensions {        				width,        				height      				}    			}  			}		}	},}
+export type ArtistsPageQueryResult = {
+  _id: string
+  _type: 'artists'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  featuredArtists: Array<{
+    name: string
+    slug: Slug
+    location: string
+    picture:
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          caption: null
+          lqip: string | null
+          width: number | null
+          height: number | null
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          caption: null
+          lqip: string | null
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+          caption: null
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        }
+  }> | null
+  seo?: Seo
+} | null
+// Variable: ourStoryPageQuery
+// Query: *[_type == "ourStory"][0]
+export type OurStoryPageQueryResult = {
+  _id: string
+  _type: 'ourStory'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  ourTeam?: Array<{
+    title: string
+    name: string
+    designation?: string
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: 'span'
+        _key: string
+      }>
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+      listItem?: 'bullet' | 'number'
+      markDefs?: Array<{
+        href?: string
+        _type: 'link'
+        _key: string
+      }>
+      level?: number
+      _type: 'block'
+      _key: string
+    }>
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+    _key: string
+  }>
+  milestones?: Array<{
+    milestone: string
+    year: string
+    _key: string
+  }>
+  seo?: Seo
+} | null
+// Variable: galleryPageQuery
+// Query: *[_type == "gallery"][0]
+export type GalleryPageQueryResult = {
+  _id: string
+  _type: 'gallery'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  seo?: Seo
+} | null
+// Variable: galleryFilterQuery
+// Query: {	'startYear': *[_type == "painting"] | order(year asc)[0].year,	'endYear': *[_type == "painting"] | order(year desc)[0].year,	'artists': *[_type == "artist"]{_id,name,slug},	'collections': *[_type == "collection"]{_id,title,slug},	'mediums': *[_type == "medium"]{_id,name,slug}	}
+export type GalleryFilterQueryResult = {
+  startYear: number | null
+  endYear: number | null
+  artists: Array<{
+    _id: string
+    name: string
+    slug: Slug
+  }>
+  collections: Array<{
+    _id: string
+    title: string
+    slug: Slug
+  }>
+  mediums: Array<{
+    _id: string
+    name: string
+    slug: Slug
+  }>
+}
+// Variable: galleryCountQuery
+// Query: count(*[_type == "painting" && ($collection == '' || _id in *[_type == "collection" && slug.current == $collection][0].paintings[]._ref) && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)])
+export type GalleryCountQueryResult = number
+// Variable: galleryPaintingFilterQuery
+// Query: *[_type == "painting" && ($collection == '' || _id in *[_type == "collection" && slug.current == $collection][0].paintings[]._ref) && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year desc)[$startIndex...$endIndex]{	_id,  	slug,  	name,	"artist":artist->.name,	year,	"medium":medium->.name,  	picture,  	publishedAt,}
+export type GalleryPaintingFilterQueryResult = Array<{
+  _id: string
+  slug: Slug
+  name: string
+  artist: string
+  year: number
+  medium: string | null
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  publishedAt: null
+}>
+// Variable: artistQuery
+// Query: *[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {	...,	picture{		...,		...asset-> {    		caption,    		...metadata {    			lqip, // the lqip can be used for blurHashUrl or other low-quality placeholders  				...dimensions {        				width,        				height  				}			}		}	},	featuredPaintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	},}
+export type ArtistQueryResult = {
+  _id: string
+  _type: 'artist'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+  location: string
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  picture:
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        caption: null
+        lqip: string | null
+        width: number | null
+        height: number | null
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        caption: null
+        lqip: string | null
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+        caption: null
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: 'image'
+      }
+  excerpt: string
+  featuredPaintings: Array<{
+    name: string
+    artist: string
+    year: number
+    medium: string | null
+    picture: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
+  seo?: Seo
+} | null
+// Variable: paintingQuery
+// Query: *[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {	name,	slug,	picture,	"artist":artist->.name,	year,	"medium":medium->.name,	description,}
+export type PaintingQueryResult = {
+  name: string
+  slug: Slug
+  picture: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  artist: string
+  year: number
+  medium: string | null
+  description: string | null
+} | null
+// Variable: eventsPageQuery
+// Query: *[_type == "eventsPage"][0]
+export type EventsPageQueryResult = {
+  _id: string
+  _type: 'eventsPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  auctions?: Array<{
     _ref: string
     _type: 'reference'
     _weak?: boolean
     _key: string
-    [internalGroqTypeReferenceTo]?: 'painting'
+    [internalGroqTypeReferenceTo]?: 'event'
   }>
-  featuredEvents?: Array<{
+  artShows?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'event'
+  }>
+  soloShows?: Array<{
     _ref: string
     _type: 'reference'
     _weak?: boolean
@@ -655,11 +1428,352 @@ export type HomepageQueryResult = {
   }>
   seo?: Seo
 } | null
+// Variable: eventsPageFilterQuery
+// Query: {'startYear': *[_type == "event"] | order(dateRange.startDate asc)[0].dateRange.startDate,'endYear': *[_type == "event"] | order(dateRange.startDate desc)[0].dateRange,'artists': *[_type == "artist"]{_id,name,slug},'auctionHouse': *[_type == "auctionHouse"]{_id,name,slug}}
+export type EventsPageFilterQueryResult = {
+  startYear: string | null
+  endYear: DateRange | null
+  artists: Array<{
+    _id: string
+    name: string
+    slug: Slug
+  }>
+  auctionHouse: Array<{
+    _id: string
+    name: string
+    slug: Slug
+  }>
+}
+// Variable: eventsPageCountQuery
+// Query: {'auction': count(*[_type == "event" && type == 'auction']),'artShow': count(*[_type == "event" && type == 'art-show']),'soloShow': count(*[_type == "event" && type == 'solo-show']),}
+export type EventsPageCountQueryResult = {
+  auction: number
+  artShow: number
+  soloShow: number
+}
+// Variable: eventQuery
+// Query: *[_type == "event" && defined(slug.current) && slug.current==$slug][0] {	...,	artists[]->{		name,		slug,		picture,	},	paintings[]->{		name,		"artist":artist->.name,		year,		"medium":medium->.name,		picture{			...,			asset->,		}	},}
+export type EventQueryResult = {
+  _id: string
+  _type: 'event'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  type: 'art-show' | 'auction' | 'solo-show'
+  auctionHouse?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'auctionHouse'
+  }
+  venue: string
+  dateRange?: DateRange
+  link?: string
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  pictures?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  paintings: Array<{
+    name: string
+    artist: string
+    year: number
+    medium: string | null
+    picture: {
+      asset: {
+        _id: string
+        _type: 'sanity.imageAsset'
+        _createdAt: string
+        _updatedAt: string
+        _rev: string
+        originalFilename?: string
+        label?: string
+        title?: string
+        description?: string
+        altText?: string
+        sha1hash?: string
+        extension?: string
+        mimeType?: string
+        size?: number
+        assetId?: string
+        uploadId?: string
+        path?: string
+        url?: string
+        metadata?: SanityImageMetadata
+        source?: SanityAssetSourceData
+      } | null
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
+  artists: Array<{
+    name: string
+    slug: Slug
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  }> | null
+  excerpt: string
+  upcoming?: boolean
+  hidden?: boolean
+  seo?: Seo
+} | null
+// Variable: pressPageQuery
+// Query: *[_type == "pressPage"][0]
+export type PressPageQueryResult = {
+  _id: string
+  _type: 'pressPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  seo?: Seo
+} | null
+// Variable: pressQuery
+// Query: *[_type == "press" && hidden==false]
+export type PressQueryResult = Array<{
+  _id: string
+  _type: 'press'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  link: string
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  excerpt: string
+  hidden?: boolean
+}>
+// Variable: blogPageQuery
+// Query: *[_type == "blogPage"][0]
+export type BlogPageQueryResult = {
+  _id: string
+  _type: 'blogPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  subtitle?: string
+  seo?: Seo
+} | null
+// Variable: blogQuery
+// Query: *[_type == "blog" && hidden==false][$startIndex...$endIndex]
+export type BlogQueryResult = Array<{
+  _id: string
+  _type: 'blog'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  subtitle?: string
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  excerpt: string
+  author: string
+  publishDate: string
+  hidden?: boolean
+  seo?: Seo
+}>
+// Variable: blogCountQuery
+// Query: count(*[_type == "blog" && hidden==false])
+export type BlogCountQueryResult = number
+// Variable: individualBlogQuery
+// Query: *[_type == "blog" && defined(slug.current) && slug.current==$slug && hidden==false][0] {	title,	subtitle,	featuredImage,	description,	author,	publishDate,	slug,	seo,  }
+export type IndividualBlogQueryResult = {
+  title: string
+  subtitle: string | null
+  featuredImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  author: string
+  publishDate: string
+  slug: Slug
+  seo: Seo | null
+} | null
+// Variable: contactUsPageQuery
+// Query: *[_type == "contactUsPage"][0]
+export type ContactUsPageQueryResult = {
+  _id: string
+  _type: 'contactUsPage'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs?: Array<{
+      href?: string
+      _type: 'link'
+      _key: string
+    }>
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  seo?: Seo
+} | null
 
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "homepage"][0] {\n\t...,\n\tlandingImage{\n\t...,\n\tasset->,\n\t}\n\t}': HomepageQueryResult
+    '*[_type == "homepage"][0] {\n\t...,\n\tlandingCarousel[]->{\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedCollections[]->{\n\t\ttitle,\n\t\tslug,\n\t\tpaintings[0]->{\n\t\t\tpicture{\n\t\t\t\t...,\n\t\t\t\tasset->,\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n\tfeaturedEvents[]->{\n\t\ttitle,\n\t\tslug,\n\t\tvenue,\n\t\tdateRange,\n\t\tpictures[0]{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t\t"artist":artists[0]->.name,\n\t},\n\tfeaturedPress[]->{\n\t\ttitle,\n\t\tslug,\n\t\texcerpt,\n\t\tlink,\n\t\tfeaturedImage{\n\t\t\t...,\n\t\t\tasset->,\n\t\t},\n\t},\n}': HomepageQueryResult
+    '*[_type == "artists"][0] {\n\t...,\n\tfeaturedArtists[]->{\n\t\tname,\n\t\tslug,\n\t\tlocation,\n\t\tpicture{\n\t\t\t...,\n\t\t\t...asset-> {\n    \t\t\tcaption,\n    \t\t\t...metadata {\n      \t\t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n      \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n      \t\t\t\t}\n    \t\t\t}\n  \t\t\t}\n\t\t}\n\t},\n}': ArtistsPageQueryResult
+    '*[_type == "ourStory"][0]': OurStoryPageQueryResult
+    '*[_type == "gallery"][0]': GalleryPageQueryResult
+    '{\n\t\'startYear\': *[_type == "painting"] | order(year asc)[0].year,\n\t\'endYear\': *[_type == "painting"] | order(year desc)[0].year,\n\t\'artists\': *[_type == "artist"]{_id,name,slug},\n\t\'collections\': *[_type == "collection"]{_id,title,slug},\n\t\'mediums\': *[_type == "medium"]{_id,name,slug}\n\t}': GalleryFilterQueryResult
+    "count(*[_type == \"painting\" && ($collection == '' || _id in *[_type == \"collection\" && slug.current == $collection][0].paintings[]._ref) && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)])": GalleryCountQueryResult
+    '*[_type == "painting" && ($collection == \'\' || _id in *[_type == "collection" && slug.current == $collection][0].paintings[]._ref) && ($artist == \'\' || artist._ref == $artist) && ($medium == \'\' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year desc)[$startIndex...$endIndex]{\n\t_id,\n  \tslug,\n  \tname,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n  \tpicture,\n  \tpublishedAt,\n}': GalleryPaintingFilterQueryResult
+    '*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tpicture{\n\t\t...,\n\t\t...asset-> {\n    \t\tcaption,\n    \t\t...metadata {\n    \t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n  \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n  \t\t\t\t}\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': ArtistQueryResult
+    '*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {\n\tname,\n\tslug,\n\tpicture,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n\tdescription,\n}': PaintingQueryResult
+    '*[_type == "eventsPage"][0]': EventsPageQueryResult
+    '{\n\'startYear\': *[_type == "event"] | order(dateRange.startDate asc)[0].dateRange.startDate,\n\'endYear\': *[_type == "event"] | order(dateRange.startDate desc)[0].dateRange,\n\'artists\': *[_type == "artist"]{_id,name,slug},\n\'auctionHouse\': *[_type == "auctionHouse"]{_id,name,slug}}': EventsPageFilterQueryResult
+    "{\n'auction': count(*[_type == \"event\" && type == 'auction']),\n'artShow': count(*[_type == \"event\" && type == 'art-show']),\n'soloShow': count(*[_type == \"event\" && type == 'solo-show']),\n}": EventsPageCountQueryResult
+    '*[_type == "event" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tartists[]->{\n\t\tname,\n\t\tslug,\n\t\tpicture,\n\t},\n\tpaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': EventQueryResult
+    '*[_type == "pressPage"][0]': PressPageQueryResult
+    '*[_type == "press" && hidden==false]': PressQueryResult
+    '*[_type == "blogPage"][0]': BlogPageQueryResult
+    '*[_type == "blog" && hidden==false][$startIndex...$endIndex]': BlogQueryResult
+    'count(*[_type == "blog" && hidden==false])': BlogCountQueryResult
+    '*[_type == "blog" && defined(slug.current) && slug.current==$slug && hidden==false][0] {\n\ttitle,\n\tsubtitle,\n\tfeaturedImage,\n\tdescription,\n\tauthor,\n\tpublishDate,\n\tslug,\n\tseo,\n  }': IndividualBlogQueryResult
+    '*[_type == "contactUsPage"][0]': ContactUsPageQueryResult
   }
 }
