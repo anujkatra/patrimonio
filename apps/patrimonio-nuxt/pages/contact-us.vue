@@ -3,7 +3,6 @@ import {contactUsPageQuery} from '~/sanity/queries'
 import type {ContactUsPageQueryResult} from '~/sanity/types'
 
 const {data: contactUsPageData} = await useSanityQuery<ContactUsPageQueryResult>(contactUsPageQuery)
-const sanity = useSanity()
 
 useSiteMetadata({
   title: contactUsPageData?.value?.seo?.title ?? 'title',
@@ -20,14 +19,18 @@ const form = ref({
 })
 
 const submitted = ref(false)
+const isSubmitting = ref(false)
+const formSubmitMessage = ref('')
 
 const handleSubmit = async () => {
   submitted.value = true
+  isSubmitting.value = true
   try {
     form.value.createdAt = new Date(Date.now()).toLocaleString('en-IN', {timeZoneName: 'short'})
-    const response = await sanity.client.create({
-      _type: 'contactUsForm',
-      ...form.value,
+
+    const response = await $fetch('/api/contact-us/form', {
+      method: 'post',
+      body: form.value,
     })
 
     form.value = {
@@ -37,8 +40,12 @@ const handleSubmit = async () => {
       message: '',
       createdAt: '',
     }
+    formSubmitMessage.value = 'Thank you! Your message has been submitted.'
   } catch (e) {
     console.error('Error submitting painting form', e)
+    formSubmitMessage.value = 'Something went wrong! Please try again!'
+  } finally {
+    isSubmitting.value = false
   }
 }
 </script>
@@ -113,7 +120,7 @@ const handleSubmit = async () => {
 
             <button
               type="submit"
-              :disabled="submitted"
+              :disabled="isSubmitting"
               class="font-cabinet h-[60px] w-full cursor-pointer border-[0.5px] border-[#202020] bg-white bg-[linear-gradient(264.83deg,rgba(252,251,247,0.5)_-4.61%,rgba(129,178,219,0.5)_44.28%,rgba(214,51,46,0.5)_112.37%)] px-[30px] text-center text-[20px] transition-all duration-300 ease-out hover:bg-black hover:bg-none hover:text-white"
             >
               Submit
@@ -122,7 +129,7 @@ const handleSubmit = async () => {
 
           <div v-if="submitted" class="pt-4">
             <p class="font-satoshi text-lg/none tracking-normal">
-              Thank you! Your message has been submitted.
+              {{ formSubmitMessage }}
             </p>
           </div>
         </div>
