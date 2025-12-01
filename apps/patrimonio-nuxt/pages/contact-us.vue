@@ -80,6 +80,7 @@ const handleSubmit = async () => {
                 id="name"
                 v-model="form.name"
                 type="text"
+                maxlength="200"
                 class="solid font-satoshi h-[60px] rounded-none border-[0.5px] border-[#202020] px-[15px] py-2.5 text-xl/none tracking-normal outline-none"
                 required
               />
@@ -102,6 +103,7 @@ const handleSubmit = async () => {
                 id="email"
                 v-model="form.email"
                 type="email"
+                maxlength="100"
                 class="solid font-satoshi h-[60px] rounded-none border-[0.5px] border-[#202020] px-[15px] py-2.5 text-xl/none tracking-normal outline-none"
                 required
               />
@@ -113,6 +115,7 @@ const handleSubmit = async () => {
                 v-model="form.message"
                 placeholder="Write your message here..."
                 cols="3"
+                maxlength="1000"
                 class="solid font-satoshi h-36 resize-none rounded-none border-[0.5px] border-[#202020] px-[15px] py-2.5 text-xl/none tracking-normal outline-none"
                 required
               />
