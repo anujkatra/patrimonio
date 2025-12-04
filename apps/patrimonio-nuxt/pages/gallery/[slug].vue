@@ -27,23 +27,38 @@ const form = ref({
   paintingSlug: paintingData.value.slug.current,
   name: '',
   email: '',
+  createdAt: '',
 })
 
 const submitted = ref(false)
+const isSubmitting = ref(false)
 const showForm = ref(false)
+const formSubmitMessage = ref('')
 
-const handleSubmit = () => {
-  // You can send the form data to an API or use a backend handler here.
-  // console.log('test Form submitted:', form.value)
-
+const handleSubmit = async () => {
   submitted.value = true
+  isSubmitting.value = true
+  try {
+    form.value.createdAt = new Date(Date.now()).toLocaleString('en-IN', {timeZoneName: 'short'})
 
-  // Optionally reset the form
-  form.value = {
-    paintingName: paintingData?.value?.name ?? '',
-    paintingSlug: paintingData?.value?.slug?.current ?? '',
-    name: '',
-    email: '',
+    const response = await $fetch('/api/gallery/form', {
+      method: 'post',
+      body: form.value,
+    })
+
+    form.value = {
+      paintingName: paintingData?.value?.name ?? '',
+      paintingSlug: paintingData?.value?.slug?.current ?? '',
+      name: '',
+      email: '',
+      createdAt: '',
+    }
+    formSubmitMessage.value = 'Thank you! Your message has been submitted.'
+  } catch (e) {
+    console.error('Error submitting painting form', e)
+    formSubmitMessage.value = 'Something went wrong! Please try again!'
+  } finally {
+    isSubmitting.value = false
   }
 }
 </script>
@@ -142,6 +157,7 @@ const handleSubmit = () => {
                     id="name"
                     v-model="form.name"
                     type="text"
+                    maxlength="200"
                     class="solid font-satoshi h-[60px] rounded-none border-[0.5px] border-[#202020] px-[15px] py-2.5 text-xl/none tracking-normal outline-none"
                     required
                   />
@@ -152,6 +168,7 @@ const handleSubmit = () => {
                     id="email"
                     v-model="form.email"
                     type="email"
+                    maxlength="100"
                     class="solid font-satoshi h-[60px] rounded-none border-[0.5px] border-[#202020] px-[15px] py-2.5 text-xl/none tracking-normal outline-none"
                     required
                   />
@@ -239,6 +256,7 @@ const handleSubmit = () => {
 
             <button
               type="submit"
+              :disabled="isSubmitting"
               class="font-cabinet h-[60px] w-full cursor-pointer border-[0.5px] border-[#202020] bg-white bg-[linear-gradient(264.83deg,rgba(252,251,247,0.5)_-4.61%,rgba(129,178,219,0.5)_44.28%,rgba(214,51,46,0.5)_112.37%)] px-[30px] text-center text-[20px] transition-all duration-300 ease-out hover:bg-black hover:bg-none hover:text-white"
             >
               Send
@@ -247,7 +265,7 @@ const handleSubmit = () => {
 
           <div v-if="submitted">
             <p class="font-satoshi text-lg/none tracking-normal">
-              Thank you! Your message has been submitted.
+              {{ formSubmitMessage }}
             </p>
           </div>
         </div>
