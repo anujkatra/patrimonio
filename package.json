@@ -7,11 +7,17 @@
   ],
   "scripts": {
     "dev": "concurrently \"yarn web:dev\" \"yarn sanity:dev\"",
+    "build": "concurrently \"yarn web:build\" \"yarn sanity:build\"",
     "web:dev": "yarn workspace patrimonio-nuxt dev",
-    "sanity:dev": "yarn workspace studio dev"
+    "web:build": "yarn workspace patrimonio-nuxt build",
+    "sanity:dev": "yarn workspace studio dev",
+    "sanity:build": "yarn workspace studio build"
   },
   "packageManager": "yarn@4.9.1",
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
