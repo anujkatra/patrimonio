@@ -4,6 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   css: ['~/assets/css/main.css'],
+  routeRules: {
+    '/**': { swr: true },
+    '/api/**': { swr: false },
+  },
   devtools: {enabled: true},
   modules: [
     '@nuxtjs/sanity',
