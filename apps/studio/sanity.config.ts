@@ -17,7 +17,6 @@ const singletonTypes = singletons.map((data) => data['name'])
 export default defineConfig({
   name: 'default',
   title: 'Patrimonio',
-  basePath: '/studio',
   projectId,
   dataset,
   plugins: [
