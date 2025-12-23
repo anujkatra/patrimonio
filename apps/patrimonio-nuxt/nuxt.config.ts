@@ -4,6 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   css: ['~/assets/css/main.css'],
+  routeRules: {
+    '/**': { swr: true },
+    '/api/**': { swr: false, cache: false },
+  },
   devtools: {enabled: true},
   modules: [
     '@nuxtjs/sanity',
@@ -17,7 +21,11 @@ export default defineNuxtConfig({
     projectId: process.env.NUXT_SANITY_PROJECT_ID,
     dataset: process.env.NUXT_SANITY_DATASET,
     apiVersion: process.env.NUXT_SANITY_API_VERSION || '2025-04-01',
-    token: process.env.NUXT_SANITY_API_READ_TOKEN, // Only required when using a private dataset
+    token: process.env.NUXT_SANITY_API_WRITE_TOKEN, // Only required when using a private dataset
+    liveContent: {
+      browserToken: process.env.NUXT_SANITY_API_READ_TOKEN,
+      serverToken: process.env.NUXT_SANITY_API_READ_TOKEN,
+    },
     visualEditing: {
       token: process.env.NUXT_SANITY_API_READ_TOKEN,
       studioUrl: process.env.NUXT_SANITY_STUDIO_URL,
