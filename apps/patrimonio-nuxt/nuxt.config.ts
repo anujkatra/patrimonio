@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   routeRules: {
     '/**': { swr: true },
-    '/api/**': { swr: false },
+    '/api/**': { swr: false, cache: false },
   },
   devtools: {enabled: true},
   modules: [
