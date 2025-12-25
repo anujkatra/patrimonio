@@ -178,7 +178,6 @@ function filter(key: string, value: string) {
     const {[key]: _, ...currentQuery} = {...route.query}
     router.replace({query: {...currentQuery, page: 1}})
   } else router.replace({query: {...route.query, page: 1, [key]: value}})
-  console.log('test', galleryPaintingData.value, galleryPaintingDataCount.value)
 }
 
 function updatePage(value: number) {

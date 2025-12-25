@@ -6,6 +6,7 @@
   "scripts": {
     "build": "yarn typegen && nuxt build",
     "dev": "yarn typegen && nuxt dev",
+    "start": "node .output/server/index.mjs",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -47,5 +48,9 @@
     "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "^5.8.3"
-  }
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "packageManager": "yarn@4.9.1"
 }
