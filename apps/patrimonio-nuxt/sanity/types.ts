@@ -1750,13 +1750,80 @@ export type ContactUsPageQueryResult = {
   }>
   seo?: Seo
 } | null
-// Variable: sitemapBlogQuery
-// Query: *[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] {	slug,	_updatedAt,	_createdAt,	}
-export type SitemapBlogQueryResult = Array<{
-  slug: Slug
-  _updatedAt: string
-  _createdAt: string
-}>
+// Variable: sitemapSingletonQuery
+// Query: {    "homepage": *[_type == "homepage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "ourStory": *[_type == "ourStory" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "gallery": *[_type == "gallery" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "artists": *[_type == "artists" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "eventsPage": *[_type == "eventsPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "pressPage": *[_type == "pressPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "blogPage": *[_type == "blogPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "contactUsPage": *[_type == "contactUsPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},  }
+export type SitemapSingletonQueryResult = {
+  homepage: {
+    _updatedAt: string
+  } | null
+  ourStory: {
+    _updatedAt: string
+  } | null
+  gallery: {
+    _updatedAt: string
+  } | null
+  artists: {
+    _updatedAt: string
+  } | null
+  eventsPage: {
+    _updatedAt: string
+  } | null
+  pressPage: {
+    _updatedAt: string
+  } | null
+  blogPage: {
+    _updatedAt: string
+  } | null
+  contactUsPage: {
+    _updatedAt: string
+  } | null
+}
+// Variable: sitemapQuery
+// Query: {    "singletons":   {    "homepage": *[_type == "homepage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "ourStory": *[_type == "ourStory" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "gallery": *[_type == "gallery" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "artists": *[_type == "artists" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "eventsPage": *[_type == "eventsPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "pressPage": *[_type == "pressPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "blogPage": *[_type == "blogPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "contactUsPage": *[_type == "contactUsPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},  },    "blogs": *[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] 	{		slug,		_updatedAt,	},    "events": *[_type == "event" && !(_id in path("drafts.**")) && hidden==false] 	{		slug,		_updatedAt,	},    "artists": *[_type == "artist" && !(_id in path("drafts.**"))] 	{		slug,		_updatedAt,	},    "paintings": *[_type == "painting" && !(_id in path("drafts.**"))] 	{		slug,		_updatedAt,	},  }
+export type SitemapQueryResult = {
+  singletons: {
+    homepage: {
+      _updatedAt: string
+    } | null
+    ourStory: {
+      _updatedAt: string
+    } | null
+    gallery: {
+      _updatedAt: string
+    } | null
+    artists: {
+      _updatedAt: string
+    } | null
+    eventsPage: {
+      _updatedAt: string
+    } | null
+    pressPage: {
+      _updatedAt: string
+    } | null
+    blogPage: {
+      _updatedAt: string
+    } | null
+    contactUsPage: {
+      _updatedAt: string
+    } | null
+  }
+  blogs: Array<{
+    slug: Slug
+    _updatedAt: string
+  }>
+  events: Array<{
+    slug: Slug
+    _updatedAt: string
+  }>
+  artists: Array<{
+    slug: Slug
+    _updatedAt: string
+  }>
+  paintings: Array<{
+    slug: Slug
+    _updatedAt: string
+  }>
+}
 
 // Query TypeMap
 import '@sanity/client'
@@ -1782,6 +1849,7 @@ declare module '@sanity/client' {
     'count(*[_type == "blog" && hidden==false])': BlogCountQueryResult
     '*[_type == "blog" && defined(slug.current) && slug.current==$slug && hidden==false][0] {\n\ttitle,\n\tsubtitle,\n\tfeaturedImage,\n\tdescription,\n\tauthor,\n\tpublishDate,\n\tslug,\n\tseo,\n  }': IndividualBlogQueryResult
     '*[_type == "contactUsPage"][0]': ContactUsPageQueryResult
-    '*[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] {\n\tslug,\n\t_updatedAt,\n\t_createdAt,\n\t}': SitemapBlogQueryResult
+    '\n  {\n    "homepage": *[_type == "homepage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "ourStory": *[_type == "ourStory" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "gallery": *[_type == "gallery" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "artists": *[_type == "artists" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "eventsPage": *[_type == "eventsPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "pressPage": *[_type == "pressPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "blogPage": *[_type == "blogPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "contactUsPage": *[_type == "contactUsPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n  }': SitemapSingletonQueryResult
+    '\n  {\n    "singletons": \n  {\n    "homepage": *[_type == "homepage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "ourStory": *[_type == "ourStory" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "gallery": *[_type == "gallery" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "artists": *[_type == "artists" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "eventsPage": *[_type == "eventsPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "pressPage": *[_type == "pressPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "blogPage": *[_type == "blogPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "contactUsPage": *[_type == "contactUsPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n  },\n    "blogs": *[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] \n\t{\n\t\tslug,\n\t\t_updatedAt,\n\t},\n    "events": *[_type == "event" && !(_id in path("drafts.**")) && hidden==false] \n\t{\n\t\tslug,\n\t\t_updatedAt,\n\t},\n    "artists": *[_type == "artist" && !(_id in path("drafts.**"))] \n\t{\n\t\tslug,\n\t\t_updatedAt,\n\t},\n    "paintings": *[_type == "painting" && !(_id in path("drafts.**"))] \n\t{\n\t\tslug,\n\t\t_updatedAt,\n\t},\n  }': SitemapQueryResult
   }
 }

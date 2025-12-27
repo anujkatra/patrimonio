@@ -207,11 +207,66 @@ export const individualBlogQuery = defineQuery(
 
 export const contactUsPageQuery = defineQuery(`*[_type == "contactUsPage"][0]`)
 
-export const sitemapBlogQuery = defineQuery(`*[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] {
-	slug,
-	_updatedAt,
-	_createdAt,
-	}`)
+export const sitemapSingletonQuery = defineQuery(`
+  {
+    "homepage": *[_type == "homepage" && !(_id in path("drafts.**"))][0] 
+	{
+		_updatedAt,
+	},
+    "ourStory": *[_type == "ourStory" && !(_id in path("drafts.**"))][0] 
+	{
+		_updatedAt,
+	},
+    "gallery": *[_type == "gallery" && !(_id in path("drafts.**"))][0] 
+	{
+		_updatedAt,
+	},
+    "artists": *[_type == "artists" && !(_id in path("drafts.**"))][0] 
+	{
+		_updatedAt,
+	},
+    "eventsPage": *[_type == "eventsPage" && !(_id in path("drafts.**"))][0] 
+	{
+		_updatedAt,
+	},
+    "pressPage": *[_type == "pressPage" && !(_id in path("drafts.**"))][0] 
+	{
+		_updatedAt,
+	},
+    "blogPage": *[_type == "blogPage" && !(_id in path("drafts.**"))][0] 
+	{
+		_updatedAt,
+	},
+    "contactUsPage": *[_type == "contactUsPage" && !(_id in path("drafts.**"))][0] 
+	{
+		_updatedAt,
+	},
+  }`)
+
+export const sitemapQuery = defineQuery(`
+  {
+    "singletons": ${sitemapSingletonQuery},
+    "blogs": *[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] 
+	{
+		slug,
+		_updatedAt,
+	},
+    "events": *[_type == "event" && !(_id in path("drafts.**")) && hidden==false] 
+	{
+		slug,
+		_updatedAt,
+	},
+    "artists": *[_type == "artist" && !(_id in path("drafts.**"))] 
+	{
+		slug,
+		_updatedAt,
+	},
+    "paintings": *[_type == "painting" && !(_id in path("drafts.**"))] 
+	{
+		slug,
+		_updatedAt,
+	},
+  }`)
 
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
