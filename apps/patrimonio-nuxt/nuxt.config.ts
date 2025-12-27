@@ -9,6 +9,15 @@ export default defineNuxtConfig({
   sitemap: {
     sources: ['/api/__sitemap__/urls'],
   },
+  routeRules: {
+    '/sitemap.xml': {
+      cache: {
+        maxAge: 120,
+        staleMaxAge: 180,
+        swr: true,
+      },
+    },
+  },
   compatibilityDate: '2025-05-15',
   css: ['~/assets/css/main.css'],
   devtools: {enabled: true},
