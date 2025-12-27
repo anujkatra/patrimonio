@@ -6,6 +6,11 @@ export default defineNuxtConfig({
     url: 'https://patrimonio.com',
     name: 'Patrimonio',
   },
+   sitemap: {
+    sources: [
+      '/api/__sitemap__/urls',
+    ]
+  },
   compatibilityDate: '2025-05-15',
   css: ['~/assets/css/main.css'],
   devtools: {enabled: true},

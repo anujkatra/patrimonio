@@ -1750,6 +1750,13 @@ export type ContactUsPageQueryResult = {
   }>
   seo?: Seo
 } | null
+// Variable: sitemapBlogQuery
+// Query: *[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] {	slug,	_updatedAt,	_createdAt,	}
+export type SitemapBlogQueryResult = Array<{
+  slug: Slug
+  _updatedAt: string
+  _createdAt: string
+}>
 
 // Query TypeMap
 import '@sanity/client'
@@ -1775,5 +1782,6 @@ declare module '@sanity/client' {
     'count(*[_type == "blog" && hidden==false])': BlogCountQueryResult
     '*[_type == "blog" && defined(slug.current) && slug.current==$slug && hidden==false][0] {\n\ttitle,\n\tsubtitle,\n\tfeaturedImage,\n\tdescription,\n\tauthor,\n\tpublishDate,\n\tslug,\n\tseo,\n  }': IndividualBlogQueryResult
     '*[_type == "contactUsPage"][0]': ContactUsPageQueryResult
+    '*[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] {\n\tslug,\n\t_updatedAt,\n\t_createdAt,\n\t}': SitemapBlogQueryResult
   }
 }

@@ -207,6 +207,12 @@ export const individualBlogQuery = defineQuery(
 
 export const contactUsPageQuery = defineQuery(`*[_type == "contactUsPage"][0]`)
 
+export const sitemapBlogQuery = defineQuery(`*[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] {
+	slug,
+	_updatedAt,
+	_createdAt,
+	}`)
+
 // export const pageQuery = defineQuery(/* groq */ `
 // 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
 // 			...,
