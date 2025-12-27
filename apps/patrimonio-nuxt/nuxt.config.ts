@@ -3,8 +3,8 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
   site: {
-    url: 'https://patrimonio.com',
-    name: 'Patrimonio',
+    url: 'https://patrimoniogallery.com',
+    name: 'Patrimonio Gallery',
   },
   sitemap: {
     sources: ['/api/__sitemap__/urls'],
