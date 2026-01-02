@@ -11,16 +11,8 @@ const [emblaRef] = emblaCarouselVue({loop: true, watchDrag: false}, [
 ])
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
-const {_type, ...seoRobots} = homepageData.value?.seo?.robots
-  ? homepageData.value.seo.robots
-  : {noindex: false, nofollow: false, _type: 'robots'}
-const {$urlFor} = useNuxtApp()
-useSiteMetadata({
-  title: homepageData?.value?.seo?.title ?? 'title',
-  description: homepageData?.value?.seo?.description ?? 'description',
-  ogImage: $urlFor(`${homepageData?.value?.seo?.image?.asset?._ref}`).url(),
-  robots: seoRobots ?? {noindex: false, nofollow: false},
-})
+
+useSiteMetadata(homepageData.value?.seo)
 
 const landingCarouselData = homepageData.value?.landingCarousel ?? []
 

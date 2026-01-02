@@ -99,13 +99,8 @@ const {data: eventsData} = await useAsyncData(
     }),
   {watch: [params, query]},
 )
-useSiteMetadata({
-  title: eventsPageData?.value?.seo?.title ?? 'Events',
-  description:
-    eventsPageData?.value?.seo?.description ??
-    'Keep yourself upto date with events conducted by Patrimonio Gallery',
-  ogImage: '',
-})
+
+useSiteMetadata(eventsPageData.value?.seo)
 
 const selectedFilters = computed(() => {
   return {

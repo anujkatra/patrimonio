@@ -1,3 +1,5 @@
+import type {Seo} from '~/sanity/types'
+
 export interface Robots {
   _type?: 'robots'
   noindex?: boolean
@@ -14,25 +16,30 @@ export interface Robots {
   unavailable_after?: string
 }
 
-type SiteMetadata = {
-  title?: string
-  description?: string
-  ogImage?: string
-  robots: Robots
-}
+export function useSiteMetadata(seo?: Seo) {
+  const {$urlFor} = useNuxtApp()
+  const url = seo?.image?.asset?._ref ? $urlFor(seo?.image?.asset?._ref).url() : ''
+  const {_type, ...seoRobots} = seo?.robots
+    ? seo.robots
+    : {noindex: false, nofollow: false, _type: 'robots'}
 
-export function useSiteMetadata({title, description, ogImage, robots}: SiteMetadata) {
+  const title = seo?.title
+    ? seo?.noTitleSuffix === true
+      ? seo?.title
+      : `${seo?.title} | Patrimonio`
+    : 'Patrimonio'
+
   useSeoMeta({
-    title,
-    description,
-    ogImage,
+    title: title,
+    description: seo?.description,
+    ogImage: url,
     ogTitle: title,
-    ogDescription: description,
+    ogDescription: seo?.description,
     twitterTitle: title,
-    twitterDescription: description,
-    twitterImage: ogImage,
+    twitterDescription: seo?.description,
+    twitterImage: url,
     twitterCard: 'summary',
-    robots: robots,
+    robots: seoRobots,
   })
 
   useHead({

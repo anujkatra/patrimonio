@@ -8,19 +8,15 @@ const {data: eventData} = await useSanityQuery<EventQueryResult>(eventQuery, {
   slug: route.params.slug,
 })
 
-if (eventData.value === null) {
+if (eventData.value !== null) {
+  useSiteMetadata(eventData?.value.seo ?? undefined)
+} else {
   throw createError({
     statusCode: 404,
     message: 'not found',
     fatal: true,
   })
 }
-
-useSiteMetadata({
-  title: eventData.value.title,
-  description: eventData.value.excerpt ?? '',
-  ogImage: '',
-})
 </script>
 
 <template>

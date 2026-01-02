@@ -6,11 +6,7 @@ import Arrow from '~/assets/svg/arrow.svg'
 const {data: pressPageData} = await useSanityQuery<PressPageQueryResult>(pressPageQuery)
 const {data: pressData} = await useSanityQuery<PressQueryResult>(pressQuery)
 
-useSiteMetadata({
-  title: pressPageData?.value?.seo?.title ?? 'title',
-  description: pressPageData?.value?.seo?.description ?? 'description',
-  ogImage: '',
-})
+useSiteMetadata(pressPageData.value?.seo)
 </script>
 
 <template>
