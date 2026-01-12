@@ -146,6 +146,7 @@ export const paintingQuery =
 	year,
 	"medium":medium->.name,
 	description,
+	seo,
 }`)
 
 export const eventsPageQuery = defineQuery(`*[_type == "eventsPage"][0]`)

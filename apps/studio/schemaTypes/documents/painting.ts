@@ -1,7 +1,8 @@
 import {defineField, DocumentDefinition} from 'sanity'
 import {ImageIcon} from '@sanity/icons'
+import {withSeo} from '../../helpers/document'
 
-export const painting: DocumentDefinition = {
+export const painting: DocumentDefinition = withSeo({
   name: 'painting',
   title: 'Painting',
   type: 'document',
@@ -145,4 +146,4 @@ export const painting: DocumentDefinition = {
       media: 'picture',
     },
   },
-}
+})

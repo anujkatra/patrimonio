@@ -28,7 +28,20 @@ export function useSiteMetadata(seo?: Seo) {
 
   const {_type, ...seoRobots} = seo?.robots
     ? seo.robots
-    : {noindex: false, nofollow: false, _type: 'robots'}
+    : {
+        _type: 'robots',
+        noindex: false,
+        nofollow: false,
+        noarchive: false,
+        nositelinkssearchbox: false,
+        nosnippet: false,
+        indexifembedded: false,
+        maxSnippet: -1,
+        maxImagePreview: 'large',
+        maxVideoPreview: -1,
+        notranslate: false,
+        noimageindex: false,
+      }
 
   const title = seo?.title
     ? seo?.noTitleSuffix === true

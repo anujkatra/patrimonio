@@ -8,19 +8,27 @@ const {data: paintingData} = await useSanityQuery<PaintingQueryResult>(paintingQ
   slug: route.params.slug,
 })
 
-if (paintingData.value === null) {
+if (paintingData.value !== null) {
+  useSiteMetadata(
+    paintingData.value?.seo
+      ? {
+          title: paintingData.value?.seo?.title ?? paintingData.value?.name,
+          image: paintingData.value?.seo?.image ?? paintingData.value?.picture,
+          ...paintingData?.value.seo,
+        }
+      : {
+          _type: 'seo',
+          title: paintingData.value?.seo?.title ?? paintingData.value?.name,
+          image: paintingData.value?.seo?.image ?? paintingData.value?.picture,
+        },
+  )
+} else {
   throw createError({
     statusCode: 404,
     message: 'not found',
     fatal: true,
   })
 }
-
-useSiteMetadata({
-  title: `${paintingData.value.name} - ${paintingData.value.artist}`,
-  description: paintingData.value.description ?? '',
-  ogImage: '',
-})
 
 const form = ref({
   paintingName: paintingData.value.name,
