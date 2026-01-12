@@ -13,30 +13,6 @@
  */
 
 // Source: schema.json
-export type FeaturedSection = {
-  _type: 'featuredSection'
-  type: 'artist' | 'painting' | 'event'
-  section:
-    | {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'artist'
-      }
-    | {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'painting'
-      }
-    | {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'event'
-      }
-}
-
 export type Robots = {
   _type: 'robots'
   noindex?: boolean
@@ -87,6 +63,32 @@ export type Opengraph = {
   }
   description?: string
   title?: string
+}
+
+export type ContactUsForm = {
+  _id: string
+  _type: 'contactUsForm'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  email: string
+  phone: string
+  message: string
+  createdAt: string
+}
+
+export type PaintingForm = {
+  _id: string
+  _type: 'paintingForm'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  paintingName: string
+  paintingSlug: string
+  name: string
+  email: string
+  createdAt: string
 }
 
 export type Blog = {
@@ -578,6 +580,10 @@ export type Homepage = {
   _rev: string
   title: string
   landingText: string
+  landingCta?: {
+    ctaText?: string
+    ctaLink?: string
+  }
   landingCarousel?: Array<{
     _ref: string
     _type: 'reference'
@@ -585,10 +591,6 @@ export type Homepage = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'painting'
   }>
-  landingCta?: {
-    ctaText?: string
-    ctaLink?: string
-  }
   featuredCollections?: Array<{
     _ref: string
     _type: 'reference'
@@ -596,11 +598,6 @@ export type Homepage = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'collection'
   }>
-  featuredSection?: Array<
-    {
-      _key: string
-    } & FeaturedSection
-  >
   featuredPaintings?: Array<{
     _ref: string
     _type: 'reference'
@@ -649,8 +646,6 @@ export type Seo = {
   title?: string
   noTitleSuffix?: boolean
   description?: string
-  keywords?: string
-  synonyms?: string
   opengraph?: Opengraph
   twitter?: Twitter
   robots?: Robots
@@ -775,10 +770,11 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
-  | FeaturedSection
   | Robots
   | Twitter
   | Opengraph
+  | ContactUsForm
+  | PaintingForm
   | Blog
   | Press
   | Painting
@@ -820,6 +816,10 @@ export type HomepageQueryResult = {
   _rev: string
   title: string
   landingText: string
+  landingCta?: {
+    ctaText?: string
+    ctaLink?: string
+  }
   landingCarousel: Array<{
     picture: {
       asset: {
@@ -851,10 +851,6 @@ export type HomepageQueryResult = {
       _type: 'image'
     }
   }> | null
-  landingCta?: {
-    ctaText?: string
-    ctaLink?: string
-  }
   featuredCollections: Array<{
     title: string
     slug: Slug
@@ -890,11 +886,6 @@ export type HomepageQueryResult = {
       }
     } | null
   }> | null
-  featuredSection?: Array<
-    {
-      _key: string
-    } & FeaturedSection
-  >
   featuredPaintings: Array<{
     name: string
     artist: string
