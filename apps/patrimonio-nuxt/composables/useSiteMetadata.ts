@@ -18,7 +18,14 @@ export interface Robots {
 
 export function useSiteMetadata(seo?: Seo) {
   const {$urlFor} = useNuxtApp()
-  const url = seo?.image?.asset?._ref ? $urlFor(seo?.image?.asset?._ref).url() : ''
+  const seoImageUrl = seo?.image?.asset?._ref ? $urlFor(seo?.image?.asset?._ref).url() : ''
+  const ogImageUrl = seo?.opengraph?.image?.asset?._ref
+    ? $urlFor(seo?.opengraph?.image?.asset?._ref).url()
+    : seoImageUrl
+  const twitterImageUrl = seo?.twitter?.image?.asset?._ref
+    ? $urlFor(seo?.twitter?.image?.asset?._ref).url()
+    : seoImageUrl
+
   const {_type, ...seoRobots} = seo?.robots
     ? seo.robots
     : {noindex: false, nofollow: false, _type: 'robots'}
@@ -32,12 +39,12 @@ export function useSiteMetadata(seo?: Seo) {
   useSeoMeta({
     title: title,
     description: seo?.description,
-    ogImage: url,
-    ogTitle: title,
-    ogDescription: seo?.description,
-    twitterTitle: title,
-    twitterDescription: seo?.description,
-    twitterImage: url,
+    ogImage: ogImageUrl,
+    ogTitle: seo?.opengraph?.title ?? title,
+    ogDescription: seo?.opengraph?.description ?? seo?.description,
+    twitterTitle: seo?.twitter?.title ?? title,
+    twitterDescription: seo?.twitter?.description ?? seo?.description,
+    twitterImage: twitterImageUrl,
     twitterCard: 'summary',
     robots: seoRobots,
   })
