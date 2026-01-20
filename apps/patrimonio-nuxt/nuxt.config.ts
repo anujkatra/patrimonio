@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   },
   sitemap: {
     sources: ['/api/__sitemap__/urls'],
+    xsl: false,
   },
   routeRules: {
     '/sitemap.xml': {
