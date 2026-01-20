@@ -146,6 +146,7 @@ export const paintingQuery =
 	year,
 	"medium":medium->.name,
 	description,
+	dimensions,
 	seo,
 }`)
 
