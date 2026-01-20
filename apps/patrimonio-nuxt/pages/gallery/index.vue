@@ -64,7 +64,7 @@ const selectedYear = computed(() =>
   typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
 )
 const forSaleOnly = ref(false)
-const paintingOrder = computed(() => route.query.order || '')
+const paintingOrder = computed(() => route.query.order || 'desc')
 
 function getIdBySlug(object, value: string) {
   for (let i = 0; i < object.length; i++) {
