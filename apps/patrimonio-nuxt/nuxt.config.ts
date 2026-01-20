@@ -2,6 +2,11 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+    },
+  },
   compatibilityDate: '2025-05-15',
   css: ['~/assets/css/main.css'],
   devtools: {enabled: true},
