@@ -89,7 +89,7 @@ const handleSubmit = async () => {
         <div class="hidden w-full flex-1 lg:block">
           <NuxtImg
             provider="sanity"
-            class="aspect-square max-h-[600px] w-full max-w-[600px]"
+            class="w-full object-contain"
             :src="`${paintingData?.picture?.asset?._ref}`"
             :alt="`${paintingData?.picture?.alt}`"
           />
