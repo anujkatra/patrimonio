@@ -4,11 +4,7 @@ import type {ContactUsPageQueryResult} from '~/sanity/types'
 
 const {data: contactUsPageData} = await useSanityQuery<ContactUsPageQueryResult>(contactUsPageQuery)
 
-useSiteMetadata({
-  title: contactUsPageData?.value?.seo?.title ?? 'title',
-  description: contactUsPageData?.value?.seo?.description ?? 'description',
-  ogImage: '',
-})
+useSiteMetadata(contactUsPageData.value?.seo)
 
 const form = ref({
   name: '',

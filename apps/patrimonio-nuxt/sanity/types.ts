@@ -13,30 +13,6 @@
  */
 
 // Source: schema.json
-export type FeaturedSection = {
-  _type: 'featuredSection'
-  type: 'artist' | 'painting' | 'event'
-  section:
-    | {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'artist'
-      }
-    | {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'painting'
-      }
-    | {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'event'
-      }
-}
-
 export type Robots = {
   _type: 'robots'
   noindex?: boolean
@@ -87,6 +63,32 @@ export type Opengraph = {
   }
   description?: string
   title?: string
+}
+
+export type ContactUsForm = {
+  _id: string
+  _type: 'contactUsForm'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  email: string
+  phone: string
+  message: string
+  createdAt: string
+}
+
+export type PaintingForm = {
+  _id: string
+  _type: 'paintingForm'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  paintingName: string
+  paintingSlug: string
+  name: string
+  email: string
+  createdAt: string
 }
 
 export type Blog = {
@@ -222,6 +224,7 @@ export type Painting = {
   }
   forSale?: boolean
   hidden?: boolean
+  seo?: Seo
 }
 
 export type Medium = {
@@ -578,6 +581,10 @@ export type Homepage = {
   _rev: string
   title: string
   landingText: string
+  landingCta?: {
+    ctaText?: string
+    ctaLink?: string
+  }
   landingCarousel?: Array<{
     _ref: string
     _type: 'reference'
@@ -585,10 +592,6 @@ export type Homepage = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'painting'
   }>
-  landingCta?: {
-    ctaText?: string
-    ctaLink?: string
-  }
   featuredCollections?: Array<{
     _ref: string
     _type: 'reference'
@@ -596,11 +599,6 @@ export type Homepage = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'collection'
   }>
-  featuredSection?: Array<
-    {
-      _key: string
-    } & FeaturedSection
-  >
   featuredPaintings?: Array<{
     _ref: string
     _type: 'reference'
@@ -649,8 +647,6 @@ export type Seo = {
   title?: string
   noTitleSuffix?: boolean
   description?: string
-  keywords?: string
-  synonyms?: string
   opengraph?: Opengraph
   twitter?: Twitter
   robots?: Robots
@@ -775,10 +771,11 @@ export type SanityAssetSourceData = {
 }
 
 export type AllSanitySchemaTypes =
-  | FeaturedSection
   | Robots
   | Twitter
   | Opengraph
+  | ContactUsForm
+  | PaintingForm
   | Blog
   | Press
   | Painting
@@ -820,6 +817,10 @@ export type HomepageQueryResult = {
   _rev: string
   title: string
   landingText: string
+  landingCta?: {
+    ctaText?: string
+    ctaLink?: string
+  }
   landingCarousel: Array<{
     picture: {
       asset: {
@@ -851,10 +852,6 @@ export type HomepageQueryResult = {
       _type: 'image'
     }
   }> | null
-  landingCta?: {
-    ctaText?: string
-    ctaLink?: string
-  }
   featuredCollections: Array<{
     title: string
     slug: Slug
@@ -890,11 +887,6 @@ export type HomepageQueryResult = {
       }
     } | null
   }> | null
-  featuredSection?: Array<
-    {
-      _key: string
-    } & FeaturedSection
-  >
   featuredPaintings: Array<{
     name: string
     artist: string
@@ -1373,7 +1365,7 @@ export type ArtistQueryResult = {
   seo?: Seo
 } | null
 // Variable: paintingQuery
-// Query: *[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {	name,	slug,	picture,	"artist":artist->.name,	year,	"medium":medium->.name,	description,}
+// Query: *[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {	name,	slug,	picture,	"artist":artist->.name,	year,	"medium":medium->.name,	description,	seo,}
 export type PaintingQueryResult = {
   name: string
   slug: Slug
@@ -1394,6 +1386,7 @@ export type PaintingQueryResult = {
   year: number
   medium: string | null
   description: string | null
+  seo: Seo | null
 } | null
 // Variable: eventsPageQuery
 // Query: *[_type == "eventsPage"][0]
@@ -1750,6 +1743,80 @@ export type ContactUsPageQueryResult = {
   }>
   seo?: Seo
 } | null
+// Variable: sitemapSingletonQuery
+// Query: {    "homepage": *[_type == "homepage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "ourStory": *[_type == "ourStory" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "gallery": *[_type == "gallery" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "artists": *[_type == "artists" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "eventsPage": *[_type == "eventsPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "pressPage": *[_type == "pressPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "blogPage": *[_type == "blogPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "contactUsPage": *[_type == "contactUsPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},  }
+export type SitemapSingletonQueryResult = {
+  homepage: {
+    _updatedAt: string
+  } | null
+  ourStory: {
+    _updatedAt: string
+  } | null
+  gallery: {
+    _updatedAt: string
+  } | null
+  artists: {
+    _updatedAt: string
+  } | null
+  eventsPage: {
+    _updatedAt: string
+  } | null
+  pressPage: {
+    _updatedAt: string
+  } | null
+  blogPage: {
+    _updatedAt: string
+  } | null
+  contactUsPage: {
+    _updatedAt: string
+  } | null
+}
+// Variable: sitemapQuery
+// Query: {    "singletons":   {    "homepage": *[_type == "homepage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "ourStory": *[_type == "ourStory" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "gallery": *[_type == "gallery" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "artists": *[_type == "artists" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "eventsPage": *[_type == "eventsPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "pressPage": *[_type == "pressPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "blogPage": *[_type == "blogPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},    "contactUsPage": *[_type == "contactUsPage" && !(_id in path("drafts.**"))][0] 	{		_updatedAt,	},  },    "blogs": *[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] 	{		slug,		_updatedAt,	},    "events": *[_type == "event" && !(_id in path("drafts.**")) && hidden==false] 	{		slug,		_updatedAt,	},    "artists": *[_type == "artist" && !(_id in path("drafts.**"))] 	{		slug,		_updatedAt,	},    "paintings": *[_type == "painting" && !(_id in path("drafts.**"))] 	{		slug,		_updatedAt,	},  }
+export type SitemapQueryResult = {
+  singletons: {
+    homepage: {
+      _updatedAt: string
+    } | null
+    ourStory: {
+      _updatedAt: string
+    } | null
+    gallery: {
+      _updatedAt: string
+    } | null
+    artists: {
+      _updatedAt: string
+    } | null
+    eventsPage: {
+      _updatedAt: string
+    } | null
+    pressPage: {
+      _updatedAt: string
+    } | null
+    blogPage: {
+      _updatedAt: string
+    } | null
+    contactUsPage: {
+      _updatedAt: string
+    } | null
+  }
+  blogs: Array<{
+    slug: Slug
+    _updatedAt: string
+  }>
+  events: Array<{
+    slug: Slug
+    _updatedAt: string
+  }>
+  artists: Array<{
+    slug: Slug
+    _updatedAt: string
+  }>
+  paintings: Array<{
+    slug: Slug
+    _updatedAt: string
+  }>
+}
 
 // Query TypeMap
 import '@sanity/client'
@@ -1763,7 +1830,7 @@ declare module '@sanity/client' {
     "count(*[_type == \"painting\" && ($collection == '' || _id in *[_type == \"collection\" && slug.current == $collection][0].paintings[]._ref) && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)])": GalleryCountQueryResult
     '*[_type == "painting" && ($collection == \'\' || _id in *[_type == "collection" && slug.current == $collection][0].paintings[]._ref) && ($artist == \'\' || artist._ref == $artist) && ($medium == \'\' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year desc)[$startIndex...$endIndex]{\n\t_id,\n  \tslug,\n  \tname,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n  \tpicture,\n  \tpublishedAt,\n}': GalleryPaintingFilterQueryResult
     '*[_type == "artist" && defined(slug.current) && slug.current==$slug][0] {\n\t...,\n\tpicture{\n\t\t...,\n\t\t...asset-> {\n    \t\tcaption,\n    \t\t...metadata {\n    \t\t\tlqip, // the lqip can be used for blurHashUrl or other low-quality placeholders\n  \t\t\t\t...dimensions {\n        \t\t\t\twidth,\n        \t\t\t\theight\n  \t\t\t\t}\n\t\t\t}\n\t\t}\n\t},\n\tfeaturedPaintings[]->{\n\t\tname,\n\t\t"artist":artist->.name,\n\t\tyear,\n\t\t"medium":medium->.name,\n\t\tpicture{\n\t\t\t...,\n\t\t\tasset->,\n\t\t}\n\t},\n}': ArtistQueryResult
-    '*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {\n\tname,\n\tslug,\n\tpicture,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n\tdescription,\n}': PaintingQueryResult
+    '*[_type == "painting" && defined(slug.current) && slug.current==$slug][0] {\n\tname,\n\tslug,\n\tpicture,\n\t"artist":artist->.name,\n\tyear,\n\t"medium":medium->.name,\n\tdescription,\n\tseo,\n}': PaintingQueryResult
     '*[_type == "eventsPage"][0]': EventsPageQueryResult
     '{\n\'startYear\': *[_type == "event"] | order(dateRange.startDate asc)[0].dateRange.startDate,\n\'endYear\': *[_type == "event"] | order(dateRange.startDate desc)[0].dateRange,\n\'artists\': *[_type == "artist"]{_id,name,slug},\n\'auctionHouse\': *[_type == "auctionHouse"]{_id,name,slug}}': EventsPageFilterQueryResult
     "{\n'auction': count(*[_type == \"event\" && type == 'auction']),\n'artShow': count(*[_type == \"event\" && type == 'art-show']),\n'soloShow': count(*[_type == \"event\" && type == 'solo-show']),\n}": EventsPageCountQueryResult
@@ -1775,5 +1842,7 @@ declare module '@sanity/client' {
     'count(*[_type == "blog" && hidden==false])': BlogCountQueryResult
     '*[_type == "blog" && defined(slug.current) && slug.current==$slug && hidden==false][0] {\n\ttitle,\n\tsubtitle,\n\tfeaturedImage,\n\tdescription,\n\tauthor,\n\tpublishDate,\n\tslug,\n\tseo,\n  }': IndividualBlogQueryResult
     '*[_type == "contactUsPage"][0]': ContactUsPageQueryResult
+    '\n  {\n    "homepage": *[_type == "homepage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "ourStory": *[_type == "ourStory" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "gallery": *[_type == "gallery" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "artists": *[_type == "artists" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "eventsPage": *[_type == "eventsPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "pressPage": *[_type == "pressPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "blogPage": *[_type == "blogPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "contactUsPage": *[_type == "contactUsPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n  }': SitemapSingletonQueryResult
+    '\n  {\n    "singletons": \n  {\n    "homepage": *[_type == "homepage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "ourStory": *[_type == "ourStory" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "gallery": *[_type == "gallery" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "artists": *[_type == "artists" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "eventsPage": *[_type == "eventsPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "pressPage": *[_type == "pressPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "blogPage": *[_type == "blogPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n    "contactUsPage": *[_type == "contactUsPage" && !(_id in path("drafts.**"))][0] \n\t{\n\t\t_updatedAt,\n\t},\n  },\n    "blogs": *[_type == "blog" && !(_id in path("drafts.**")) && hidden==false] \n\t{\n\t\tslug,\n\t\t_updatedAt,\n\t},\n    "events": *[_type == "event" && !(_id in path("drafts.**")) && hidden==false] \n\t{\n\t\tslug,\n\t\t_updatedAt,\n\t},\n    "artists": *[_type == "artist" && !(_id in path("drafts.**"))] \n\t{\n\t\tslug,\n\t\t_updatedAt,\n\t},\n    "paintings": *[_type == "painting" && !(_id in path("drafts.**"))] \n\t{\n\t\tslug,\n\t\t_updatedAt,\n\t},\n  }': SitemapQueryResult
   }
 }

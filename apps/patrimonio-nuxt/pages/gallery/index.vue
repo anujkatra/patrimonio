@@ -64,7 +64,7 @@ const selectedYear = computed(() =>
   typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
 )
 const forSaleOnly = ref(false)
-const paintingOrder = computed(() => route.query.order || '')
+const paintingOrder = computed(() => route.query.order || 'desc')
 
 function getIdBySlug(object, value: string) {
   for (let i = 0; i < object.length; i++) {
@@ -89,11 +89,7 @@ function handleForSaleOnlyToggle() {
 
 const {data: galleryPageData} = await useSanityQuery<GalleryPageQueryResult>(galleryPageQuery)
 
-useSiteMetadata({
-  title: galleryPageData?.value?.seo?.title ?? 'title',
-  description: galleryPageData?.value?.seo?.description ?? 'description',
-  ogImage: '',
-})
+useSiteMetadata(galleryPageData.value?.seo)
 
 const query = computed(
   () => groq`*[_type == "painting" && ($collection == '' || _id in *[_type == "collection" && slug.current == $collection][0].paintings[]._ref) && ($artist == '' || artist._ref == $artist) && ($medium == '' || medium._ref == $medium) && ($startYear == 0 || (year>=$startYear && year<$endYear)) && ($forSaleOnly == false || forSale == true)] | order(year ${paintingOrder.value})[$startIndex...$endIndex]{

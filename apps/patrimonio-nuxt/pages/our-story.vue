@@ -5,11 +5,7 @@ import Milestone from '~/assets/svg/milestone.svg'
 
 const {data: ourStoryPageData} = await useSanityQuery<OurStoryPageQueryResult>(ourStoryPageQuery)
 
-useSiteMetadata({
-  title: ourStoryPageData?.value?.seo?.title ?? 'title',
-  description: ourStoryPageData?.value?.seo?.description ?? 'description',
-  ogImage: '',
-})
+useSiteMetadata(ourStoryPageData.value?.seo)
 </script>
 
 <template>

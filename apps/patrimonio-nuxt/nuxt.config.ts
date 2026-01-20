@@ -2,6 +2,23 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
+  site: {
+    url: 'https://patrimoniogallery.com',
+    name: 'Patrimonio Gallery',
+  },
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
+    xsl: false,
+  },
+  routeRules: {
+    '/sitemap.xml': {
+      cache: {
+        maxAge: 120,
+        staleMaxAge: 180,
+        swr: true,
+      },
+    },
+  },
   compatibilityDate: '2025-05-15',
   css: ['~/assets/css/main.css'],
   devtools: {enabled: true},
@@ -12,6 +29,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     'nuxt-svgo',
     'shadcn-nuxt',
+    '@nuxtjs/sitemap',
   ],
   sanity: {
     projectId: process.env.NUXT_SANITY_PROJECT_ID,

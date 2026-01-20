@@ -16,11 +16,7 @@ if (artistData.value === null) {
   })
 }
 
-useSiteMetadata({
-  title: artistData?.value?.seo?.title ?? 'title',
-  description: artistData?.value?.seo?.description ?? 'description',
-  ogImage: '',
-})
+useSiteMetadata(artistData.value?.seo)
 </script>
 
 <template>

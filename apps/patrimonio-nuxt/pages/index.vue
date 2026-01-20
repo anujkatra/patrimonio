@@ -12,11 +12,7 @@ const [emblaRef] = emblaCarouselVue({loop: true, watchDrag: false}, [
 
 const {data: homepageData} = await useSanityQuery<HomepageQueryResult>(homepageQuery)
 
-useSiteMetadata({
-  title: homepageData?.value?.seo?.title ?? 'title',
-  description: homepageData?.value?.seo?.description ?? 'description',
-  ogImage: '',
-})
+useSiteMetadata(homepageData.value?.seo)
 
 const landingCarouselData = homepageData.value?.landingCarousel ?? []
 

@@ -5,11 +5,7 @@ import Arrow from '~/assets/svg/arrow.svg'
 
 const {data: artistsPageData} = await useSanityQuery<ArtistsPageQueryResult>(artistsPageQuery)
 
-useSiteMetadata({
-  title: artistsPageData?.value?.seo?.title ?? 'title',
-  description: artistsPageData?.value?.seo?.description ?? 'description',
-  ogImage: '',
-})
+useSiteMetadata(artistsPageData.value?.seo)
 </script>
 
 <template>

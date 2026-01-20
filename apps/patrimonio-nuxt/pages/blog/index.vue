@@ -39,11 +39,7 @@ const {data: blogData} = await useAsyncData(
 const {data: blogPageData} = await useSanityQuery<BlogPageQueryResult>(blogPageQuery)
 const {data: blogCountData} = await useSanityQuery<BlogCountQueryResult>(blogCountQuery)
 
-useSiteMetadata({
-  title: blogPageData?.value?.seo?.title ?? 'title',
-  description: blogPageData?.value?.seo?.description ?? 'description',
-  ogImage: '',
-})
+useSiteMetadata(blogPageData.value?.seo)
 </script>
 
 <template>

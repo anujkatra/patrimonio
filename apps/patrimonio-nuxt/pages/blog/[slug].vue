@@ -7,19 +7,15 @@ const {data: blogData} = await useSanityQuery<IndividualBlogQueryResult>(individ
   slug: route.params.slug,
 })
 
-if (blogData.value === null) {
+if (blogData.value !== null) {
+  useSiteMetadata(blogData?.value.seo ?? undefined)
+} else {
   throw createError({
     statusCode: 404,
     message: 'not found',
     fatal: true,
   })
 }
-
-useSiteMetadata({
-  title: blogData?.value?.seo?.title ?? 'title',
-  description: blogData?.value?.seo?.description ?? 'description',
-  ogImage: '',
-})
 </script>
 
 <template>
