@@ -3,6 +3,17 @@ import {paintingQuery} from '~/sanity/queries'
 import type {PaintingQueryResult} from '~/sanity/types'
 import Arrow from '~/assets/svg/arrow.svg'
 
+const units = [
+  {title: 'Inches', value: 'in'},
+  {title: 'Feet', value: 'ft'},
+  {title: 'Centimeters', value: 'cm'},
+  {title: 'Meters', value: 'm'},
+]
+
+function getUnitTitle(value: string) {
+  return units.find((unit) => unit.value === value)?.title ?? ''
+}
+
 const route = useRoute()
 const {data: paintingData} = await useSanityQuery<PaintingQueryResult>(paintingQuery, {
   slug: route.params.slug,
@@ -78,7 +89,7 @@ const handleSubmit = async () => {
         <div class="hidden w-full flex-1 lg:block">
           <NuxtImg
             provider="sanity"
-            class="aspect-square max-h-[600px] w-full max-w-[600px]"
+            class="w-full object-contain"
             :src="`${paintingData?.picture?.asset?._ref}`"
             :alt="`${paintingData?.picture?.alt}`"
           />
@@ -114,6 +125,13 @@ const handleSubmit = async () => {
               >
                 <span v-if="paintingData?.year">{{ paintingData?.year }} | </span>
                 <span v-if="paintingData?.medium">{{ paintingData?.medium }}</span>
+              </p>
+              <p
+                v-if="paintingData?.dimensions"
+                class="font-satoshi border-b-[0.5px] border-solid border-[#202020] pb-2.5 text-base/none tracking-normal md:text-xl/none"
+              >
+                {{ paintingData?.dimensions?.height }} x {{ paintingData?.dimensions?.width }}
+                {{ getUnitTitle(paintingData?.dimensions?.unit ?? '') }}
               </p>
               <button
                 class="mt-2.5 hidden h-[60px] w-full max-w-[420px] cursor-pointer items-center justify-between border-[0.5px] border-[#202020] bg-white bg-[linear-gradient(264.83deg,rgba(252,251,247,0.5)_-4.61%,rgba(129,178,219,0.5)_44.28%,rgba(214,51,46,0.5)_112.37%)] pr-[40px] pl-[30px] transition-all duration-300 ease-out hover:bg-black hover:bg-none hover:pr-[30px] hover:text-white lg:flex"
