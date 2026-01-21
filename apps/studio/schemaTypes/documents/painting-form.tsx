@@ -1,5 +1,32 @@
 import {defineField, DocumentDefinition} from 'sanity'
 import {DocumentIcon} from '@sanity/icons'
+import {FieldProps, useFormValue} from 'sanity'
+
+function PaintingDescriptionLink(props: FieldProps) {
+  const paintingSlug = useFormValue(['paintingSlug']) as string
+
+  return (
+    <div>
+      {props.renderDefault(props)}
+      {paintingSlug !== null && typeof paintingSlug === 'string' ? (
+        <p>
+          Link:{' '}
+          <span>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={`https://patrimoniogallery.com/gallery/${paintingSlug}`}
+            >
+              https://patrimoniogallery.com/gallery/{paintingSlug}
+            </a>
+          </span>
+        </p>
+      ) : (
+        <></>
+      )}
+    </div>
+  )
+}
 
 export const paintingForm: DocumentDefinition = {
   name: 'paintingForm',
@@ -20,6 +47,9 @@ export const paintingForm: DocumentDefinition = {
       type: 'string',
       readOnly: true,
       validation: (rule) => [rule.required()],
+      components: {
+        field: PaintingDescriptionLink,
+      },
     }),
     defineField({
       name: 'name',
