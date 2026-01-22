@@ -53,18 +53,25 @@ onMounted(() => {
 })
 
 const itemsPerPage = 12
-const params = computed(() => route.query || '')
-const selectedArtist = computed(() => route.query.artist || '')
-const selectedMedium = computed(() => route.query.medium || '')
-const selectedCollection = computed(() => route.query.collection || '')
-const page = computed(() => (typeof route.query.page === 'string' ? parseInt(route.query.page) : 1))
+const selectedArtist = ref(route.query.artist || '')
+const selectedMedium = ref(route.query.medium || '')
+const selectedCollection = ref(route.query.collection || '')
+const page = ref(typeof route.query.page === 'string' ? parseInt(route.query.page) : 1)
 const startIndex = computed(() => (page.value - 1) * itemsPerPage)
 const endIndex = computed(() => startIndex.value + itemsPerPage)
-const selectedYear = computed(() =>
-  typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
-)
+const selectedYear = ref(typeof route.query.year === 'string' ? parseInt(route.query.year) : 0)
 const forSaleOnly = ref(false)
-const paintingOrder = computed(() => route.query.order || 'desc')
+const paintingOrder = ref(route.query.order || 'desc')
+
+onBeforeRouteUpdate((to, from) => {
+  if (to.name !== from.name) return
+  selectedArtist.value = to.query.artist || ''
+  selectedMedium.value = to.query.medium || ''
+  selectedCollection.value = to.query.collection || ''
+  page.value = typeof to.query.page === 'string' ? parseInt(to.query.page) : 1
+  selectedYear.value = typeof to.query.year === 'string' ? parseInt(to.query.year) : 0
+  paintingOrder.value = to.query.order || 'desc'
+})
 
 function getIdBySlug(object, value: string) {
   for (let i = 0; i < object.length; i++) {
@@ -119,7 +126,17 @@ const {data: galleryPaintingData} = await useAsyncData(
       forSaleOnly: forSaleOnly.value,
       collection: selectedCollection.value,
     }),
-  {watch: [params, forSaleOnly, query]},
+  {
+    watch: [
+      page,
+      selectedArtist,
+      selectedMedium,
+      selectedCollection,
+      selectedYear,
+      forSaleOnly,
+      query,
+    ],
+  },
 )
 
 const {data: galleryPaintingDataCount} = await useAsyncData(
