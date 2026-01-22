@@ -341,7 +341,7 @@ const featuredCollectionsLayout = [
           </div>
         </div>
         <div class="lg:hidden">
-          <BaseLink variant="secondary" class="w-full" icon to="/gallery">
+          <BaseLink variant="secondary" class="w-full" icon to="/events">
             View all upcoming events &nbsp;| {{ featuredEventsData.length }} |
             <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
           </BaseLink>
