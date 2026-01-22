@@ -453,7 +453,10 @@ const currentActiveMobileFilter = ref(0)
               </div>
             </div>
             <div class="flex h-10 justify-center hover:bg-black hover:text-white">
-              <Select default-value="desc" @update:model-value="(value) => filter('order', value)">
+              <Select
+                :default-value="paintingOrder"
+                @update:model-value="(value) => filter('order', value)"
+              >
                 <SelectTrigger
                   class="font-satoshi flex h-10! cursor-pointer justify-center gap-[15px] border-none px-[15px] text-base/none font-normal tracking-normal shadow-none"
                 >
