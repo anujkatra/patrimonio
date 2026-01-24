@@ -583,29 +583,29 @@ const currentActiveMobileFilter = ref(0)
           <NuxtLink
             v-for="(painting, index) in galleryPaintingData"
             :key="index"
-            :to="`/gallery/${painting.slug.current}`"
+            :to="`/gallery/${painting?.slug?.current}`"
           >
             <div class="flex w-full max-w-[400px] flex-col gap-5">
               <div class="w-full overflow-hidden">
                 <NuxtImg
                   provider="sanity"
-                  :src="`${painting?.picture.asset?._ref}`"
-                  :alt="`${painting?.picture.alt}`"
+                  :src="`${painting?.picture?.asset?._ref}`"
+                  :alt="`${painting?.picture?.alt}`"
                   class="aspect-square w-full object-cover object-center transition-all duration-500 md:hover:scale-125"
                 />
               </div>
               <div class="flex w-full flex-col gap-[5px] py-5 pr-5">
                 <h3 class="font-cabinet pb-0.5 text-2xl/none font-medium tracking-normal">
-                  {{ painting.name }}
+                  {{ painting?.name }}
                 </h3>
                 <div
                   class="font-satoshi flex flex-col gap-2.5 text-xl/none font-light tracking-normal"
                 >
-                  <p class="line-clamp-1 pb-1">by {{ painting.artist }}</p>
+                  <p class="line-clamp-1 pb-1">by {{ painting?.artist }}</p>
                   <div class="flex gap-2.5 text-lg/none">
-                    <p>{{ painting.year }}</p>
+                    <p>{{ painting?.year }}</p>
                     <p>|</p>
-                    <p>{{ painting.medium }}</p>
+                    <p>{{ painting?.medium }}</p>
                   </div>
                 </div>
               </div>
