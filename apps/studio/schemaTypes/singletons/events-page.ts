@@ -25,59 +25,5 @@ export const eventsPage: DocumentDefinition = withSeo({
       description: 'A tagline/subtitle for the Artists Page',
       type: 'text',
     }),
-    defineField({
-      name: 'auctions',
-      title: 'Auctions',
-      description: "Add all auctions that you'd like to display on the events page",
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [
-            {
-              type: 'event',
-            },
-          ],
-          options: {filter: 'type == "auction"', disableNew: true},
-        },
-      ],
-      validation: (Rule) => Rule.unique(),
-    }),
-    defineField({
-      name: 'artShows',
-      title: 'Art Shows',
-      description: "Add all art shows that you'd like to display on the events page",
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [
-            {
-              type: 'event',
-            },
-          ],
-          options: {filter: 'type == "art-show"', disableNew: true},
-        },
-      ],
-      validation: (Rule) => Rule.unique(),
-    }),
-    defineField({
-      name: 'soloShows',
-      title: 'Solo Shows',
-      description: "Add all solo shows that you'd like to display on the events page",
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [
-            {
-              type: 'event',
-            },
-          ],
-          options: {filter: 'type == "solo-show"', disableNew: true},
-        },
-      ],
-      validation: (Rule) => Rule.unique(),
-    }),
   ],
 })
