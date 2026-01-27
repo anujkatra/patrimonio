@@ -19,23 +19,6 @@ const sanity = useSanity()
 const route = useRoute()
 const router = useRouter()
 
-// onMounted(() => {
-//   // Check if 'page' query param exists, if not, add a default
-//   if (!route.query.page || !route.query.order) {
-//     router.replace({
-//       query: {...route.query, page: route.query.page ?? 1, order: route.query.order ?? 'desc'},
-//     })
-//   }
-// })
-onMounted(() => {
-  // Check if 'page' query param exists, if not, add a default
-  if (!route.query.page) {
-    router.replace({
-      query: {...route.query, page: 1},
-    })
-  }
-})
-
 const params = computed(() => route.query || '')
 const selectedArtist = computed(() => route.query.artist || '')
 const selectedAuctionHouse = computed(() => route.query.auctionHouse || '')
@@ -67,8 +50,6 @@ const {data: eventsPageCountData} =
   await useSanityQuery<EventsPageCountQueryResult>(eventsPageCountQuery)
 const {data: eventsPageFilterData} =
   await useSanityQuery<EventsPageFilterQueryResult>(eventsPageFilterQuery)
-// console.log(eventsPageData.value)
-// console.log('filter', eventsPageFilterData.value)
 
 const query = computed(
   () => groq`*[_type == "event" && ($type == '' || type == $type) && ($auctionHouse == '' || auctionHouse._ref == $auctionHouse) && ($artist == '' || $artist in artists[]._ref)]{
@@ -113,9 +94,6 @@ const selectedFilters = computed(() => {
   }
 })
 
-const soloShowCount = computed(() => eventsPageData.value?.soloShows?.length ?? 0)
-const auctionCount = computed(() => eventsPageData.value?.auctions?.length ?? 0)
-const artShowCount = computed(() => eventsPageData.value?.artShows?.length ?? 0)
 function eventFilter(value: string) {
   if (selectedType.value === value) {
     const {type, ...currentQuery} = {...route.query}
@@ -143,19 +121,16 @@ for (let i = startDecade; i <= endDecade; i += 10) {
 function filter(key: string, value: string) {
   if (value === '' || value === '0') {
     const {[key]: _, ...currentQuery} = {...route.query}
-    router.replace({query: {...currentQuery, page: 1}})
+    router.replace({query: {...currentQuery}})
   } else if (isFilterMenuOpen.value && route.query[key] == value) {
     // Toggle filter if it already exists
     const {[key]: _, ...currentQuery} = {...route.query}
-    router.replace({query: {...currentQuery, page: 1}})
-  } else router.replace({query: {...route.query, page: 1, [key]: value}})
+    router.replace({query: {...currentQuery}})
+  } else router.replace({query: {...route.query, [key]: value}})
 }
 
-function updatePage(value: number) {
-  router.replace({query: {...route.query, page: value}})
-}
 function reset() {
-  router.replace({query: {page: 1}})
+  router.replace({query: {}})
 }
 
 const isFilterMenuOpen = ref(false)
@@ -478,63 +453,6 @@ const currentActiveMobileFilter = ref(0)
               </div>
             </div>
           </Transition>
-          <!-- <Transition mode="out-in" name="fade" appear>
-            <div
-              v-show="eventFilterType == 'auction' || eventFilterType == ''"
-              class="flex w-full flex-col gap-5"
-            >
-              <h2 class="font-cabinet text-3xl/none">Auctions</h2>
-              <div v-for="auction in eventsPageData?.auctions" :key="auction._id">
-                <EventCard
-                  :title="auction?.title"
-                  :link="auction.slug.current"
-                  :image-src="auction?.pictures?.[0]?.asset?._ref"
-                  :excerpt="auction?.excerpt"
-                  :venue="auction.venue"
-                  :upcoming="auction.upcoming"
-                  :date-range="auction.dateRange"
-                />
-              </div>
-            </div>
-          </Transition> -->
-          <!-- <Transition mode="out-in" name="fade" appear>
-            <div
-              v-show="eventFilterType == 'artShow' || eventFilterType == ''"
-              class="flex w-full flex-col gap-5"
-            >
-              <h2 class="font-cabinet text-3xl/none">Art Shows</h2>
-              <div v-for="artShow in eventsPageData?.artShows" :key="artShow._id">
-                <EventCard
-                  :title="artShow?.title"
-                  :link="artShow.slug.current"
-                  :image-src="artShow?.pictures?.[0]?.asset?._ref"
-                  :excerpt="artShow?.excerpt"
-                  :venue="artShow.venue"
-                  :upcoming="artShow.upcoming"
-                  :date-range="artShow.dateRange"
-                />
-              </div>
-            </div>
-          </Transition>
-          <Transition mode="out-in" name="fade" appear>
-            <div
-              v-show="eventFilterType == 'soloShow' || eventFilterType == ''"
-              class="flex w-full flex-col gap-5"
-            >
-              <h2 class="font-cabinet text-3xl/none">Solo Shows</h2>
-              <div v-for="soloShow in eventsPageData?.soloShows" :key="soloShow._id">
-                <EventCard
-                  :title="soloShow?.title"
-                  :link="soloShow.slug.current"
-                  :image-src="soloShow?.pictures?.[0]?.asset?._ref"
-                  :excerpt="soloShow?.excerpt"
-                  :venue="soloShow.venue"
-                  :upcoming="soloShow.upcoming"
-                  :date-range="soloShow.dateRange"
-                />
-              </div>
-            </div>
-          </Transition> -->
         </div>
       </div>
     </section>
