@@ -56,7 +56,7 @@ const handleSubmit = async () => {
           <h1
             class="font-cabinet text-[35px]/none font-normal tracking-normal lg:text-[45px]/none xl:text-[65px]/none"
           >
-            Contact Us
+            {{ contactUsPageData?.title ?? 'Contact Us' }}
           </h1>
           <div
             class="font-satoshi flex flex-col gap-5 text-xl/none font-light tracking-normal lg:gap-10"
