@@ -29,7 +29,7 @@ export const artists: DocumentDefinition = withSeo({
       title: 'Featured Artists',
       name: 'featuredArtists',
       type: 'array',
-      description: 'Featured Artists',
+      description: 'Note: Only artists added here will be displayed on Artists page',
       validation: (Rule) => Rule.unique(),
       of: [
         {

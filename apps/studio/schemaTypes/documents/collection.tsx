@@ -30,7 +30,13 @@ export const collection: DocumentDefinition = withSeo({
       title: 'Collection Paintings',
       name: 'paintings',
       type: 'array',
-      description: 'Paintings in this collection (max 30)',
+      description: (
+        <>
+          Paintings in this collection (max 30)
+          <br />
+          Note: The first painting will be treated as the featured painting for the collection
+        </>
+      ),
       validation: (Rule) => Rule.unique().max(30),
       of: [
         {

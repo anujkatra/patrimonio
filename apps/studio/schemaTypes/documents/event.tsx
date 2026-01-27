@@ -100,7 +100,13 @@ export const event: DocumentDefinition = withSeo({
       title: 'Pictures',
       name: 'pictures',
       type: 'array',
-      description: 'Pictures from the Event (max 30)',
+      description: (
+        <>
+          Pictures from the Event (max 30)
+          <br />
+          Note: The first picture will be treated as the featured image for the event
+        </>
+      ),
       validation: (rule) => rule.max(30),
       of: [
         {

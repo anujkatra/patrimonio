@@ -116,6 +116,7 @@ export const painting: DocumentDefinition = withSeo({
       name: 'medium',
       type: 'reference',
       to: [{type: 'medium'}],
+      validation: (rule) => rule.required(),
     }),
     defineField({
       title: 'For Sale',
