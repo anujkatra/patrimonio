@@ -68,7 +68,7 @@ const paintingOrder = computed(() => route.query.order || 'desc')
 
 function getIdBySlug(object, value: string) {
   for (let i = 0; i < object.length; i++) {
-    if (object[i].slug.current === value) {
+    if (object[i]?.slug?.current === value) {
       return object[i]._id
     }
   }
@@ -76,7 +76,7 @@ function getIdBySlug(object, value: string) {
 }
 function getValueBySlug(object, value: string, returnValue: string) {
   for (let i = 0; i < object.length; i++) {
-    if (object[i].slug.current === value) {
+    if (object[i]?.slug?.current === value) {
       return object[i][returnValue]
     }
   }

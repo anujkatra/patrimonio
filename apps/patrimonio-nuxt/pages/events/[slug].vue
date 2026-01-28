@@ -61,13 +61,13 @@ if (eventData.value !== null) {
           >
             <SanityContent :blocks="eventData?.content" />
           </div>
-          <BaseLink variant="secondary" class="w-full" icon to="/">
+          <BaseLink v-if="eventData?.link" variant="secondary" class="w-full" icon :to="eventData?.link" target="_blank">
             Join the Auction
             <template #icon> <Arrow class="w-[50px]" :font-controlled="false" /></template>
           </BaseLink>
-          <BaseLink variant="primary" class="bg-patrimonio-beige w-full" to="/">
+          <!-- <BaseLink variant="primary" class="bg-patrimonio-beige w-full" to="/">
             Download Catalogue (PDF)
-          </BaseLink>
+          </BaseLink> -->
         </div>
         <div class="hidden w-full md:block md:flex-1">
           <NuxtImg
