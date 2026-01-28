@@ -6,6 +6,7 @@ import {structure} from './plugins/structure'
 import {singletonPlugin} from './plugins/singleton'
 import {presentationTool} from 'sanity/presentation'
 import {singletons} from './schemaTypes/singletons'
+import {resolve} from './presentation/resolve'
 
 // Environment variables for project configuration
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-projectID'
@@ -23,6 +24,7 @@ export default defineConfig({
     structureTool({structure}),
     singletonPlugin(singletonTypes),
     presentationTool({
+      resolve,
       previewUrl: {
         origin: process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000',
         previewMode: {
