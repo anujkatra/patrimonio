@@ -9,6 +9,8 @@ export default defineEventHandler(async (event) => {
     return { ok: true, ignored: true }
   }
 
+  console.log("in email api", body)
+
   const mailgunDomain = process.env.MAILGUN_DOMAIN
   const mailgunApiKey = process.env.MAILGUN_API_KEY
 
