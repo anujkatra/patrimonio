@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const { _type, _id } = body
 
   // Optional: only react to certain document types
-  if (_type !== 'post') {
+  if (_type !== 'paintingForm' || _type !== 'contactUsForm') {
     return { ok: true, ignored: true }
   }
 
