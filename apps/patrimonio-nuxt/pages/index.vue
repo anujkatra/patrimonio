@@ -6,7 +6,7 @@ import {ref} from 'vue'
 import emblaCarouselVue from 'embla-carousel-vue'
 import Autoplay from 'embla-carousel-autoplay'
 
-const [emblaRef] = emblaCarouselVue({loop: true, watchDrag: true}, [
+const [emblaRef] = emblaCarouselVue({loop: true, watchDrag: false}, [
   Autoplay({delay: 4000, stopOnInteraction: false, stopOnFocusIn: false}),
 ])
 
