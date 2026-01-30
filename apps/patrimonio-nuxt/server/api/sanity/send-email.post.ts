@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
         from: `Test <test@${mailgunDomain}>`,
         to: 'anujkatra94@gmail.com',
         subject: 'New inquiry recieved on website',
-        html:`<><p>A new "${_type === 'paintingForm'?'painting':'contact'}" inquiry was recieved.</p><br /><p><a href="https://patrimonio-sanity-git-anujk-add-e-e1d8a8-yashbajaj234s-projects.vercel.app/structure/${_type}/${_id}">Link</a></p></>`,
+        html:`<><p>A new "${_type === 'paintingForm'?'painting':'contact'}" inquiry was recieved.</p><br /><p><a href="https://patrimonio-sanity-git-anujk-add-e-e1d8a8-yashbajaj234s-projects.vercel.app/structure/${_type};${_id}">Link</a></p></>`,
       }),
     }
   )
