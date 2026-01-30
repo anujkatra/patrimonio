@@ -3,7 +3,6 @@ export default defineEventHandler(async (event) => {
   
   // Sanity webhook payload
   const { _type, _id } = body
-  console.log("in email api", body)
 
   // Optional: only react to certain document types
   if (_type !== 'paintingForm' && _type !== 'contactUsForm') {
@@ -26,8 +25,8 @@ export default defineEventHandler(async (event) => {
       body: new URLSearchParams({
         from: `Test <test@${mailgunDomain}>`,
         to: 'anujkatra94@gmail.com',
-        subject: 'New Sanity document created',
-        text: `A new "${_type}" document was created.\n\nID: ${_id}`,
+        subject: 'New inquiry recieved on website',
+        html:`<><p>A new "${_type === 'paintingForm'?'painting':'contact'}" inquiry was recieved.</p><br /><p><a href="https://patrimonio-sanity-git-anujk-add-e-e1d8a8-yashbajaj234s-projects.vercel.app/structure/${_type}/${_id}">Link</a></p></>`,
       }),
     }
   )
@@ -36,10 +35,6 @@ export default defineEventHandler(async (event) => {
     const error = await res.text()
     console.error('Mailgun error:', error)
     throw new Error('Failed to send email')
-  }
-  else {
-    const response = await res.text()
-    console.log("response",response)
   }
 
   return { ok: true }
