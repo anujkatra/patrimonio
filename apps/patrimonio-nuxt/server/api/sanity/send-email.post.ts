@@ -3,12 +3,12 @@ export default defineEventHandler(async (event) => {
   
   // Sanity webhook payload
   const { _type, _id } = body
-  console.log("in email api", body)
+  console.log("in email api", body, _type !== 'paintingForm' || 'contactUsForm',_type !== 'paintingForm')
 
   // Optional: only react to certain document types
-  // if (_type !== 'paintingForm' || 'contactUsForm') {
-  //   return { ok: true, ignored: true }
-  // }
+  if (_type !== 'paintingForm' || 'contactUsForm') {
+    return { ok: true, ignored: true }
+  }
 
   const mailgunDomain = process.env.MAILGUN_DOMAIN
   const mailgunApiKey = process.env.MAILGUN_API_KEY
