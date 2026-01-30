@@ -3,10 +3,10 @@ export default defineEventHandler(async (event) => {
   
   // Sanity webhook payload
   const { _type, _id } = body
-  console.log("in email api", body, _type !== 'paintingForm' || 'contactUsForm',_type !== 'paintingForm')
+  console.log("in email api", body)
 
   // Optional: only react to certain document types
-  if (_type !== 'paintingForm' || 'contactUsForm') {
+  if (_type !== 'paintingForm' && _type !== 'contactUsForm') {
     return { ok: true, ignored: true }
   }
 
