@@ -23,7 +23,7 @@ const props = defineProps<{
           provider="sanity"
           :src="`${props.imageSrc._id}`"
           :alt="`${props.title} Collection`"
-          class="size-full"
+          class="size-full object-cover"
         />
       </NuxtLink>
     </div>

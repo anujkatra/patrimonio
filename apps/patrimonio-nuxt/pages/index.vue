@@ -83,7 +83,7 @@ const featuredCollectionsLayout = [
                 provider="sanity"
                 :src="`${picture.picture.asset?._id}`"
                 :alt="`${picture.picture.alt}`"
-                class="aspect-square object-cover lg:max-w-[400px]"
+                class="max-lg:object-cover max-lg:mx-auto max-h-[400px] my-auto lg:ml-auto"
               />
             </div>
           </div>
