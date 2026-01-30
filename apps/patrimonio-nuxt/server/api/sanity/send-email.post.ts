@@ -1,6 +1,7 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-
+  
+  console.log("in email api", body)
   // Sanity webhook payload
   const { _type, _id } = body
 
@@ -8,8 +9,6 @@ export default defineEventHandler(async (event) => {
   if (_type !== 'paintingForm' || _type !== 'contactUsForm') {
     return { ok: true, ignored: true }
   }
-
-  console.log("in email api", body)
 
   const mailgunDomain = process.env.MAILGUN_DOMAIN
   const mailgunApiKey = process.env.MAILGUN_API_KEY
@@ -37,6 +36,10 @@ export default defineEventHandler(async (event) => {
     const error = await res.text()
     console.error('Mailgun error:', error)
     throw new Error('Failed to send email')
+  }
+  else {
+    const response = await res.text()
+    console.log("response",response)
   }
 
   return { ok: true }
