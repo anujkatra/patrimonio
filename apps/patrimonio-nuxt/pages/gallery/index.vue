@@ -53,18 +53,25 @@ onMounted(() => {
 })
 
 const itemsPerPage = 12
-const params = computed(() => route.query || '')
-const selectedArtist = computed(() => route.query.artist || '')
-const selectedMedium = computed(() => route.query.medium || '')
-const selectedCollection = computed(() => route.query.collection || '')
-const page = computed(() => (typeof route.query.page === 'string' ? parseInt(route.query.page) : 1))
+const selectedArtist = ref(route.query.artist || '')
+const selectedMedium = ref(route.query.medium || '')
+const selectedCollection = ref(route.query.collection || '')
+const page = ref(typeof route.query.page === 'string' ? parseInt(route.query.page) : 1)
 const startIndex = computed(() => (page.value - 1) * itemsPerPage)
 const endIndex = computed(() => startIndex.value + itemsPerPage)
-const selectedYear = computed(() =>
-  typeof route.query.year === 'string' ? parseInt(route.query.year) : 0,
-)
+const selectedYear = ref(typeof route.query.year === 'string' ? parseInt(route.query.year) : 0)
 const forSaleOnly = ref(false)
-const paintingOrder = computed(() => route.query.order || 'desc')
+const paintingOrder = ref(route.query.order || 'desc')
+
+onBeforeRouteUpdate((to, from) => {
+  if (to.name !== from.name) return
+  selectedArtist.value = to.query.artist || ''
+  selectedMedium.value = to.query.medium || ''
+  selectedCollection.value = to.query.collection || ''
+  page.value = typeof to.query.page === 'string' ? parseInt(to.query.page) : 1
+  selectedYear.value = typeof to.query.year === 'string' ? parseInt(to.query.year) : 0
+  paintingOrder.value = to.query.order || 'desc'
+})
 
 function getIdBySlug(object, value: string) {
   for (let i = 0; i < object.length; i++) {
@@ -119,7 +126,17 @@ const {data: galleryPaintingData} = await useAsyncData(
       forSaleOnly: forSaleOnly.value,
       collection: selectedCollection.value,
     }),
-  {watch: [params, forSaleOnly, query]},
+  {
+    watch: [
+      page,
+      selectedArtist,
+      selectedMedium,
+      selectedCollection,
+      selectedYear,
+      forSaleOnly,
+      query,
+    ],
+  },
 )
 
 const {data: galleryPaintingDataCount} = await useAsyncData(
@@ -577,41 +594,44 @@ const currentActiveMobileFilter = ref(0)
             </div>
           </div>
         </div>
-        <div
-          class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-[50px] lg:gap-y-[30px]"
-        >
-          <NuxtLink
-            v-for="(painting, index) in galleryPaintingData"
-            :key="index"
-            :to="`/gallery/${painting?.slug?.current}`"
+        <Transition mode="out-in" name="fade">
+          <div
+            :key="galleryPaintingData"
+            class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-[50px] lg:gap-y-[30px]"
           >
-            <div class="flex w-full max-w-[400px] flex-col gap-5">
-              <div class="w-full overflow-hidden">
-                <NuxtImg
-                  provider="sanity"
-                  :src="`${painting?.picture?.asset?._ref}`"
-                  :alt="`${painting?.picture?.alt}`"
-                  class="aspect-square w-full object-cover object-center transition-all duration-500 md:hover:scale-125"
-                />
-              </div>
-              <div class="flex w-full flex-col gap-[5px] py-5 pr-5">
-                <h3 class="font-cabinet pb-0.5 text-2xl/none font-medium tracking-normal">
-                  {{ painting?.name }}
-                </h3>
-                <div
-                  class="font-satoshi flex flex-col gap-2.5 text-xl/none font-light tracking-normal"
-                >
-                  <p class="line-clamp-1 pb-1">by {{ painting?.artist }}</p>
-                  <div class="flex gap-2.5 text-lg/none">
-                    <p>{{ painting?.year }}</p>
-                    <p>|</p>
-                    <p>{{ painting?.medium }}</p>
+            <NuxtLink
+              v-for="(painting, index) in galleryPaintingData"
+              :key="index"
+              :to="`/gallery/${painting?.slug?.current}`"
+            >
+              <div class="flex w-full max-w-[400px] flex-col gap-5">
+                <div class="w-full overflow-hidden">
+                  <NuxtImg
+                    provider="sanity"
+                    :src="`${painting?.picture?.asset?._ref}`"
+                    :alt="`${painting?.picture?.alt}`"
+                    class="aspect-square w-full object-cover object-center transition-all duration-500 md:hover:scale-125"
+                  />
+                </div>
+                <div class="flex w-full flex-col gap-[5px] py-5 pr-5">
+                  <h3 class="font-cabinet pb-0.5 text-2xl/none font-medium tracking-normal">
+                    {{ painting?.name }}
+                  </h3>
+                  <div
+                    class="font-satoshi flex flex-col gap-2.5 text-xl/none font-light tracking-normal"
+                  >
+                    <p class="line-clamp-1 pb-1">by {{ painting?.artist }}</p>
+                    <div class="flex gap-2.5 text-lg/none">
+                      <p>{{ painting?.year }}</p>
+                      <p>|</p>
+                      <p>{{ painting?.medium }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </NuxtLink>
-        </div>
+            </NuxtLink>
+          </div>
+        </Transition>
         <div class="w-full">
           <Pagination
             :key="galleryPaintingData"
